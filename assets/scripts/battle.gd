@@ -1,11 +1,21 @@
 extends Control
 
+# TextBox
+@export var textBoxController : TextBoxController
 
-# Called when the node enters the scene tree for the first time.
+# Player stuff
+@export var actionsPanel : Panel
+
 func _ready() -> void:
-	pass # Replace with function body.
-
+	setup_scene()
+	start_battle()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+func setup_scene():
+	actionsPanel.hide()
+
+func start_battle():
+	textBoxController.display_text("A wild enemy appears")

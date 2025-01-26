@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://bytpyetjp5qo5"]
+[gd_scene load_steps=20 format=3 uid="uid://bytpyetjp5qo5"]
 
-[ext_resource type="Script" path="res://assets/scripts/battle.gd" id="1_xcbi3"]
+[ext_resource type="Script" path="res://assets/scripts/battle.gd" id="1_o0k4u"]
 [ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="2_wjigb"]
 [ext_resource type="Texture2D" uid="uid://csumf0mk4tank" path="res://assets/art/enemies/dark_mage.png" id="3_i5qtg"]
 [ext_resource type="StyleBox" uid="uid://cwld1tb0waeaq" path="res://assets/config/colors/button_default.tres" id="4_lsh0s"]
 [ext_resource type="LabelSettings" uid="uid://bk76npxe4v3st" path="res://assets/config/label_settings/text_box_label_settings.tres" id="5_kmdtb"]
+[ext_resource type="Script" path="res://assets/scripts/text_box.gd" id="5_x10or"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_oy5t6"]
 specular_color = Color(0, 0, 0, 1)
@@ -76,16 +77,18 @@ border_width_right = 4
 border_width_bottom = 4
 border_color = Color(1, 1, 1, 1)
 
-[node name="Battle" type="Control"]
+[node name="Battle" type="Control" node_paths=PackedStringArray("textBoxController", "actionsPanel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_xcbi3")
+script = ExtResource("1_o0k4u")
+textBoxController = NodePath("TextBoxMarginContainer")
+actionsPanel = NodePath("PlayerActionsPanel")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="BackgroundTextureRect" type="TextureRect" parent="."]
 modulate = Color(0.00162843, 0, 0.0926018, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -95,7 +98,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("CanvasTexture_oy5t6")
 
-[node name="EnemyContainer" type="VBoxContainer" parent="."]
+[node name="EnemyVBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -110,7 +113,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="EnemyHealthBar" type="ProgressBar" parent="EnemyContainer"]
+[node name="EnemyHealthProgressBar" type="ProgressBar" parent="EnemyVBoxContainer"]
 custom_minimum_size = Vector2(180, 30)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -119,7 +122,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_4ajxu")
 value = 50.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="EnemyContainer/EnemyHealthBar"]
+[node name="EnemyHealthLabel" type="Label" parent="EnemyVBoxContainer/EnemyHealthProgressBar"]
 texture_filter = 1
 texture_repeat = 1
 layout_mode = 1
@@ -136,7 +139,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="Enemy" type="TextureRect" parent="EnemyContainer"]
+[node name="EnemyTextureRect" type="TextureRect" parent="EnemyVBoxContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 2
@@ -146,7 +149,7 @@ texture = ExtResource("3_i5qtg")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="PlayerPanel" type="Panel" parent="."]
+[node name="PlayerStatusPanel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -157,7 +160,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_d4mow")
 
-[node name="PlayerDataContainer" type="HBoxContainer" parent="PlayerPanel"]
+[node name="PlayerDataHBoxContainer" type="HBoxContainer" parent="PlayerStatusPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -169,7 +172,7 @@ grow_vertical = 2
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="PlayerName" type="Label" parent="PlayerPanel/PlayerDataContainer"]
+[node name="PlayerNameLabel" type="Label" parent="PlayerStatusPanel/PlayerDataHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_wjigb")
@@ -177,7 +180,7 @@ text = "Player"
 label_settings = SubResource("LabelSettings_nxkji")
 horizontal_alignment = 1
 
-[node name="PlayerHealthBar" type="ProgressBar" parent="PlayerPanel/PlayerDataContainer"]
+[node name="PlayerHealthBar" type="ProgressBar" parent="PlayerStatusPanel/PlayerDataHBoxContainer"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -188,7 +191,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_k6hsr")
 value = 50.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="PlayerPanel/PlayerDataContainer/PlayerHealthBar"]
+[node name="PlayerHealthLabel" type="Label" parent="PlayerStatusPanel/PlayerDataHBoxContainer/PlayerHealthBar"]
 texture_filter = 1
 texture_repeat = 1
 layout_mode = 1
@@ -203,7 +206,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="ActionsPanel" type="Panel" parent="."]
+[node name="PlayerActionsPanel" type="Panel" parent="."]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 1
 anchors_preset = 10
@@ -211,7 +214,7 @@ anchor_right = 1.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vd2et")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ActionsPanel"]
+[node name="ActionsHBoxContainer" type="HBoxContainer" parent="PlayerActionsPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,7 +223,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="ButtonMarginContainer" type="MarginContainer" parent="ActionsPanel/HBoxContainer"]
+[node name="AttackButtonMarginContainer" type="MarginContainer" parent="PlayerActionsPanel/ActionsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
@@ -228,7 +231,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Button" type="Button" parent="ActionsPanel/HBoxContainer/ButtonMarginContainer"]
+[node name="AttackButton" type="Button" parent="PlayerActionsPanel/ActionsHBoxContainer/AttackButtonMarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -240,7 +243,7 @@ theme_override_styles/normal = ExtResource("4_lsh0s")
 keep_pressed_outside = true
 text = "Strike"
 
-[node name="ButtonMarginContainer2" type="MarginContainer" parent="ActionsPanel/HBoxContainer"]
+[node name="MagicButtonMarginContainer" type="MarginContainer" parent="PlayerActionsPanel/ActionsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
@@ -248,7 +251,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Button" type="Button" parent="ActionsPanel/HBoxContainer/ButtonMarginContainer2"]
+[node name="MagicButton" type="Button" parent="PlayerActionsPanel/ActionsHBoxContainer/MagicButtonMarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -259,7 +262,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
 theme_override_styles/normal = ExtResource("4_lsh0s")
 text = "Magic"
 
-[node name="ButtonMarginContainer3" type="MarginContainer" parent="ActionsPanel/HBoxContainer"]
+[node name="DefendButtonMarginContainer" type="MarginContainer" parent="PlayerActionsPanel/ActionsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
@@ -267,7 +270,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Button" type="Button" parent="ActionsPanel/HBoxContainer/ButtonMarginContainer3"]
+[node name="DefendButton" type="Button" parent="PlayerActionsPanel/ActionsHBoxContainer/DefendButtonMarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -278,7 +281,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
 theme_override_styles/normal = ExtResource("4_lsh0s")
 text = "Defend"
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="TextBoxMarginContainer" type="MarginContainer" parent="." node_paths=PackedStringArray("textBox", "textBoxLabel")]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -288,12 +291,15 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 30
+script = ExtResource("5_x10or")
+textBox = NodePath(".")
+textBoxLabel = NodePath("TextBoxPanel/TextBoxPanelMarginContainer/TextBoxTextLabel")
 
-[node name="TextBox" type="Panel" parent="MarginContainer"]
+[node name="TextBoxPanel" type="Panel" parent="TextBoxMarginContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2kd5s")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TextBox"]
+[node name="TextBoxPanelMarginContainer" type="MarginContainer" parent="TextBoxMarginContainer/TextBoxPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -305,7 +311,7 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 0
 
-[node name="Label" type="Label" parent="MarginContainer/TextBox/MarginContainer"]
+[node name="TextBoxTextLabel" type="Label" parent="TextBoxMarginContainer/TextBoxPanel/TextBoxPanelMarginContainer"]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
 size_flags_vertical = 0
@@ -314,7 +320,7 @@ label_settings = ExtResource("5_kmdtb")
 autowrap_mode = 3
 max_lines_visible = 3
 
-[node name="Ticker" type="Label" parent="MarginContainer/TextBox/MarginContainer"]
+[node name="TextBoxTickerLabel" type="Label" parent="TextBoxMarginContainer/TextBoxPanel/TextBoxPanelMarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
