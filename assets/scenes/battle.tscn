@@ -1,8 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://bytpyetjp5qo5"]
+[gd_scene load_steps=19 format=3 uid="uid://bytpyetjp5qo5"]
 
-[ext_resource type="Texture2D" uid="uid://csumf0mk4tank" path="res://assets/art/enemies/dark_mage.png" id="1_2r6la"]
-[ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="1_6nsry"]
-[ext_resource type="StyleBox" uid="uid://cwld1tb0waeaq" path="res://assets/config/colors/button_default.tres" id="3_olp57"]
+[ext_resource type="Script" path="res://assets/scripts/battle.gd" id="1_xcbi3"]
+[ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="2_wjigb"]
+[ext_resource type="Texture2D" uid="uid://csumf0mk4tank" path="res://assets/art/enemies/dark_mage.png" id="3_i5qtg"]
+[ext_resource type="StyleBox" uid="uid://cwld1tb0waeaq" path="res://assets/config/colors/button_default.tres" id="4_lsh0s"]
+[ext_resource type="LabelSettings" uid="uid://bk76npxe4v3st" path="res://assets/config/label_settings/text_box_label_settings.tres" id="5_kmdtb"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_oy5t6"]
 specular_color = Color(0, 0, 0, 1)
@@ -23,7 +25,7 @@ border_width_bottom = 2
 border_color = Color(0.223529, 0.223529, 0.223529, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_oekl2"]
-font = ExtResource("1_6nsry")
+font = ExtResource("2_wjigb")
 font_size = 25
 shadow_size = 3
 shadow_color = Color(0, 0, 0, 0.843137)
@@ -51,7 +53,7 @@ border_width_bottom = 2
 border_color = Color(0.223529, 0.223529, 0.223529, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_orglx"]
-font = ExtResource("1_6nsry")
+font = ExtResource("2_wjigb")
 font_size = 35
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.843137)
@@ -66,6 +68,14 @@ bg_color = Color(0, 0.0630134, 0.438141, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqbl3"]
 bg_color = Color(0, 0.00727719, 0.139551, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2kd5s"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+
 [node name="Battle" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -73,6 +83,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_xcbi3")
 
 [node name="Background" type="TextureRect" parent="."]
 modulate = Color(0.00162843, 0, 0.0926018, 1)
@@ -131,7 +142,7 @@ custom_minimum_size = Vector2(180, 180)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("1_2r6la")
+texture = ExtResource("3_i5qtg")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
@@ -161,7 +172,7 @@ alignment = 1
 [node name="PlayerName" type="Label" parent="PlayerPanel/PlayerDataContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("1_6nsry")
+theme_override_fonts/font = ExtResource("2_wjigb")
 text = "Player"
 label_settings = SubResource("LabelSettings_nxkji")
 horizontal_alignment = 1
@@ -221,11 +232,11 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
-theme_override_fonts/font = ExtResource("1_6nsry")
+theme_override_fonts/font = ExtResource("2_wjigb")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
-theme_override_styles/normal = ExtResource("3_olp57")
+theme_override_styles/normal = ExtResource("4_lsh0s")
 keep_pressed_outside = true
 text = "Strike"
 
@@ -241,11 +252,11 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
-theme_override_fonts/font = ExtResource("1_6nsry")
+theme_override_fonts/font = ExtResource("2_wjigb")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
-theme_override_styles/normal = ExtResource("3_olp57")
+theme_override_styles/normal = ExtResource("4_lsh0s")
 text = "Magic"
 
 [node name="ButtonMarginContainer3" type="MarginContainer" parent="ActionsPanel/HBoxContainer"]
@@ -260,9 +271,55 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
-theme_override_fonts/font = ExtResource("1_6nsry")
+theme_override_fonts/font = ExtResource("2_wjigb")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
-theme_override_styles/normal = ExtResource("3_olp57")
+theme_override_styles/normal = ExtResource("4_lsh0s")
 text = "Defend"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 222.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 30
+
+[node name="TextBox" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2kd5s")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 0
+
+[node name="Label" type="Label" parent="MarginContainer/TextBox/MarginContainer"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Kaelthas deu 10 de dano no inimigo!"
+label_settings = ExtResource("5_kmdtb")
+autowrap_mode = 3
+max_lines_visible = 3
+
+[node name="Ticker" type="Label" parent="MarginContainer/TextBox/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = ">
+"
+label_settings = ExtResource("5_kmdtb")
+horizontal_alignment = 2
+vertical_alignment = 2
