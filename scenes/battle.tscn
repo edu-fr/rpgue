@@ -1,0 +1,268 @@
+[gd_scene load_steps=16 format=3 uid="uid://bytpyetjp5qo5"]
+
+[ext_resource type="Texture2D" uid="uid://csumf0mk4tank" path="res://assets/art/enemies/dark_mage.png" id="1_2r6la"]
+[ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="1_6nsry"]
+[ext_resource type="StyleBox" uid="uid://cwld1tb0waeaq" path="res://assets/config/colors/button_default.tres" id="3_olp57"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_oy5t6"]
+specular_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1b44g"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.223103, 0.223103, 0.223103, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ajxu"]
+bg_color = Color(0.649786, 0, 0.0888395, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.223529, 0.223529, 0.223529, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_oekl2"]
+font = ExtResource("1_6nsry")
+font_size = 25
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.843137)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4mow"]
+bg_color = Color(0, 0, 0, 0.168627)
+
+[sub_resource type="LabelSettings" id="LabelSettings_nxkji"]
+font_size = 46
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j1c5k"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.223103, 0.223103, 0.223103, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6hsr"]
+bg_color = Color(0, 0.416019, 0.102807, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.223529, 0.223529, 0.223529, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_orglx"]
+font = ExtResource("1_6nsry")
+font_size = 35
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.843137)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vd2et"]
+bg_color = Color(0, 0, 0, 0.168627)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7u3kc"]
+bg_color = Color(0, 0.0630134, 0.438141, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqbl3"]
+bg_color = Color(0, 0.00727719, 0.139551, 1)
+
+[node name="Battle" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.00162843, 0, 0.0926018, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_oy5t6")
+
+[node name="EnemyContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.0
+offset_top = -83.0
+offset_right = 129.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="EnemyHealthBar" type="ProgressBar" parent="EnemyContainer"]
+custom_minimum_size = Vector2(180, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_1b44g")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4ajxu")
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="EnemyContainer/EnemyHealthBar"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.5
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "HP: 50/100"
+label_settings = SubResource("LabelSettings_oekl2")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Enemy" type="TextureRect" parent="EnemyContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_2r6la")
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayerPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -77.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_d4mow")
+
+[node name="PlayerDataContainer" type="HBoxContainer" parent="PlayerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_right = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="PlayerName" type="Label" parent="PlayerPanel/PlayerDataContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("1_6nsry")
+text = "Player"
+label_settings = SubResource("LabelSettings_nxkji")
+horizontal_alignment = 1
+
+[node name="PlayerHealthBar" type="ProgressBar" parent="PlayerPanel/PlayerDataContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_j1c5k")
+theme_override_styles/fill = SubResource("StyleBoxFlat_k6hsr")
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="PlayerPanel/PlayerDataContainer/PlayerHealthBar"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "HP: 50/100"
+label_settings = SubResource("LabelSettings_orglx")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="ActionsPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vd2et")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ActionsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ButtonMarginContainer" type="MarginContainer" parent="ActionsPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Button" type="Button" parent="ActionsPanel/HBoxContainer/ButtonMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_6nsry")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
+theme_override_styles/normal = ExtResource("3_olp57")
+keep_pressed_outside = true
+text = "Strike"
+
+[node name="ButtonMarginContainer2" type="MarginContainer" parent="ActionsPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Button" type="Button" parent="ActionsPanel/HBoxContainer/ButtonMarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_6nsry")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
+theme_override_styles/normal = ExtResource("3_olp57")
+text = "Magic"
+
+[node name="ButtonMarginContainer3" type="MarginContainer" parent="ActionsPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Button" type="Button" parent="ActionsPanel/HBoxContainer/ButtonMarginContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_6nsry")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
+theme_override_styles/normal = ExtResource("3_olp57")
+text = "Defend"
