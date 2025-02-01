@@ -1,10 +1,11 @@
+class_name Battle
+
 extends Control
 
-# TextBox
 @export var textBoxController : TextBoxController
 
 # Player stuff
-@export var actionsPanel : Panel
+@export var playerActionsPanel : ActionsPanelController
 
 func _ready() -> void:
 	setup_scene()
@@ -15,7 +16,16 @@ func _process(delta: float) -> void:
 	pass
 
 func setup_scene():
-	actionsPanel.hide()
+	setup_UI()
+
+func setup_UI():
+	playerActionsPanel.hide()
+	textBoxController.hide()
+	playerActionsPanel.setup()
+
+func spawn_enemies():
+	return
 
 func start_battle():
-	textBoxController.display_text("A wild enemy appears")
+	await textBoxController.display_text("A wild enemy appears")
+	playerActionsPanel.show()
