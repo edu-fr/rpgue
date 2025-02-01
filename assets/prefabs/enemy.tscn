@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://7rliwei46ypd"]
+
+[ext_resource type="Script" path="res://assets/scripts/enemies/enemy.gd" id="1_2y77x"]
+[ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="1_nrcy3"]
+[ext_resource type="Script" path="res://assets/scripts/UI/health_progress_bar.gd" id="2_j17xw"]
+[ext_resource type="Texture2D" uid="uid://csumf0mk4tank" path="res://assets/art/enemies/dark_mage.png" id="2_k0iwk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1b44g"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.223103, 0.223103, 0.223103, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ajxu"]
+bg_color = Color(0.649786, 0, 0.0888395, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.223529, 0.223529, 0.223529, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_oekl2"]
+font = ExtResource("1_nrcy3")
+font_size = 25
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.843137)
+
+[node name="EnemyVBoxContainer" type="VBoxContainer"]
+alignment = 1
+script = ExtResource("1_2y77x")
+
+[node name="EnemyHealthProgressBar" type="ProgressBar" parent="." node_paths=PackedStringArray("progressBar")]
+custom_minimum_size = Vector2(180, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_1b44g")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4ajxu")
+value = 50.0
+show_percentage = false
+script = ExtResource("2_j17xw")
+progressBar = NodePath(".")
+
+[node name="EnemyHealthLabel" type="Label" parent="EnemyHealthProgressBar"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.5
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "HP: 50/100"
+label_settings = SubResource("LabelSettings_oekl2")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="EnemyTextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_k0iwk")
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
