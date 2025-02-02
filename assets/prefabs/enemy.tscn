@@ -26,12 +26,14 @@ font_size = 25
 shadow_size = 3
 shadow_color = Color(0, 0, 0, 0.843137)
 
-[node name="EnemyVBoxContainer" type="VBoxContainer" node_paths=PackedStringArray("_healthBar")]
+[node name="EnemyVBoxContainer" type="VBoxContainer" node_paths=PackedStringArray("_healthBar", "_enemyImage")]
 alignment = 1
 script = ExtResource("1_2y77x")
 _healthBar = NodePath("EnemyHealthProgressBar")
+_enemyImage = NodePath("EnemyTextureRect")
 
-[node name="EnemyHealthProgressBar" type="ProgressBar" parent="." node_paths=PackedStringArray("progressBar", "label")]
+[node name="EnemyHealthProgressBar" type="ProgressBar" parent="." node_paths=PackedStringArray("_progressBar", "_label")]
+visible = false
 custom_minimum_size = Vector2(180, 30)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -40,8 +42,8 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_4ajxu")
 value = 50.0
 show_percentage = false
 script = ExtResource("2_j17xw")
-progressBar = NodePath(".")
-label = NodePath("EnemyHealthLabel")
+_progressBar = NodePath(".")
+_label = NodePath("EnemyHealthLabel")
 
 [node name="EnemyHealthLabel" type="Label" parent="EnemyHealthProgressBar"]
 texture_filter = 1

@@ -2,24 +2,128 @@ class_name ActionsPanelController
 
 extends Control
 
-# Textbox
-@export var attackButton : Button
-@export var magicButton : Button
-@export var defendButton : Button
+enum BUTTON {NONE, ATTACK, MAGIC, DEFEND}
+ 
+@export var _attackButton: Button
+@export var _magicButton: Button
+@export var _defendButton: Button
 
-func setup() -> void:
-	attackButton.pressed.connect(on_attack_button_pressed)
-	magicButton.pressed.connect(on_magic_button_pressed)
-	defendButton.pressed.connect(on_defend_button_pressed)
+var _enemiesRef: Array[EnemyController]
+signal playerTurn(turnResult: PlayerTurnResult)
 
-func on_attack_button_pressed() -> void:
-	print("attack")
+func setup(enemiesRef: Array[EnemyController]) -> void:
+	_enemiesRef = enemiesRef
+
+	_attackButton.pressed.connect(_on_attack_button_pressed)
+	_magicButton.pressed.connect(_on_magic_button_pressed)
+	_defendButton.pressed.connect(_on_defend_button_pressed)
+
+	_set_buttons_enabled(false) # buttons start disabled
+
 	return
 
-func on_magic_button_pressed() -> void:
-	print("magic")
+func start_player_turn() -> PlayerTurnResult:
+	self.show()
+	_set_buttons_enabled(true)
+
+	return await playerTurn
+
+#region Button Selection
+
+func _on_attack_button_pressed() -> void:
+	_open_enemy_selection(BUTTON.ATTACK)
+
 	return
 
-func on_defend_button_pressed() -> void:
-	print("defend")
+func _on_magic_button_pressed() -> void:
+	_open_enemy_selection(BUTTON.MAGIC)
+
 	return
+
+func _on_defend_button_pressed() -> void:
+	playerTurn.emit(PlayerTurnResult.new(_buttonPressedToPlayerActionType(BUTTON.DEFEND), -1))
+	
+	return
+
+func _set_buttons_enabled(value: bool) -> void:
+	_attackButton.disabled = !value
+	_magicButton.disabled = !value
+	_defendButton.disabled = !value
+
+	return
+
+func _buttonPressedToPlayerActionType(button: BUTTON) -> PlayerTurnResult.ActionCategory:
+	match button:
+		BUTTON.ATTACK:
+			return PlayerTurnResult.ActionCategory.ATTACK
+		BUTTON.MAGIC:
+			return PlayerTurnResult.ActionCategory.MAGIC
+		BUTTON.DEFEND:
+			return PlayerTurnResult.ActionCategory.DEFEND
+		BUTTON.NONE:
+			push_error("Retornando acao de player sem ter botao escolhido definido")
+			return PlayerTurnResult.ActionCategory.NONE
+
+	push_error("Tipo de botao pressionado na acao do player nao existente")
+	return PlayerTurnResult.ActionCategory.NONE
+
+#endregion
+
+#region Enemy Targeting
+
+var _hoveredEnemy: int
+var _currentButtonPressed: BUTTON
+
+func _open_enemy_selection(buttonType: BUTTON) -> void:
+	_set_buttons_enabled(false) # button clicks must be disabled during enemy selection
+	_currentButtonPressed = buttonType
+	_hover_first_enemy()
+
+	return
+
+
+func _input(event: InputEvent) -> void:
+	if (Input.is_action_just_pressed("ui_accept")):
+		_select_current()
+	elif (Input.is_action_just_pressed("ui_cancel")):
+		_cancel_enemy_selection()
+	elif (Input.is_action_just_pressed("ui_right")):
+		_hover_next()
+	elif (Input.is_action_just_pressed("ui_left")):
+		_hover_previous()
+	return
+
+func _hover_first_enemy() -> void:
+	_hoveredEnemy = 0
+	_on_hover_changed()
+	return
+
+func _select_current() -> void:
+	playerTurn.emit(PlayerTurnResult.new(_buttonPressedToPlayerActionType(_currentButtonPressed), _hoveredEnemy))
+	return
+
+func _hover_next() -> void:
+	_hoveredEnemy = (_hoveredEnemy + 1) if _hoveredEnemy < _enemiesRef.size() else 0
+	_on_hover_changed()
+	return
+
+func _hover_previous() -> void:
+	_hoveredEnemy = (_hoveredEnemy - 1) if _hoveredEnemy > 0 else _enemiesRef.size()
+	_on_hover_changed()
+	return
+
+func _on_hover_changed() -> void:
+	for i in _enemiesRef.size():
+		_enemiesRef[i].set_selected(i == _hoveredEnemy)
+	return
+
+func _cancel_enemy_selection():
+	_hoveredEnemy = -1
+	_on_hover_changed()
+
+	_currentButtonPressed = BUTTON.NONE
+	_set_buttons_enabled(true)
+
+	return
+
+#endregion

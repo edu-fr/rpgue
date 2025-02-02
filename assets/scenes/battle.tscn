@@ -10,6 +10,15 @@
 [sub_resource type="CanvasTexture" id="CanvasTexture_oy5t6"]
 specular_color = Color(0, 0, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vd2et"]
+bg_color = Color(0, 0, 0, 0.168627)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7u3kc"]
+bg_color = Color(0, 0.0630134, 0.438141, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqbl3"]
+bg_color = Color(0, 0.00727719, 0.139551, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4mow"]
 bg_color = Color(0, 0, 0, 0.168627)
 
@@ -38,15 +47,6 @@ font_size = 35
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.843137)
 shadow_offset = Vector2(2, 2)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vd2et"]
-bg_color = Color(0, 0, 0, 0.168627)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7u3kc"]
-bg_color = Color(0, 0.0630134, 0.438141, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqbl3"]
-bg_color = Color(0, 0.00727719, 0.139551, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2kd5s"]
 bg_color = Color(0, 0, 0, 1)
@@ -80,78 +80,18 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("CanvasTexture_oy5t6")
 
-[node name="PlayerStatusPanel" type="Panel" parent="." node_paths=PackedStringArray("attackButton", "magicButton", "defendButton")]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -77.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_d4mow")
-script = ExtResource("4_7lnlx")
-attackButton = NodePath("../PlayerActionsPanel/ActionsHBoxContainer/AttackButtonMarginContainer/AttackButton")
-magicButton = NodePath("../PlayerActionsPanel/ActionsHBoxContainer/MagicButtonMarginContainer/MagicButton")
-defendButton = NodePath("../PlayerActionsPanel/ActionsHBoxContainer/DefendButtonMarginContainer/DefendButton")
-
-[node name="PlayerDataHBoxContainer" type="HBoxContainer" parent="PlayerStatusPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 17.0
-offset_right = -17.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 30
-alignment = 1
-
-[node name="PlayerNameLabel" type="Label" parent="PlayerStatusPanel/PlayerDataHBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("2_wjigb")
-text = "Player"
-label_settings = SubResource("LabelSettings_nxkji")
-horizontal_alignment = 1
-
-[node name="PlayerHealthBar" type="ProgressBar" parent="PlayerStatusPanel/PlayerDataHBoxContainer"]
-custom_minimum_size = Vector2(150, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_styles/background = SubResource("StyleBoxFlat_j1c5k")
-theme_override_styles/fill = SubResource("StyleBoxFlat_k6hsr")
-value = 50.0
-show_percentage = false
-
-[node name="PlayerHealthLabel" type="Label" parent="PlayerStatusPanel/PlayerDataHBoxContainer/PlayerHealthBar"]
-texture_filter = 1
-texture_repeat = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "HP: 50/100"
-label_settings = SubResource("LabelSettings_orglx")
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="PlayerActionsPanel" type="Panel" parent="." node_paths=PackedStringArray("attackButton", "magicButton", "defendButton")]
+[node name="PlayerActionsPanel" type="Panel" parent="." node_paths=PackedStringArray("_attackButton", "_magicButton", "_defendButton")]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
+offset_bottom = 100.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vd2et")
 script = ExtResource("4_7lnlx")
-attackButton = NodePath("ActionsHBoxContainer/AttackButtonMarginContainer/AttackButton")
-magicButton = NodePath("ActionsHBoxContainer/MagicButtonMarginContainer/MagicButton")
-defendButton = NodePath("ActionsHBoxContainer/DefendButtonMarginContainer/DefendButton")
+_attackButton = NodePath("ActionsHBoxContainer/AttackButtonMarginContainer/AttackButton")
+_magicButton = NodePath("ActionsHBoxContainer/MagicButtonMarginContainer/MagicButton")
+_defendButton = NodePath("ActionsHBoxContainer/DefendButtonMarginContainer/DefendButton")
 
 [node name="ActionsHBoxContainer" type="HBoxContainer" parent="PlayerActionsPanel"]
 layout_mode = 1
@@ -219,6 +159,63 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
 theme_override_styles/normal = ExtResource("4_lsh0s")
 text = "Defend"
+
+[node name="PlayerStatusPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -77.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_d4mow")
+
+[node name="PlayerDataHBoxContainer" type="HBoxContainer" parent="PlayerStatusPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_right = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="PlayerNameLabel" type="Label" parent="PlayerStatusPanel/PlayerDataHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_wjigb")
+text = "Player"
+label_settings = SubResource("LabelSettings_nxkji")
+horizontal_alignment = 1
+
+[node name="PlayerHealthBar" type="ProgressBar" parent="PlayerStatusPanel/PlayerDataHBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_j1c5k")
+theme_override_styles/fill = SubResource("StyleBoxFlat_k6hsr")
+value = 50.0
+show_percentage = false
+
+[node name="PlayerHealthLabel" type="Label" parent="PlayerStatusPanel/PlayerDataHBoxContainer/PlayerHealthBar"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "HP: 50/100"
+label_settings = SubResource("LabelSettings_orglx")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
 [node name="TextBoxMarginContainer" type="MarginContainer" parent="." node_paths=PackedStringArray("_textBox", "_textBoxLabel")]
 visible = false
