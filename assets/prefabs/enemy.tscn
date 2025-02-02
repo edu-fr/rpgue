@@ -26,9 +26,10 @@ font_size = 25
 shadow_size = 3
 shadow_color = Color(0, 0, 0, 0.843137)
 
-[node name="EnemyVBoxContainer" type="VBoxContainer"]
+[node name="EnemyVBoxContainer" type="VBoxContainer" node_paths=PackedStringArray("healthBar")]
 alignment = 1
 script = ExtResource("1_2y77x")
+healthBar = NodePath("EnemyHealthProgressBar")
 
 [node name="EnemyHealthProgressBar" type="ProgressBar" parent="." node_paths=PackedStringArray("progressBar")]
 custom_minimum_size = Vector2(180, 30)

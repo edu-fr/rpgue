@@ -5,15 +5,15 @@ extends Control
 @export var healthBar : HealthBarController
 
 func init():
-	# setup_health_bar()
+	setup_health_bar(50, 35)
 
 	return self;
 
-func setup_health_bar(max : int, current : int = -1):
-	healthBar.init(max, current)
+func setup_health_bar(_max : int, _current : int = -1):
+	healthBar.init(_max, _current)
 
-func take_damage(damageValue : int):
-	healthBar.take_damage(damageValue)
+func take_damage(_damageValue : int):
+	healthBar.take_damage(_damageValue)
 
-func heal(healValue : int):
-	healthBar.heal(healValue)
+func heal(_healValue : int):
+	healthBar.heal(_healValue)

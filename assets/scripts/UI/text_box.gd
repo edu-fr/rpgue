@@ -7,12 +7,12 @@ extends Control
 
 signal textBoxClosed
 
-func _input(event):
+func _input(_event) -> void:
 	if Input.is_action_just_pressed("ui_accept") or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		textBox.hide()
 		textBoxClosed.emit()
 
-func display_text(text):
-	textBoxLabel.text = text
+func display_text(_text):
+	textBoxLabel.text = _text
 	textBox.show()
-	return textBoxClosed
+	await textBoxClosed
