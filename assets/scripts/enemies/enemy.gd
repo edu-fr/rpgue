@@ -2,18 +2,18 @@ class_name EnemyController
 
 extends Control
 
-@export var healthBar : HealthBarController
+@export var _healthBar : HealthBarController
 
 func init():
-	setup_health_bar(50, 35)
+	_setup_health_bar(50, 35)
 
 	return self;
 
-func setup_health_bar(_max : int, _current : int = -1):
-	healthBar.init(_max, _current)
+func _setup_health_bar(maxHealth : int, current : int = -1):
+	_healthBar.init(maxHealth, current)
 
-func take_damage(_damageValue : int):
-	healthBar.take_damage(_damageValue)
+func _take_damage(damageValue : int):
+	_healthBar.take_damage(damageValue)
 
-func heal(_healValue : int):
-	healthBar.heal(_healValue)
+func _heal(healValue : int):
+	_healthBar.heal(healValue)
