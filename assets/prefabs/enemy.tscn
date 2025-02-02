@@ -31,7 +31,7 @@ alignment = 1
 script = ExtResource("1_2y77x")
 healthBar = NodePath("EnemyHealthProgressBar")
 
-[node name="EnemyHealthProgressBar" type="ProgressBar" parent="." node_paths=PackedStringArray("progressBar")]
+[node name="EnemyHealthProgressBar" type="ProgressBar" parent="." node_paths=PackedStringArray("progressBar", "label")]
 custom_minimum_size = Vector2(180, 30)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -41,6 +41,7 @@ value = 50.0
 show_percentage = false
 script = ExtResource("2_j17xw")
 progressBar = NodePath(".")
+label = NodePath("EnemyHealthLabel")
 
 [node name="EnemyHealthLabel" type="Label" parent="EnemyHealthProgressBar"]
 texture_filter = 1
