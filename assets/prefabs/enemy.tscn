@@ -27,6 +27,7 @@ shadow_size = 3
 shadow_color = Color(0, 0, 0, 0.843137)
 
 [node name="EnemyVBoxContainer" type="VBoxContainer" node_paths=PackedStringArray("_healthBar", "_enemyImage")]
+focus_mode = 2
 alignment = 1
 script = ExtResource("1_2y77x")
 _healthBar = NodePath("EnemyHealthProgressBar")

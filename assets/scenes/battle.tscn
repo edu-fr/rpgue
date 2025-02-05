@@ -80,7 +80,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("CanvasTexture_oy5t6")
 
-[node name="PlayerActionsPanel" type="Panel" parent="." node_paths=PackedStringArray("_attackButton", "_magicButton", "_defendButton")]
+[node name="PlayerActionsPanel" type="Panel" parent="." node_paths=PackedStringArray("_optionsHBoxContainer", "_attackButton", "_magicButton", "_defendButton")]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 1
 anchors_preset = 10
@@ -89,6 +89,7 @@ offset_bottom = 100.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vd2et")
 script = ExtResource("4_7lnlx")
+_optionsHBoxContainer = NodePath("ActionsHBoxContainer")
 _attackButton = NodePath("ActionsHBoxContainer/AttackButtonMarginContainer/AttackButton")
 _magicButton = NodePath("ActionsHBoxContainer/MagicButtonMarginContainer/MagicButton")
 _defendButton = NodePath("ActionsHBoxContainer/DefendButtonMarginContainer/DefendButton")
@@ -113,7 +114,12 @@ theme_override_constants/margin_bottom = 10
 [node name="AttackButton" type="Button" parent="PlayerActionsPanel/ActionsHBoxContainer/AttackButtonMarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_mode = 0
+focus_neighbor_left = NodePath("../../DefendButtonMarginContainer/DefendButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../MagicButtonMarginContainer/MagicButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../MagicButtonMarginContainer/MagicButton")
+focus_previous = NodePath("../../DefendButtonMarginContainer/DefendButton")
 theme_override_fonts/font = ExtResource("2_wjigb")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
@@ -133,7 +139,12 @@ theme_override_constants/margin_bottom = 10
 [node name="MagicButton" type="Button" parent="PlayerActionsPanel/ActionsHBoxContainer/MagicButtonMarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_mode = 0
+focus_neighbor_left = NodePath("../../AttackButtonMarginContainer/AttackButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../DefendButtonMarginContainer/DefendButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../DefendButtonMarginContainer/DefendButton")
+focus_previous = NodePath("../../AttackButtonMarginContainer/AttackButton")
 theme_override_fonts/font = ExtResource("2_wjigb")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
@@ -152,7 +163,12 @@ theme_override_constants/margin_bottom = 10
 [node name="DefendButton" type="Button" parent="PlayerActionsPanel/ActionsHBoxContainer/DefendButtonMarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_mode = 0
+focus_neighbor_left = NodePath("../../MagicButtonMarginContainer/MagicButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../AttackButtonMarginContainer/AttackButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../AttackButtonMarginContainer/AttackButton")
+focus_previous = NodePath("../../MagicButtonMarginContainer/MagicButton")
 theme_override_fonts/font = ExtResource("2_wjigb")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")

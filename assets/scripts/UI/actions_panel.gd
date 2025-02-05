@@ -3,7 +3,8 @@ class_name ActionsPanelController
 extends Control
 
 enum BUTTON {NONE, ATTACK, MAGIC, DEFEND}
- 
+
+@export var _optionsHBoxContainer : HBoxContainer
 @export var _attackButton: Button
 @export var _magicButton: Button
 @export var _defendButton: Button
@@ -42,13 +43,23 @@ func _on_magic_button_pressed() -> void:
 
 func _on_defend_button_pressed() -> void:
 	playerTurn.emit(PlayerTurnResult.new(_buttonPressedToPlayerActionType(BUTTON.DEFEND), -1))
-	
+
 	return
 
 func _set_buttons_enabled(value: bool) -> void:
+	var focusMode = Control.FOCUS_ALL if value else Control.FOCUS_NONE
+
 	_attackButton.disabled = !value
+	_attackButton.focus_mode = focusMode
+
+	if (value):
+		_attackButton.grab_focus()
+
 	_magicButton.disabled = !value
+	_magicButton.focus_mode = focusMode
+
 	_defendButton.disabled = !value
+	_defendButton.focus_mode = focusMode
 
 	return
 
@@ -82,15 +93,26 @@ func _open_enemy_selection(buttonType: BUTTON) -> void:
 	return
 
 
-func _input(event: InputEvent) -> void:
-	if (Input.is_action_just_pressed("ui_accept")):
-		_select_current()
-	elif (Input.is_action_just_pressed("ui_cancel")):
+func _input(_event: InputEvent) -> void:
+	if (_currentButtonPressed == BUTTON.ATTACK or _currentButtonPressed == BUTTON.MAGIC):
+		_input_select_target()
+
+	return
+
+func _input_select_target():
+	if (Input.is_action_just_released("ui_accept")):
+		_select_current_targeted_enemy()
 		_cancel_enemy_selection()
-	elif (Input.is_action_just_pressed("ui_right")):
-		_hover_next()
-	elif (Input.is_action_just_pressed("ui_left")):
-		_hover_previous()
+
+	elif (Input.is_action_just_released("ui_cancel")):
+		_cancel_enemy_selection()
+
+	elif (Input.is_action_just_released("ui_right")):
+		_hover_next_enemy()
+
+	elif (Input.is_action_just_released("ui_left")):
+		_hover_previous_enemy()
+
 	return
 
 func _hover_first_enemy() -> void:
@@ -98,17 +120,17 @@ func _hover_first_enemy() -> void:
 	_on_hover_changed()
 	return
 
-func _select_current() -> void:
+func _select_current_targeted_enemy() -> void:
 	playerTurn.emit(PlayerTurnResult.new(_buttonPressedToPlayerActionType(_currentButtonPressed), _hoveredEnemy))
 	return
 
-func _hover_next() -> void:
-	_hoveredEnemy = (_hoveredEnemy + 1) if _hoveredEnemy < _enemiesRef.size() else 0
+func _hover_next_enemy() -> void:
+	_hoveredEnemy = (_hoveredEnemy + 1) if _hoveredEnemy < _enemiesRef.size() - 1 else 0
 	_on_hover_changed()
 	return
 
-func _hover_previous() -> void:
-	_hoveredEnemy = (_hoveredEnemy - 1) if _hoveredEnemy > 0 else _enemiesRef.size()
+func _hover_previous_enemy() -> void:
+	_hoveredEnemy = (_hoveredEnemy - 1) if _hoveredEnemy > 0 else _enemiesRef.size() - 1
 	_on_hover_changed()
 	return
 

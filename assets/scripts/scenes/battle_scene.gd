@@ -4,7 +4,7 @@ extends Control
 
 enum BATTLE_RESULT {NONE, WIN, LOSE}
 enum TURN_OWNER {NONE, PLAYER, ENEMIES}
- 
+
 const _enemyScenePath = "E:/Godot/Projects/rpgue/assets/prefabs/enemy.tscn"
 
 @export var _playerActionsPanel: ActionsPanelController
@@ -80,7 +80,7 @@ func _wait_turn_owner_action(nextToPlay: TURN_OWNER) -> TURN_OWNER:
 	if (nextToPlay == TURN_OWNER.PLAYER):
 		var playerTurnResult = await _wait_player_action()
 		return _execute_player_turn_result(playerTurnResult)
-	
+
 	print("executing enemy action")
 	# execute enemy action
 	return TURN_OWNER.PLAYER
@@ -92,7 +92,7 @@ func _execute_player_turn_result(playerAction : PlayerTurnResult) -> TURN_OWNER:
 
 		PlayerTurnResult.ActionCategory.ATTACK:
 			_remainingEnemies[playerAction._enemyIndex]._take_damage(_playerRef.get_player_attack_damage())
-			
+
 		PlayerTurnResult.ActionCategory.MAGIC:
 			_remainingEnemies[playerAction._enemyIndex]._take_damage(_playerRef.get_player_magic_damage())
 
@@ -103,5 +103,5 @@ func _wait_player_action() -> PlayerTurnResult:
 
 func _wait_enemy_action() -> EnemyTurnResult:
 	return
-	
+
 #endregion
