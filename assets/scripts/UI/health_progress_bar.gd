@@ -13,6 +13,9 @@ func init(_max: int, _current: int) -> void:
 
 	return
 
+func get_current_health() -> int:
+	return _progressBar.value
+
 func take_damage(_damageValue: int) -> void:
 	_progressBar.value -= _damageValue
 	update_label()

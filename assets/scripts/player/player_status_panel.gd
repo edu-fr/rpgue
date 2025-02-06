@@ -3,8 +3,10 @@ class_name PlayerStatusPanelController
 extends Control
 
 @export var playerName : String
-@export var _healBarController : HealthBarController
+@export var _healthBarController : HealthBarController
 
 func init(maxHp : int, currentHp : int) -> void:
-	_healBarController.init(maxHp, currentHp)
+	_healthBarController.init(maxHp, currentHp)
 
+func get_player_current_health() -> int:
+	return _healthBarController.get_current_health()

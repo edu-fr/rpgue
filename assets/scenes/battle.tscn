@@ -59,7 +59,7 @@ border_width_right = 4
 border_width_bottom = 4
 border_color = Color(1, 1, 1, 1)
 
-[node name="Battle" type="Control" node_paths=PackedStringArray("_playerActionsPanel", "_enemiesHBoxContainer", "_textBoxController")]
+[node name="Battle" type="Control" node_paths=PackedStringArray("_playerController", "_enemiesHBoxContainer", "_textBoxController")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,7 +69,7 @@ offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7hjph")
-_playerActionsPanel = NodePath("PlayerController/PlayerActionsPanel")
+_playerController = NodePath("PlayerController")
 _enemiesHBoxContainer = NodePath("EnemiesHBoxContainer")
 _textBoxController = NodePath("TextBoxMarginContainer")
 
@@ -99,13 +99,14 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("_statusPanel")]
+[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("_statusPanel", "_actionsPanel")]
 script = ExtResource("2_1ciky")
 _statusPanel = NodePath("PlayerStatusPanel")
+_actionsPanel = NodePath("PlayerActionsPanel")
 _playerInitialMaxHealth = 30
 _playerInitialCurrentHp = 30
 
-[node name="PlayerStatusPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("_healBarController")]
+[node name="PlayerStatusPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("_healthBarController")]
 z_index = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -118,7 +119,7 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_d4mow")
 script = ExtResource("5_konab")
 playerName = "Kaelthas"
-_healBarController = NodePath("PlayerDataHBoxContainer/PlayerHealthBar")
+_healthBarController = NodePath("PlayerDataHBoxContainer/PlayerHealthBar")
 
 [node name="PlayerDataHBoxContainer" type="HBoxContainer" parent="PlayerController/PlayerStatusPanel"]
 layout_mode = 1

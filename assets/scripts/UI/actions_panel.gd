@@ -11,7 +11,7 @@ enum BUTTON {NONE, ATTACK, MAGIC, DEFEND}
 var _enemiesRef: Array[EnemyController]
 signal playerTurn(turnResult: PlayerTurnResult)
 
-func setup(enemiesRef: Array[EnemyController]) -> void:
+func init(enemiesRef: Array[EnemyController]) -> void:
 	_enemiesRef = enemiesRef
 
 	_attackButton.pressed.connect(_on_attack_button_pressed)
@@ -22,7 +22,7 @@ func setup(enemiesRef: Array[EnemyController]) -> void:
 
 	return
 
-func start_player_turn() -> PlayerTurnResult:
+func start_turn() -> PlayerTurnResult:
 	self.show()
 	_set_buttons_enabled(true)
 
