@@ -20,7 +20,7 @@ func _input(_event: InputEvent) -> void:
 
 	return
 
-func display_text(text):
+func display_text(text) -> void:
 	_textBoxLabel.text = text
 	_textBox.show()
 	await _textBoxClosed

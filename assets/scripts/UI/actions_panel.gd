@@ -4,7 +4,6 @@ extends Control
 
 enum BUTTON {NONE, ATTACK, MAGIC, DEFEND}
 
-@export var _optionsHBoxContainer : HBoxContainer
 @export var _attackButton: Button
 @export var _magicButton: Button
 @export var _defendButton: Button
@@ -32,7 +31,7 @@ func start_player_turn() -> PlayerTurnResult:
 #region Button Selection
 
 func _on_attack_button_pressed() -> void:
-	_open_enemy_selection(BUTTON.ATTACK)
+	_open_enemy_selection(BUTTON.ATTACK) 
 
 	return
 
@@ -99,7 +98,7 @@ func _input(_event: InputEvent) -> void:
 
 	return
 
-func _input_select_target():
+func _input_select_target() -> void:
 	if (Input.is_action_just_released("ui_accept")):
 		_select_current_targeted_enemy()
 		_cancel_enemy_selection()
@@ -139,7 +138,7 @@ func _on_hover_changed() -> void:
 		_enemiesRef[i].set_selected(i == _hoveredEnemy)
 	return
 
-func _cancel_enemy_selection():
+func _cancel_enemy_selection() -> void:
 	_hoveredEnemy = -1
 	_on_hover_changed()
 

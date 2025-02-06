@@ -34,7 +34,6 @@ _healthBar = NodePath("EnemyHealthProgressBar")
 _enemyImage = NodePath("EnemyTextureRect")
 
 [node name="EnemyHealthProgressBar" type="ProgressBar" parent="." node_paths=PackedStringArray("_progressBar", "_label")]
-visible = false
 custom_minimum_size = Vector2(180, 30)
 layout_mode = 2
 size_flags_horizontal = 4
