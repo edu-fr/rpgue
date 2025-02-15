@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://7rliwei46ypd"]
 
-[ext_resource type="Script" path="res://assets/scripts/enemies/enemy.gd" id="1_2y77x"]
 [ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="1_nrcy3"]
+[ext_resource type="Script" path="res://assets/scripts/enemies/enemy_controller.gd" id="1_vweea"]
 [ext_resource type="Script" path="res://assets/scripts/UI/health_progress_bar.gd" id="2_j17xw"]
 [ext_resource type="Texture2D" uid="uid://csumf0mk4tank" path="res://assets/art/enemies/dark_mage.png" id="2_k0iwk"]
 
@@ -29,7 +29,7 @@ shadow_color = Color(0, 0, 0, 0.843137)
 [node name="EnemyVBoxContainer" type="VBoxContainer" node_paths=PackedStringArray("_healthBar", "_enemyImage")]
 focus_mode = 2
 alignment = 1
-script = ExtResource("1_2y77x")
+script = ExtResource("1_vweea")
 _healthBar = NodePath("EnemyHealthProgressBar")
 _enemyImage = NodePath("EnemyTextureRect")
 
