@@ -40,4 +40,3 @@ func damage_player(damage: int) -> bool:
 	_statusPanel.damage_player(damage)
 
 	return is_player_alive()
-	

@@ -2,11 +2,11 @@ class_name PlayerAction
 
 enum ActionCategory {NONE, ATTACK, MAGIC, DEFEND}
 var _actionCategory: ActionCategory
-var _enemyIndex: int
+var _enemiesIndex: Array[int]
 
 
-func _init(actionCategory: ActionCategory, enemyIndex: int) -> void:
+func _init(actionCategory: ActionCategory, enemiesIndex: Array[int]) -> void:
 	_actionCategory = actionCategory
-	_enemyIndex = enemyIndex
+	_enemiesIndex = enemiesIndex
 
 	return

@@ -107,13 +107,21 @@ func _execute_player_action(playerAction: PlayerAction) -> void:
 		PlayerAction.ActionCategory.DEFEND:
 			_playerController.defend()
 
+			return
+
 		PlayerAction.ActionCategory.ATTACK:
-			_remainingEnemies[playerAction._enemyIndex].on_damage_received(_playerController.get_player_attack_damage())
+			for enemyIndex in playerAction._enemiesIndex:
+				_remainingEnemies[enemyIndex].on_damage_received(_playerController.get_player_attack_damage())
+
+			return
 
 		PlayerAction.ActionCategory.MAGIC:
-			for enemy in _remainingEnemies:
-				enemy.on_damage_received(_playerController.get_player_magic_damage())
+			for enemyIndex in playerAction._enemiesIndex:
+				_remainingEnemies[enemyIndex].on_damage_received(_playerController.get_player_magic_damage())
 
+			return
+
+	push_error("Invalid player action category: " + str(playerAction._actionCategory))
 	return
 
 

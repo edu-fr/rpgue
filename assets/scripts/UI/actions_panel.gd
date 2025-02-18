@@ -29,10 +29,13 @@ func init(enemiesRef: Array[EnemyController]) -> void:
 func start_turn() -> PlayerAction:
 	self.show()
 	_set_buttons_enabled(true)
+
 	print("Waiting player turn")
 	var playerAction: PlayerAction = await playerTurn
 	print("Done waiting, disabling menu buttons and returning action")
+
 	_set_buttons_enabled(false)
+
 	return playerAction
 
 
@@ -45,13 +48,13 @@ func _on_attack_button_pressed() -> void:
 
 
 func _on_magic_button_pressed() -> void:
-	_open_enemy_selection(BUTTON.MAGIC)
+	_open_enemy_selection(BUTTON.MAGIC, true)
 
 	return
 
 
 func _on_defend_button_pressed() -> void:
-	playerTurn.emit(PlayerAction.new(_buttonPressedToPlayerActionType(BUTTON.DEFEND), -1))
+	playerTurn.emit(PlayerAction.new(_buttonPressedToPlayerActionType(BUTTON.DEFEND), []))
 
 	return
 
@@ -85,83 +88,113 @@ func _buttonPressedToPlayerActionType(button: BUTTON) -> PlayerAction.ActionCate
 			return PlayerAction.ActionCategory.NONE
 
 	push_error("Tipo de botao pressionado na acao do player nao existente")
+
 	return PlayerAction.ActionCategory.NONE
 
 #endregion
 
+
 #region Enemy Targeting
 
-var _hoveredEnemy: int
+var _hoveredEnemies: Array[int]
 var _currentButtonPressed: BUTTON
+var _selecting: bool
 
 
-func _open_enemy_selection(buttonType: BUTTON) -> void:
+func _open_enemy_selection(buttonType: BUTTON, all: bool = false) -> void:
 	_set_buttons_enabled(false) # button clicks must be disabled during enemy selection
 	_currentButtonPressed = buttonType
-	_hover_first_enemy()
+
+	if (all):
+		_hover_all()
+	else:
+		_hover_first_enemy()
+
+	_selecting = true;
 
 	return
 
 
 func _unhandled_input(_event: InputEvent) -> void:
+	if (!_selecting):
+		return
+
 	if (_currentButtonPressed == BUTTON.ATTACK or _currentButtonPressed == BUTTON.MAGIC):
-		_input_select_target()
+		_input_select_target(_event)
 
 	return
 
 
-func _input_select_target() -> void:
-	if (Input.is_action_just_released("ui_accept")):
-		_select_current_targeted_enemy()
+func _input_select_target(_event: InputEvent) -> void:
+	if (_event.is_action_pressed("ui_accept")):
+		_select_current_targeted_enemies()
 		_cancel_enemy_selection()
 
-	elif (Input.is_action_just_released("ui_cancel")):
+	elif (_event.is_action_pressed("ui_cancel")):
 		_cancel_enemy_selection()
 		_set_buttons_enabled(true)
 
-	elif (Input.is_action_just_released("ui_right")):
+	elif (_event.is_action_pressed("ui_right")):
 		_hover_next_enemy()
 
-	elif (Input.is_action_just_released("ui_left")):
+	elif (_event.is_action_pressed("ui_left")):
 		_hover_previous_enemy()
 
 	return
 
 
 func _hover_first_enemy() -> void:
-	_hoveredEnemy = 0
+	_hoveredEnemies = [0]
 	_on_hover_changed()
 	return
 
 
-func _select_current_targeted_enemy() -> void:
-	playerTurn.emit(PlayerAction.new(_buttonPressedToPlayerActionType(_currentButtonPressed), _hoveredEnemy))
+func _select_current_targeted_enemies() -> void:
+	playerTurn.emit(PlayerAction.new(_buttonPressedToPlayerActionType(_currentButtonPressed), _hoveredEnemies))
 	return
 
 
 func _hover_next_enemy() -> void:
-	_hoveredEnemy = (_hoveredEnemy + 1) if _hoveredEnemy < _enemiesRef.size() - 1 else 0
+	var _last = _hoveredEnemies.back()
+	_hoveredEnemies.remove_at(0)
+	var _newIndex = _last + 1 if _last < (_enemiesRef.size() - 1) else 0
+	_hoveredEnemies.append(_newIndex)
+
 	_on_hover_changed()
 	return
 
 
 func _hover_previous_enemy() -> void:
-	_hoveredEnemy = (_hoveredEnemy - 1) if _hoveredEnemy > 0 else _enemiesRef.size() - 1
+	var _first = _hoveredEnemies.front()
+	_hoveredEnemies.remove_at(_hoveredEnemies.size() - 1)
+	var _newIndex = _first - 1 if _first > 0 else (_enemiesRef.size() - 1)
+	_hoveredEnemies.append(_newIndex)
+
 	_on_hover_changed()
+	return
+
+
+func _hover_all() -> void:
+	_hoveredEnemies.clear()
+	for i in range(_enemiesRef.size()):
+		_hoveredEnemies.append(i)
+	_on_hover_changed()
+
 	return
 
 
 func _on_hover_changed() -> void:
 	for i in _enemiesRef.size():
-		_enemiesRef[i].set_selected(i == _hoveredEnemy)
+		_enemiesRef[i].set_selected(_hoveredEnemies.find(i) != -1)
 	return
 
 
 func _cancel_enemy_selection() -> void:
-	_hoveredEnemy = -1
+	_hoveredEnemies = []
 	_on_hover_changed()
 
 	_currentButtonPressed = BUTTON.NONE
+	_selecting = false
 
 	return
 
