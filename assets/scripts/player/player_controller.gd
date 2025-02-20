@@ -7,13 +7,15 @@ extends Node
 @export var _playerInitialCurrentHp: int
 
 
-func init(enemiesToFight: Array[EnemyController]) -> void:
+func init() -> void:
 	_statusPanel.init(_playerInitialMaxHealth, _playerInitialCurrentHp)
-	_actionsPanel.init(enemiesToFight)
+	_actionsPanel.init()
+
+	return
 
 
-func start_player_turn() -> PlayerAction:
-	return await _actionsPanel.start_turn()
+func start_player_turn(remainingEnemies: Array[EnemyController]) -> PlayerAction:
+	return await _actionsPanel.start_turn(remainingEnemies)
 
 
 func get_player_health() -> int:

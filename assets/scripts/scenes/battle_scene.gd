@@ -8,7 +8,7 @@ const _enemyScenePath: String = "E:/Godot/Projects/rpgue/assets/prefabs/enemy.ts
 @export var _enemiesHBoxContainer: HBoxContainer
 @export var _textBoxController: TextBoxController
 
-var _remainingEnemies: Array[EnemyController]
+var _allEnemies: Array[EnemyController]
 var _playerReward: PlayerReward
 
 
@@ -27,7 +27,7 @@ func _ready() -> void:
 #region Battle Setup
 
 func _setup_scene() -> void:
-	_spawn_enemies(3)
+	_spawn_enemies(4)
 	_setup_player()
 	_setup_UI()
 
@@ -35,7 +35,7 @@ func _setup_scene() -> void:
 
 
 func _setup_player() -> void:
-	_playerController.init(_remainingEnemies)
+	_playerController.init()
 	_playerReward = PlayerReward.new()
 
 	return
@@ -49,14 +49,18 @@ func _setup_UI() -> void:
 
 func _spawn_enemies(_quantity: int) -> void:
 	for i in _quantity:
-		var enemy: Node                      = preload(_enemyScenePath).instantiate()
+		var enemy: Node = preload(_enemyScenePath).instantiate()
 		var enemyController: EnemyController = enemy
-		enemyController.init()
+		enemyController.init(i)
 
-		_remainingEnemies.append(enemyController)
+		_allEnemies.append(enemyController)
 		_enemiesHBoxContainer.add_child(enemy)
 
 	return
+
+
+func _get_remaining_enemies() -> Array[EnemyController]:
+	return _allEnemies.filter(func(enemy): return enemy.is_alive())
 
 
 #endregion
@@ -76,9 +80,8 @@ func _battle_turn_logic() -> BATTLE_RESULT:
 	var battleDecided: bool    = false
 
 	while (!battleDecided):
-		print("While called")
 		nextToPlay = await _wait_turn_owner_action(nextToPlay)
-		battleDecided = _playerController.get_player_health() < 0 || _remainingEnemies.size() < 0
+		battleDecided = _playerController.get_player_health() < 0 || _get_remaining_enemies().size() == 0
 
 	return BATTLE_RESULT.WIN if _playerController.get_player_health() > 0 else BATTLE_RESULT.LOSE
 
@@ -110,36 +113,57 @@ func _execute_player_action(playerAction: PlayerAction) -> void:
 			return
 
 		PlayerAction.ActionCategory.ATTACK:
-			for enemyIndex in playerAction._enemiesIndex:
-				_remainingEnemies[enemyIndex].on_damage_received(_playerController.get_player_attack_damage())
+			for enemyId in playerAction._enemiesIds:
+				var enemy: EnemyController = _get_remaining_enemy_by_id(enemyId)
+				if (!enemy.is_alive()):
+					continue
+
+				enemy.on_damage_received(_playerController.get_player_attack_damage())
 
 			return
 
 		PlayerAction.ActionCategory.MAGIC:
-			for enemyIndex in playerAction._enemiesIndex:
-				_remainingEnemies[enemyIndex].on_damage_received(_playerController.get_player_magic_damage())
+			for enemyId in playerAction._enemiesIds:
+				var enemy: EnemyController = _get_remaining_enemy_by_id(enemyId)
+				if (!enemy.is_alive()):
+					continue
+
+				enemy.on_damage_received(_playerController.get_player_magic_damage())
 
 			return
+	
+		_:
+			push_error("Invalid player action category: " + str(playerAction._actionCategory))
 
 	push_error("Invalid player action category: " + str(playerAction._actionCategory))
 	return
 
 
+func _get_remaining_enemy_by_id(id: int) -> EnemyController:
+	var enemies: Array[EnemyController] = _get_remaining_enemies()
+	for enemy:EnemyController in enemies:
+		if (enemy.enemy_id == id):
+			return enemy
+
+	push_error("Remaining enemy not found with id " + str(id))
+	return null
+
+
 func _get_player_action() -> PlayerAction:
-	return await _playerController.start_player_turn()
+	return await _playerController.start_player_turn(_get_remaining_enemies())
 
 
 func _execute_enemies_action() -> void:
-	for _enemy in _remainingEnemies:
+	for _enemy in _get_remaining_enemies():
 		var _enemyAction: EnemyAction = _enemy.act()
-		print("Will wait enemy action")
 		await _textBoxController.display_text(_create_enemy_action_text(_enemy, _enemyAction))
-		print("Done waiting")
 		_execute_enemy_action(_enemy, _enemyAction)
+
+	return
 
 
 func _create_enemy_action_text(_enemy: EnemyController, _enemyAction: EnemyAction) -> String:
-	var _enemyInfoText: String = "Enemy " + str(_remainingEnemies.find(_enemy))
+	var _enemyInfoText: String = "Enemy n" + str(_get_remaining_enemies().find(_enemy))
 	var _actionText: String
 	match (_enemyAction.actionCategory as EnemyAction.EnemyActionCategory):
 		EnemyAction.EnemyActionCategory.ATTACK:
@@ -160,14 +184,7 @@ func _execute_enemy_action(enemy: EnemyController, enemyAction: EnemyAction) -> 
 		enemyAction.EnemyActionCategory.HEAL:
 			enemy.heal(enemyAction.actionValue)
 
-
-func _update_enemy_list() -> void:
-	var deadEnemies: Array[EnemyController]
-	deadEnemies = _remainingEnemies.filter(func(enemy): enemy.alive())
-
-	for enemy in deadEnemies:
-		_increase_player_reward(enemy.rewardCoinsAmount)
-		_remainingEnemies.remove_at(_remainingEnemies.find(enemy))
+	return
 
 
 func _increase_player_reward(goldReward: int) -> void:
@@ -175,4 +192,4 @@ func _increase_player_reward(goldReward: int) -> void:
 
 	return
 
-#endregion
+	#endregion

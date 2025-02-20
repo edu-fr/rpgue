@@ -16,7 +16,6 @@ func setup() -> void:
 
 func _gui_input(_event: InputEvent) -> void:
 	if (!_displayingText):
-		print("Not displaying text")
 		return
 
 	if _event.is_action_pressed("ui_accept"):

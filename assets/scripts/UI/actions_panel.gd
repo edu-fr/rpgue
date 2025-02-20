@@ -6,13 +6,11 @@ enum BUTTON {NONE, ATTACK, MAGIC, DEFEND}
 @export var _magicButton: Button
 @export var _defendButton: Button
 
-var _enemiesRef: Array[EnemyController]
+var _remainingEnemiesRef: Array[EnemyController]
 signal playerTurn(turnResult: PlayerAction)
 
 
-func init(enemiesRef: Array[EnemyController]) -> void:
-	_enemiesRef = enemiesRef
-
+func init() -> void:
 	_attackButton.pressed.connect(_on_attack_button_pressed)
 	_magicButton.pressed.connect(_on_magic_button_pressed)
 	_defendButton.pressed.connect(_on_defend_button_pressed)
@@ -26,14 +24,12 @@ func init(enemiesRef: Array[EnemyController]) -> void:
 	return
 
 
-func start_turn() -> PlayerAction:
-	self.show()
+func start_turn(remainingEnemies: Array[EnemyController]) -> PlayerAction:
+	_remainingEnemiesRef = remainingEnemies
 	_set_buttons_enabled(true)
 
-	print("Waiting player turn")
+	self.show()
 	var playerAction: PlayerAction = await playerTurn
-	print("Done waiting, disabling menu buttons and returning action")
-
 	_set_buttons_enabled(false)
 
 	return playerAction
@@ -127,8 +123,10 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 func _input_select_target(_event: InputEvent) -> void:
 	if (_event.is_action_pressed("ui_accept")):
-		_select_current_targeted_enemies()
+		var _selectedEnemiesIds: Array[int] = _get_current_targeted_enemies_ids()
+		var _buttonPressed: BUTTON = _currentButtonPressed
 		_cancel_enemy_selection()
+		playerTurn.emit(PlayerAction.new(_buttonPressedToPlayerActionType(_buttonPressed), _selectedEnemiesIds))
 
 	elif (_event.is_action_pressed("ui_cancel")):
 		_cancel_enemy_selection()
@@ -149,15 +147,18 @@ func _hover_first_enemy() -> void:
 	return
 
 
-func _select_current_targeted_enemies() -> void:
-	playerTurn.emit(PlayerAction.new(_buttonPressedToPlayerActionType(_currentButtonPressed), _hoveredEnemies))
-	return
+func _get_current_targeted_enemies_ids() -> Array[int]:
+	var array: Array = _hoveredEnemies.map(func(enemyIndex: int): return _remainingEnemiesRef[enemyIndex].enemy_id)
+	var hoveredEnemiesIds: Array[int] = []
+	hoveredEnemiesIds.assign(array)
+
+	return hoveredEnemiesIds
 
 
 func _hover_next_enemy() -> void:
 	var _last = _hoveredEnemies.back()
 	_hoveredEnemies.remove_at(0)
-	var _newIndex = _last + 1 if _last < (_enemiesRef.size() - 1) else 0
+	var _newIndex = _last + 1 if _last < (_remainingEnemiesRef.size() - 1) else 0
 	_hoveredEnemies.append(_newIndex)
 
 	_on_hover_changed()
@@ -167,7 +168,7 @@ func _hover_next_enemy() -> void:
 func _hover_previous_enemy() -> void:
 	var _first = _hoveredEnemies.front()
 	_hoveredEnemies.remove_at(_hoveredEnemies.size() - 1)
-	var _newIndex = _first - 1 if _first > 0 else (_enemiesRef.size() - 1)
+	var _newIndex = _first - 1 if _first > 0 else (_remainingEnemiesRef.size() - 1)
 	_hoveredEnemies.append(_newIndex)
 
 	_on_hover_changed()
@@ -176,7 +177,7 @@ func _hover_previous_enemy() -> void:
 
 func _hover_all() -> void:
 	_hoveredEnemies.clear()
-	for i in range(_enemiesRef.size()):
+	for i in range(_remainingEnemiesRef.size()):
 		_hoveredEnemies.append(i)
 	_on_hover_changed()
 
@@ -184,8 +185,8 @@ func _hover_all() -> void:
 
 
 func _on_hover_changed() -> void:
-	for i in _enemiesRef.size():
-		_enemiesRef[i].set_selected(_hoveredEnemies.find(i) != -1)
+	for i in _remainingEnemiesRef.size():
+		_remainingEnemiesRef[i].set_selected(_hoveredEnemies.find(i) != -1)
 	return
 
 
