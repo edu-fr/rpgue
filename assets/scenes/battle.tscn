@@ -3,15 +3,13 @@
 [ext_resource type="Script" path="res://assets/scripts/scenes/battle_scene.gd" id="1_7hjph"]
 [ext_resource type="Script" path="res://assets/scripts/player/player_status_panel_controller.gd" id="2_4yxab"]
 [ext_resource type="Script" path="res://assets/scripts/player/player_controller.gd" id="2_8qo7m"]
+[ext_resource type="PackedScene" uid="uid://b26x5w04r3k5m" path="res://assets/prefabs/background_texture_rect.tscn" id="2_txouv"]
 [ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="2_wjigb"]
 [ext_resource type="Script" path="res://assets/scripts/UI/actions_panel.gd" id="4_7lnlx"]
 [ext_resource type="StyleBox" uid="uid://cwld1tb0waeaq" path="res://assets/config/colors/button_default.tres" id="4_lsh0s"]
 [ext_resource type="LabelSettings" uid="uid://bk76npxe4v3st" path="res://assets/config/label_settings/text_box_label_settings.tres" id="5_kmdtb"]
 [ext_resource type="Script" path="res://assets/scripts/UI/text_box.gd" id="5_x10or"]
 [ext_resource type="Script" path="res://assets/scripts/UI/health_progress_bar.gd" id="6_jo7rj"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_oy5t6"]
-specular_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4mow"]
 bg_color = Color(0, 0, 0, 0.168627)
@@ -73,17 +71,13 @@ _playerController = NodePath("PlayerController")
 _enemiesHBoxContainer = NodePath("EnemiesHBoxContainer")
 _textBoxController = NodePath("TextBoxMarginContainer")
 
-[node name="BackgroundTextureRect" type="TextureRect" parent="."]
-modulate = Color(0.00162843, 0, 0.0926018, 1)
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = SubResource("CanvasTexture_oy5t6")
+[node name="BackgroundTextureRect" parent="." instance=ExtResource("2_txouv")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="EnemiesHBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1

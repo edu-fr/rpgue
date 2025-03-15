@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcamwpl3diqoc"]
+
+[ext_resource type="Script" path="res://assets/scripts/scenes/main_scene.gd" id="1_bbunw"]
+[ext_resource type="PackedScene" uid="uid://dl4uwub830np3" path="res://assets/prefabs/managers/game_manager.tscn" id="1_iw17g"]
+[ext_resource type="PackedScene" uid="uid://csb8wg2y7ql82" path="res://assets/prefabs/managers/scene_manager.tscn" id="2_q74jk"]
+[ext_resource type="Script" path="res://assets/scripts/scenes/managers/game_manager.gd" id="2_t26ap"]
+[ext_resource type="PackedScene" uid="uid://cdpdd6sxylx7h" path="res://assets/prefabs/managers/flow_manager.tscn" id="3_od2kc"]
+
+[node name="MainScene" type="Node" node_paths=PackedStringArray("flowManager")]
+script = ExtResource("1_bbunw")
+flowManager = NodePath("Managers/FlowManager")
+
+[node name="Managers" type="Node" parent="."]
+
+[node name="GameManager" parent="Managers" instance=ExtResource("1_iw17g")]
+script = ExtResource("2_t26ap")
+
+[node name="SceneManager" parent="Managers" node_paths=PackedStringArray("SceneTree2D", "SceneTreeGUI") instance=ExtResource("2_q74jk")]
+SceneTree2D = NodePath("../../SceneTree/2D")
+SceneTreeGUI = NodePath("../../SceneTree/GUI")
+metadata/_edit_group_ = true
+
+[node name="FlowManager" parent="Managers" node_paths=PackedStringArray("_sceneManager") instance=ExtResource("3_od2kc")]
+_sceneManager = NodePath("../SceneManager")
+
+[node name="SceneTree" type="Node" parent="."]
+
+[node name="2D" type="Node2D" parent="SceneTree"]
+
+[node name="GUI" type="Control" parent="SceneTree"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Camera2D" type="Camera2D" parent="."]

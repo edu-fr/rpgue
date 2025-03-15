@@ -1,0 +1,101 @@
+[gd_scene load_steps=5 format=3 uid="uid://dy5cs0p0dat01"]
+
+[ext_resource type="PackedScene" uid="uid://b26x5w04r3k5m" path="res://assets/prefabs/background_texture_rect.tscn" id="1_5440m"]
+[ext_resource type="LabelSettings" uid="uid://bcq144k27f2k4" path="res://assets/config/label_settings/title_label_settings.tres" id="2_sqcoy"]
+[ext_resource type="Theme" uid="uid://cgstlj5p1fke1" path="res://assets/config/button_themes/main_menu_button_theme.tres" id="3_jf8py"]
+
+[sub_resource type="GDScript" id="GDScript_h1oa5"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = SubResource("GDScript_h1oa5")
+
+[node name="BackgroundTextureRect" parent="." instance=ExtResource("1_5440m")]
+modulate = Color(0.437867, 0, 0.0951527, 1)
+layout_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuVBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabelMarginContainer" type="MarginContainer" parent="MarginContainer/MenuVBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_bottom = 0
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/MenuVBoxContainer/TitleLabelMarginContainer"]
+layout_mode = 2
+text = "RPGUE"
+label_settings = ExtResource("2_sqcoy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonsVBoxContainer" type="VBoxContainer" parent="MarginContainer/MenuVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="StartButtonMarginContainer" type="MarginContainer" parent="MarginContainer/MenuVBoxContainer/ButtonsVBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="StartButton" type="Button" parent="MarginContainer/MenuVBoxContainer/ButtonsVBoxContainer/StartButtonMarginContainer"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+theme = ExtResource("3_jf8py")
+text = "START"
+
+[node name="OptionsButtonMarginContainer2" type="MarginContainer" parent="MarginContainer/MenuVBoxContainer/ButtonsVBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="OptionsButton" type="Button" parent="MarginContainer/MenuVBoxContainer/ButtonsVBoxContainer/OptionsButtonMarginContainer2"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+theme = ExtResource("3_jf8py")
+text = "OPTIONS"
+
+[node name="QuitButtonMarginContainer3" type="MarginContainer" parent="MarginContainer/MenuVBoxContainer/ButtonsVBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="QuitButton" type="Button" parent="MarginContainer/MenuVBoxContainer/ButtonsVBoxContainer/QuitButtonMarginContainer3"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+theme = ExtResource("3_jf8py")
+text = "QUIT
+"

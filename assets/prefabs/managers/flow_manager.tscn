@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdpdd6sxylx7h"]
+
+[ext_resource type="Script" path="res://assets/scripts/scenes/managers/flow_manager.gd" id="1_pc8n7"]
+
+[node name="FlowManager" type="Node"]
+script = ExtResource("1_pc8n7")
