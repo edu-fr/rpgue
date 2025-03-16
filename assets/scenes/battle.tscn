@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://bytpyetjp5qo5"]
+[gd_scene load_steps=21 format=3 uid="uid://bytpyetjp5qo5"]
 
 [ext_resource type="Script" path="res://assets/scripts/scenes/battle_scene.gd" id="1_7hjph"]
 [ext_resource type="Script" path="res://assets/scripts/player/player_status_panel_controller.gd" id="2_4yxab"]
 [ext_resource type="Script" path="res://assets/scripts/player/player_controller.gd" id="2_8qo7m"]
 [ext_resource type="PackedScene" uid="uid://b26x5w04r3k5m" path="res://assets/prefabs/background_texture_rect.tscn" id="2_txouv"]
 [ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="2_wjigb"]
+[ext_resource type="Texture2D" uid="uid://dpwjd00ofe7rl" path="res://assets/art/backgrounds/battle_background.png" id="3_0slls"]
 [ext_resource type="Script" path="res://assets/scripts/UI/actions_panel.gd" id="4_7lnlx"]
 [ext_resource type="StyleBox" uid="uid://cwld1tb0waeaq" path="res://assets/config/colors/button_default.tres" id="4_lsh0s"]
 [ext_resource type="LabelSettings" uid="uid://bk76npxe4v3st" path="res://assets/config/label_settings/text_box_label_settings.tres" id="5_kmdtb"]
@@ -72,12 +73,16 @@ _enemiesHBoxContainer = NodePath("EnemiesHBoxContainer")
 _textBoxController = NodePath("TextBoxMarginContainer")
 
 [node name="BackgroundTextureRect" parent="." instance=ExtResource("2_txouv")]
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
+modulate = Color(1, 1, 1, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+offset_left = -1920.0
+offset_top = -1080.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("3_0slls")
 
 [node name="EnemiesHBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -94,7 +99,8 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("_statusPanel", "_actionsPanel")]
+[node name="PlayerController" type="Control" parent="." node_paths=PackedStringArray("_statusPanel", "_actionsPanel")]
+anchors_preset = 0
 script = ExtResource("2_8qo7m")
 _statusPanel = NodePath("PlayerStatusPanel")
 _actionsPanel = NodePath("PlayerActionsPanel")
@@ -103,6 +109,7 @@ _playerInitialCurrentHp = 100
 
 [node name="PlayerStatusPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("_playerNameLabel", "_healthBarController")]
 z_index = 1
+layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -173,6 +180,7 @@ uppercase = true
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(0, 100)
+layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = -8.0

@@ -1,5 +1,5 @@
 class_name PlayerController
-extends Node
+extends Control
 
 @export var _statusPanel: PlayerStatusPanelController
 @export var _actionsPanel: ActionsPanelController

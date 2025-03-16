@@ -1,36 +1,29 @@
 [gd_scene load_steps=5 format=3 uid="uid://dy5cs0p0dat01"]
 
+[ext_resource type="Script" path="res://assets/scripts/scenes/main_menu.gd" id="1_8wt3o"]
 [ext_resource type="PackedScene" uid="uid://b26x5w04r3k5m" path="res://assets/prefabs/background_texture_rect.tscn" id="1_5440m"]
 [ext_resource type="LabelSettings" uid="uid://bcq144k27f2k4" path="res://assets/config/label_settings/title_label_settings.tres" id="2_sqcoy"]
 [ext_resource type="Theme" uid="uid://cgstlj5p1fke1" path="res://assets/config/button_themes/main_menu_button_theme.tres" id="3_jf8py"]
 
-[sub_resource type="GDScript" id="GDScript_h1oa5"]
-script/source = "extends Control
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
-
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("startButton", "optionsButton", "quitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 4
-script = SubResource("GDScript_h1oa5")
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_8wt3o")
+startButton = NodePath("MarginContainer/MenuVBoxContainer/ButtonsVBoxContainer/StartButtonMarginContainer/StartButton")
+optionsButton = NodePath("MarginContainer/MenuVBoxContainer/ButtonsVBoxContainer/OptionsButtonMarginContainer2/OptionsButton")
+quitButton = NodePath("MarginContainer/MenuVBoxContainer/ButtonsVBoxContainer/QuitButtonMarginContainer3/QuitButton")
 
 [node name="BackgroundTextureRect" parent="." instance=ExtResource("1_5440m")]
-modulate = Color(0.437867, 0, 0.0951527, 1)
+modulate = Color(1, 1, 1, 1)
 layout_mode = 1
+expand_mode = 2
+stretch_mode = 6
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

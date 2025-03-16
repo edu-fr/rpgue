@@ -12,8 +12,21 @@ config_version=5
 
 config/name="Rpgue"
 run/main_scene="res://assets/scenes/main_scene.tscn"
+run/print_header=false
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Main="*res://assets/scripts/scenes/main_scene.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/resizable=false
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [dotnet]
 

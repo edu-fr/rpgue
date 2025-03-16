@@ -1,7 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b26x5w04r3k5m"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_oy5t6"]
-specular_color = Color(0, 0, 0, 1)
+[ext_resource type="Texture2D" uid="uid://cbo75gge2rtbe" path="res://assets/art/backgrounds/main_menu_background.png" id="1_hahn3"]
 
 [node name="BackgroundTextureRect" type="TextureRect"]
 modulate = Color(0.00162843, 0, 0.0926018, 1)
@@ -12,4 +11,4 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = SubResource("CanvasTexture_oy5t6")
+texture = ExtResource("1_hahn3")

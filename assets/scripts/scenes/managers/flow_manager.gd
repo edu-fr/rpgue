@@ -5,10 +5,19 @@ extends Node
 
 func boot_sequence() -> void:
 	print("Starting boot sequence")
-	_go_to_menu()
+	go_to_menu()
 
 	return
 
-func _go_to_menu() -> void:
+func go_to_menu() -> void:
 	print("Opening MainMenu")
-	_sceneManager.change_scene_2D(_sceneManager.Scene2DName.MAIN_MENU)
+	_sceneManager.change_scene(_sceneManager.SceneName.MAIN_MENU)
+
+	return
+
+
+func go_to_battle() -> void:
+	print("Opening Battle")
+	_sceneManager.change_scene(_sceneManager.SceneName.BATTLE)
+	
+	return

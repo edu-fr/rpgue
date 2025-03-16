@@ -15,22 +15,22 @@ flowManager = NodePath("Managers/FlowManager")
 [node name="GameManager" parent="Managers" instance=ExtResource("1_iw17g")]
 script = ExtResource("2_t26ap")
 
-[node name="SceneManager" parent="Managers" node_paths=PackedStringArray("SceneTree2D", "SceneTreeGUI") instance=ExtResource("2_q74jk")]
-SceneTree2D = NodePath("../../SceneTree/2D")
-SceneTreeGUI = NodePath("../../SceneTree/GUI")
+[node name="SceneManager" parent="Managers" node_paths=PackedStringArray("GameSceneTree") instance=ExtResource("2_q74jk")]
+GameSceneTree = NodePath("../../GameSceneTree")
 metadata/_edit_group_ = true
 
 [node name="FlowManager" parent="Managers" node_paths=PackedStringArray("_sceneManager") instance=ExtResource("3_od2kc")]
 _sceneManager = NodePath("../SceneManager")
 
-[node name="SceneTree" type="Node" parent="."]
-
-[node name="2D" type="Node2D" parent="SceneTree"]
-
-[node name="GUI" type="Control" parent="SceneTree"]
+[node name="GameSceneTree" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0

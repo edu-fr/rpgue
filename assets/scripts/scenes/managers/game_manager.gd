@@ -1,2 +1,2 @@
 class_name GameManager
-extends Control
+extends Node

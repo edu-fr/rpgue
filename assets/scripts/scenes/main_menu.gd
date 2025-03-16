@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 func _on_start_pressed() -> void:
-	print("start")
+	Main.flowManager.go_to_battle()
 	return
 
 
