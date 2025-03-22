@@ -124,7 +124,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 func _input_select_target(_event: InputEvent) -> void:
 	if (_event.is_action_pressed("ui_accept")):
 		var _selectedEnemiesIds: Array[int] = _get_current_targeted_enemies_ids()
-		var _buttonPressed: BUTTON = _currentButtonPressed
+		var _buttonPressed: BUTTON          = _currentButtonPressed
 		_cancel_enemy_selection()
 		playerTurn.emit(PlayerAction.new(_buttonPressedToPlayerActionType(_buttonPressed), _selectedEnemiesIds))
 
@@ -148,7 +148,7 @@ func _hover_first_enemy() -> void:
 
 
 func _get_current_targeted_enemies_ids() -> Array[int]:
-	var array: Array = _hoveredEnemies.map(func(enemyIndex: int): return _remainingEnemiesRef[enemyIndex].enemy_id)
+	var array: Array                  = _hoveredEnemies.map(func(enemyIndex: int) -> int: return _remainingEnemiesRef[enemyIndex].enemy_id)
 	var hoveredEnemiesIds: Array[int] = []
 	hoveredEnemiesIds.assign(array)
 
@@ -156,9 +156,9 @@ func _get_current_targeted_enemies_ids() -> Array[int]:
 
 
 func _hover_next_enemy() -> void:
-	var _last = _hoveredEnemies.back()
+	var _last: int = _hoveredEnemies.back()
 	_hoveredEnemies.remove_at(0)
-	var _newIndex = _last + 1 if _last < (_remainingEnemiesRef.size() - 1) else 0
+	var _newIndex: int = _last + 1 if _last < (_remainingEnemiesRef.size() - 1) else 0
 	_hoveredEnemies.append(_newIndex)
 
 	_on_hover_changed()
@@ -166,9 +166,9 @@ func _hover_next_enemy() -> void:
 
 
 func _hover_previous_enemy() -> void:
-	var _first = _hoveredEnemies.front()
+	var _first: int = _hoveredEnemies.front()
 	_hoveredEnemies.remove_at(_hoveredEnemies.size() - 1)
-	var _newIndex = _first - 1 if _first > 0 else (_remainingEnemiesRef.size() - 1)
+	var _newIndex: int = _first - 1 if _first > 0 else (_remainingEnemiesRef.size() - 1)
 	_hoveredEnemies.append(_newIndex)
 
 	_on_hover_changed()
@@ -177,7 +177,7 @@ func _hover_previous_enemy() -> void:
 
 func _hover_all() -> void:
 	_hoveredEnemies.clear()
-	for i in range(_remainingEnemiesRef.size()):
+	for i: int in range(_remainingEnemiesRef.size()):
 		_hoveredEnemies.append(i)
 	_on_hover_changed()
 
@@ -185,7 +185,7 @@ func _hover_all() -> void:
 
 
 func _on_hover_changed() -> void:
-	for i in _remainingEnemiesRef.size():
+	for i: int in _remainingEnemiesRef.size():
 		_remainingEnemiesRef[i].set_selected(_hoveredEnemies.find(i) != -1)
 	return
 

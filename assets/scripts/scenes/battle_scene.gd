@@ -14,7 +14,7 @@ var _playerReward: PlayerReward
 
 func _ready() -> void:
 	_setup_scene()
-	var battleResult = await _start_battle()
+	var battleResult: BATTLE_RESULT = await _start_battle()
 
 	if (battleResult == BATTLE_RESULT.WIN):
 		print("PLAYER WIN")
@@ -48,8 +48,8 @@ func _setup_UI() -> void:
 
 
 func _spawn_enemies(_quantity: int) -> void:
-	for i in _quantity:
-		var enemy: Node = preload(_enemyScenePath).instantiate()
+	for i: int in _quantity:
+		var enemy: Node                      = preload(_enemyScenePath).instantiate()
 		var enemyController: EnemyController = enemy
 		enemyController.init(i)
 
@@ -60,7 +60,7 @@ func _spawn_enemies(_quantity: int) -> void:
 
 
 func _get_remaining_enemies() -> Array[EnemyController]:
-	return _allEnemies.filter(func(enemy): return enemy.is_alive())
+	return _allEnemies.filter(func(enemy: EnemyController) -> bool: return enemy.is_alive())
 
 
 #endregion
@@ -68,7 +68,7 @@ func _get_remaining_enemies() -> Array[EnemyController]:
 
 func _start_battle() -> BATTLE_RESULT:
 	await _textBoxController.display_text("A wild enemy appears")
-	var battleResult = await _battle_turn_logic()
+	var battleResult: BATTLE_RESULT = await _battle_turn_logic()
 
 	return battleResult
 
@@ -91,7 +91,7 @@ func _wait_turn_owner_action(nextToPlay: TURN_OWNER) -> TURN_OWNER:
 
 	if (nextToPlay == TURN_OWNER.PLAYER):
 		print("== PLAYER TURN ==")
-		var playerAction = await _get_player_action()
+		var playerAction: PlayerAction = await _get_player_action()
 		_execute_player_action(playerAction)
 		_next_turn_owner = TURN_OWNER.ENEMIES
 		print("== FINISHING PLAYER TURN ==")
@@ -113,7 +113,7 @@ func _execute_player_action(playerAction: PlayerAction) -> void:
 			return
 
 		PlayerAction.ActionCategory.ATTACK:
-			for enemyId in playerAction._enemiesIds:
+			for enemyId: int in playerAction._enemiesIds:
 				var enemy: EnemyController = _get_remaining_enemy_by_id(enemyId)
 				if (!enemy.is_alive()):
 					continue
@@ -123,7 +123,7 @@ func _execute_player_action(playerAction: PlayerAction) -> void:
 			return
 
 		PlayerAction.ActionCategory.MAGIC:
-			for enemyId in playerAction._enemiesIds:
+			for enemyId: int in playerAction._enemiesIds:
 				var enemy: EnemyController = _get_remaining_enemy_by_id(enemyId)
 				if (!enemy.is_alive()):
 					continue
@@ -131,7 +131,7 @@ func _execute_player_action(playerAction: PlayerAction) -> void:
 				enemy.on_damage_received(_playerController.get_player_magic_damage())
 
 			return
-	
+
 		_:
 			push_error("Invalid player action category: " + str(playerAction._actionCategory))
 
@@ -141,7 +141,7 @@ func _execute_player_action(playerAction: PlayerAction) -> void:
 
 func _get_remaining_enemy_by_id(id: int) -> EnemyController:
 	var enemies: Array[EnemyController] = _get_remaining_enemies()
-	for enemy:EnemyController in enemies:
+	for enemy: EnemyController in enemies:
 		if (enemy.enemy_id == id):
 			return enemy
 
@@ -154,7 +154,7 @@ func _get_player_action() -> PlayerAction:
 
 
 func _execute_enemies_action() -> void:
-	for _enemy in _get_remaining_enemies():
+	for _enemy: EnemyController in _get_remaining_enemies():
 		var _enemyAction: EnemyAction = _enemy.act()
 		await _textBoxController.display_text(_create_enemy_action_text(_enemy, _enemyAction))
 		_execute_enemy_action(_enemy, _enemyAction)

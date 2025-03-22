@@ -1,13 +1,15 @@
 class_name FlowManager
 extends Node
 
-@export var _sceneManager : SceneManager
+@export var _sceneManager: SceneManager
+
 
 func boot_sequence() -> void:
 	print("Starting boot sequence")
 	go_to_menu()
 
 	return
+
 
 func go_to_menu() -> void:
 	print("Opening MainMenu")
@@ -19,5 +21,5 @@ func go_to_menu() -> void:
 func go_to_battle() -> void:
 	print("Opening Battle")
 	_sceneManager.change_scene(_sceneManager.SceneName.BATTLE)
-	
+
 	return

@@ -5,6 +5,7 @@ extends Control
 @export var optionsButton: Button
 @export var quitButton: Button
 
+
 func _ready() -> void:
 	startButton.pressed.connect(_on_start_pressed)
 	optionsButton.pressed.connect(_on_options_pressed)
@@ -14,7 +15,7 @@ func _ready() -> void:
 
 
 func _on_start_pressed() -> void:
-	Main.flowManager.go_to_battle()
+	GM.flowManager.go_to_battle()
 	return
 
 

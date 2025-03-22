@@ -1,11 +1,13 @@
 class_name MainScene
 extends Node
 
+static var instance: MainScene
+
 @export var flowManager: FlowManager
 
+
 func _ready() -> void:
-	if (flowManager == null):
-		return
+	GM.setup(self)
 
 	print("Game started")
 	flowManager.boot_sequence()

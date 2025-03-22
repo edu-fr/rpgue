@@ -4,10 +4,11 @@ extends Control
 @export var _healthBar: HealthBarController
 @export var _enemyImage: TextureRect
 
-var _enemyAttackPower : int
-var _enemyHealPower : int
-var enemy_id : int
-var rewardCoinsAmount : int
+var _enemyAttackPower: int
+var _enemyHealPower: int
+var enemy_id: int
+var rewardCoinsAmount: int
+
 
 func init(id: int) -> void:
 	_setup_health_bar(50)
@@ -22,8 +23,8 @@ func init(id: int) -> void:
 func act() -> EnemyAction:
 	_alive_assertion()
 
-	var rng = RandomNumberGenerator.new()
-	var value = rng.randi_range(1, 2)
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	var value: int                 = rng.randi_range(1, 2)
 
 	assert(value == 1 or value == 2)
 
@@ -95,6 +96,7 @@ func _healAction() -> EnemyAction:
 
 	return EnemyAction.new(EnemyAction.EnemyActionCategory.HEAL, _enemyHealPower)
 
+
 func _on_death() -> void:
 	# Death animation
 	_enemyImage.visible = false
@@ -102,5 +104,6 @@ func _on_death() -> void:
 
 	return
 
-func _alive_assertion():
+
+func _alive_assertion() -> void:
 	assert(is_alive(), "Dead enemies should't execute any action")
