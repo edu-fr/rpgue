@@ -17,9 +17,9 @@ func _ready() -> void:
 	var battleResult: BATTLE_RESULT = await _start_battle()
 
 	if (battleResult == BATTLE_RESULT.WIN):
-		print("PLAYER WIN")
+		GM.flowManager.open_upgrade_scene()
 	else:
-		print("LOST")
+		GM.flowManager.open_upgrade_scene()
 
 	return
 

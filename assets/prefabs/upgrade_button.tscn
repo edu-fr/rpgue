@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://dddh188mjrpky"]
+
+[ext_resource type="Script" path="res://assets/scripts/upgrade/upgrade_controller.gd" id="1_1acgl"]
+[ext_resource type="Theme" uid="uid://cgstlj5p1fke1" path="res://assets/config/button_themes/main_menu_button_theme.tres" id="1_jmjvx"]
+[ext_resource type="Theme" uid="uid://chrwvn8j4upf6" path="res://assets/config/button_themes/upgrade_menu_button_description_theme.tres" id="2_0swc7"]
+
+[node name="UpgradeButtonMarginContainer" type="MarginContainer" node_paths=PackedStringArray("button")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_1acgl")
+button = NodePath("UpgradeButton")
+
+[node name="UpgradeButton" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+
+[node name="ButtonVBoxContainer" type="VBoxContainer" parent="UpgradeButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleMarginContainer" type="MarginContainer" parent="UpgradeButton/ButtonVBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="TitleRichTextLabel" type="RichTextLabel" parent="UpgradeButton/ButtonVBoxContainer/TitleMarginContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme = ExtResource("1_jmjvx")
+text = "Upgrade title"
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="DescriptionMarginContainer" type="MarginContainer" parent="UpgradeButton/ButtonVBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="DescriptionRichTextLabel" type="RichTextLabel" parent="UpgradeButton/ButtonVBoxContainer/DescriptionMarginContainer"]
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_0swc7")
+text = "Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description Upgrade description "
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false

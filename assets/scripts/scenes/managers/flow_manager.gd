@@ -23,3 +23,7 @@ func go_to_battle() -> void:
 	_sceneManager.change_scene(_sceneManager.SceneName.BATTLE)
 
 	return
+
+func open_upgrade_scene() -> void:
+	print("Opening upgrade scene")
+	_sceneManager.change_scene(_sceneManager.SceneName.UPGRADE)

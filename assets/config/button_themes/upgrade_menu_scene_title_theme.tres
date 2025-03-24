@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bmyojn3mkgcsr"]
+
+[ext_resource type="StyleBox" uid="uid://dqlryv5motsq1" path="res://assets/config/button_themes/inner_button_styles/transparent.tres" id="1_hnj6p"]
+[ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="2_tqn8o"]
+
+[resource]
+default_font = ExtResource("2_tqn8o")
+default_font_size = 120
+Button/styles/normal = ExtResource("1_hnj6p")
