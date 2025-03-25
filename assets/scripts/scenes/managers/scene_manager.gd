@@ -11,7 +11,7 @@ func change_scene(sceneName: SceneName) -> void:
 	var _path: String = _get_scene_path(sceneName)
 	print("Changing to scene at: " + _path)
 	var _scene: PackedScene = load(_path)
-	var _sceneNode: Node    = _scene.instantiate()
+	var _sceneNode: Node = _scene.instantiate()
 	assert(_sceneNode != null, "Failed to load scene at: " + _path)
 
 	if (GameSceneTree.get_child_count() > 0):

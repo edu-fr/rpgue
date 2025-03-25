@@ -14,6 +14,9 @@ var _playerReward: PlayerReward
 
 func _ready() -> void:
 	_setup_scene()
+
+	Utils.set_key_action(KEY_F, GM.flowManager.open_upgrade_scene)
+
 	var battleResult: BATTLE_RESULT = await _start_battle()
 
 	if (battleResult == BATTLE_RESULT.WIN):
@@ -49,7 +52,7 @@ func _setup_UI() -> void:
 
 func _spawn_enemies(_quantity: int) -> void:
 	for i: int in _quantity:
-		var enemy: Node                      = preload(_enemyScenePath).instantiate()
+		var enemy: Node = preload(_enemyScenePath).instantiate()
 		var enemyController: EnemyController = enemy
 		enemyController.init(i)
 
@@ -77,7 +80,7 @@ func _start_battle() -> BATTLE_RESULT:
 
 func _battle_turn_logic() -> BATTLE_RESULT:
 	var nextToPlay: TURN_OWNER = TURN_OWNER.PLAYER
-	var battleDecided: bool    = false
+	var battleDecided: bool = false
 
 	while (!battleDecided):
 		nextToPlay = await _wait_turn_owner_action(nextToPlay)

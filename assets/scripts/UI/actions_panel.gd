@@ -124,7 +124,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 func _input_select_target(_event: InputEvent) -> void:
 	if (_event.is_action_pressed("ui_accept")):
 		var _selectedEnemiesIds: Array[int] = _get_current_targeted_enemies_ids()
-		var _buttonPressed: BUTTON          = _currentButtonPressed
+		var _buttonPressed: BUTTON = _currentButtonPressed
 		_cancel_enemy_selection()
 		playerTurn.emit(PlayerAction.new(_buttonPressedToPlayerActionType(_buttonPressed), _selectedEnemiesIds))
 
@@ -148,7 +148,7 @@ func _hover_first_enemy() -> void:
 
 
 func _get_current_targeted_enemies_ids() -> Array[int]:
-	var array: Array                  = _hoveredEnemies.map(func(enemyIndex: int) -> int: return _remainingEnemiesRef[enemyIndex].enemy_id)
+	var array: Array = _hoveredEnemies.map(func(enemyIndex: int) -> int: return _remainingEnemiesRef[enemyIndex].enemy_id)
 	var hoveredEnemiesIds: Array[int] = []
 	hoveredEnemiesIds.assign(array)
 

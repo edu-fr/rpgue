@@ -8,7 +8,7 @@ extends Control
 func init(_max: int, _current: int) -> void:
 	_progressBar.max_value = _max
 	_progressBar.min_value = 0
-	_progressBar.value = _current if _current >= 0 else _max 
+	_progressBar.value = _current if _current >= 0 else _max
 	update_label()
 
 	return

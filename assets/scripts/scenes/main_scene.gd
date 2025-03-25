@@ -16,3 +16,8 @@ func _ready() -> void:
 	flowManager.boot_sequence()
 
 	return
+
+
+## DEBUG
+func _process(_delta: float) -> void:
+	Utils._check_key_actions()

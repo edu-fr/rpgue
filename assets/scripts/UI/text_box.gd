@@ -1,18 +1,18 @@
 class_name TextBoxController
-
 extends Control
 
 @export var _textBox: MarginContainer
 @export var _textBoxLabel: Label
 
 var _displayingText: bool
-
 signal _textBoxClosed
+
 
 func setup() -> void:
 	_hide()
 
 	return
+
 
 func _gui_input(_event: InputEvent) -> void:
 	if (!_displayingText):
@@ -24,6 +24,7 @@ func _gui_input(_event: InputEvent) -> void:
 		_textBoxClosed.emit()
 
 	return
+
 
 func display_text(text: String) -> void:
 	_textBoxLabel.text = text

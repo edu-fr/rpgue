@@ -24,7 +24,7 @@ func act() -> EnemyAction:
 	_alive_assertion()
 
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-	var value: int                 = rng.randi_range(1, 2)
+	var value: int = rng.randi_range(1, 2)
 
 	assert(value == 1 or value == 2)
 

@@ -5,8 +5,8 @@ var flowManager: FlowManager
 var dataManager: DataManager
 
 
-func init(main_scene: MainScene) -> GlobalManager:
+func init(main_scene: MainScene) -> void:
 	flowManager = main_scene.flowManager
 	dataManager = main_scene.dataManager
 
-	return self
+	return
