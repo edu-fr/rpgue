@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcamwpl3diqoc"]
+[gd_scene load_steps=5 format=3 uid="uid://dcamwpl3diqoc"]
 
 [ext_resource type="Script" path="res://assets/scripts/scenes/main_scene.gd" id="1_bbunw"]
 [ext_resource type="PackedScene" uid="uid://csb8wg2y7ql82" path="res://assets/prefabs/managers/scene_manager.tscn" id="2_q74jk"]
 [ext_resource type="PackedScene" uid="uid://cdpdd6sxylx7h" path="res://assets/prefabs/managers/flow_manager.tscn" id="3_od2kc"]
+[ext_resource type="PackedScene" uid="uid://cfyquefr30paa" path="res://assets/prefabs/managers/data_manager.tscn" id="4_owqop"]
 
-[node name="MainScene" type="Node" node_paths=PackedStringArray("flowManager")]
+[node name="MainScene" type="Node" node_paths=PackedStringArray("flowManager", "dataManager")]
 script = ExtResource("1_bbunw")
 flowManager = NodePath("Managers/FlowManager")
+dataManager = NodePath("Managers/DataManager")
 
 [node name="Managers" type="Node" parent="."]
 
@@ -16,6 +18,8 @@ metadata/_edit_group_ = true
 
 [node name="FlowManager" parent="Managers" node_paths=PackedStringArray("_sceneManager") instance=ExtResource("3_od2kc")]
 _sceneManager = NodePath("../SceneManager")
+
+[node name="DataManager" parent="Managers" instance=ExtResource("4_owqop")]
 
 [node name="GameSceneTree" type="Control" parent="."]
 layout_mode = 3

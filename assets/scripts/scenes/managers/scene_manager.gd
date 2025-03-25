@@ -24,7 +24,7 @@ func change_scene(sceneName: SceneName) -> void:
 
 
 func _get_scene_path(sceneName: SceneName) -> String:
-	var nameStr: String    = SceneName.keys()[sceneName]
+	var nameStr: String = SceneName.keys()[sceneName]
 	var _scenePath: String = _BASE_SCENE_PATH + nameStr.to_lower() + ".tscn"
 
 	return _scenePath

@@ -1,4 +1,4 @@
-class_name MainMenu
+class_name MainMenuScene
 extends Control
 
 @export var startButton: Button
@@ -25,5 +25,5 @@ func _on_options_pressed() -> void:
 
 
 func _on_quit_pressed() -> void:
-	print("quit")
+	get_tree().quit()
 	return
