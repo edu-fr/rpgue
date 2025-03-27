@@ -4,16 +4,16 @@ extends Node
 @export var _sceneManager: SceneManager
 
 
-func boot_sequence() -> void:
-	print("Starting boot sequence")
-	go_to_menu()
+func go_to_main_menu() -> void:
+	print("Going to MainMenu")
+	_sceneManager.change_scene(_sceneManager.SceneName.MAIN_MENU)
 
 	return
 
 
-func go_to_menu() -> void:
-	print("Opening MainMenu")
-	_sceneManager.change_scene(_sceneManager.SceneName.MAIN_MENU)
+func go_to_run_map() -> void:
+	print("Opening run map scene")
+	_sceneManager.change_scene(_sceneManager.SceneName.MAP)
 
 	return
 

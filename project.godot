@@ -19,7 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GM="*res://assets/scripts/scenes/managers/global_manager.gd"
-Util="*res://assets/scripts/utils.gd"
+Util="*res://assets/scripts/utils/utils.gd"
 
 [debug]
 

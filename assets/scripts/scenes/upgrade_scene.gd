@@ -25,3 +25,11 @@ func _setup_buttons() -> void:
 	upgradeController3.init(upgrades[2])
 
 	return
+
+	
+func _on_upgrade_clicked(upgradeData: UpgradeData) -> void:
+	GM.runManager.currentRunDataRef.playerInstance.add_upgrade(upgradeData)
+
+	GM.flowManager.go_to_run_map()
+
+	return

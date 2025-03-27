@@ -105,10 +105,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_8qo7m")
-_statusPanel = NodePath("PlayerStatusPanel")
-_actionsPanel = NodePath("PlayerActionsPanel")
 _playerInitialMaxHealth = 100
 _playerInitialCurrentHp = 100
+_statusPanel = NodePath("PlayerStatusPanel")
+_actionsPanel = NodePath("PlayerActionsPanel")
 
 [node name="PlayerStatusPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("_playerNameLabel", "_healthBarController")]
 z_index = 1

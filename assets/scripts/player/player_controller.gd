@@ -3,12 +3,11 @@ extends Control
 
 @export var _statusPanel: PlayerStatusPanelController
 @export var _actionsPanel: ActionsPanelController
-@export var _playerInitialMaxHealth: int
-@export var _playerInitialCurrentHp: int
 
 
 func init() -> void:
-	_statusPanel.init(_playerInitialMaxHealth, _playerInitialCurrentHp)
+	var player = GM.runManager.currentRunDataRef.playerInstance
+	_statusPanel.init(player.maxHp, player.currentHp)
 	_actionsPanel.init()
 
 	return

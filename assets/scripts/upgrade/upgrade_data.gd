@@ -1,10 +1,11 @@
 class_name UpgradeData
 
-enum Category {    BUFF, PENALTY }
+enum Category { BUFF, PENALTY }
 enum AppliesTo { NONE, ATTACK, MAGIC, DEFENSE, STATS }
 enum DamageType { NONE, VARIABLE, ABSOLUTE }
-enum ActivationWindow {    NONE, STANDARD, POST_HIT, PERMANENT }
+enum ActivationWindow { NONE, STANDARD, POST_HIT, PERMANENT }
 enum ValueType { NONE, VARIABLE, ABSOLUTE }
+var id: int
 var name: String
 var description: String
 var categories: Array[Category]
@@ -24,8 +25,10 @@ var requirementsToAppear: String
 var restrictions: String
 
 
-static func from_json(data: Dictionary) -> UpgradeData:
+static func create_from_json(data: Dictionary) -> UpgradeData:
 	var upgrade: UpgradeData = UpgradeData.new()
+
+	upgrade.id = data.get("ID", -1)
 
 	upgrade.name = data.get("NAME", "")
 	assert(upgrade.name != "", "Can't import upgrade without name")

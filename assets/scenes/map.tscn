@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://bt3jow4sj3p05"]
+
+[ext_resource type="Script" path="res://assets/scripts/scenes/map_scene.gd" id="1_55u0w"]
+[ext_resource type="PackedScene" uid="uid://b26x5w04r3k5m" path="res://assets/prefabs/background_texture_rect.tscn" id="2_7rsy6"]
+[ext_resource type="Texture2D" uid="uid://ds0ir1gtlaefs" path="res://assets/art/backgrounds/map_backgorund.png" id="3_1fx55"]
+[ext_resource type="PackedScene" uid="uid://bhtiee7hbk73m" path="res://assets/prefabs/level_button.tscn" id="4_dlg3u"]
+
+[node name="MapScene" type="Control" node_paths=PackedStringArray("_stageButtons")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_55u0w")
+_stageButtons = [NodePath("LevelsControl/LevelButton"), NodePath("LevelsControl/LevelButton2"), NodePath("LevelsControl/LevelButton3"), NodePath("LevelsControl/LevelButton4")]
+
+[node name="BackgroundTextureRect" parent="." instance=ExtResource("2_7rsy6")]
+modulate = Color(1, 1, 1, 1)
+layout_mode = 1
+texture = ExtResource("3_1fx55")
+expand_mode = 2
+stretch_mode = 6
+
+[node name="LevelsControl" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LevelButton" parent="LevelsControl" instance=ExtResource("4_dlg3u")]
+layout_mode = 0
+offset_left = 306.0
+offset_top = 469.0
+offset_right = 406.0
+offset_bottom = 539.0
+
+[node name="LevelButton2" parent="LevelsControl" instance=ExtResource("4_dlg3u")]
+layout_mode = 0
+offset_left = 684.0
+offset_top = 783.0
+offset_right = 784.0
+offset_bottom = 853.0
+text = "Level 2"
+
+[node name="LevelButton3" parent="LevelsControl" instance=ExtResource("4_dlg3u")]
+layout_mode = 0
+offset_left = 1007.0
+offset_top = 540.0
+offset_right = 1107.0
+offset_bottom = 610.0
+text = "Level 3"
+
+[node name="LevelButton4" parent="LevelsControl" instance=ExtResource("4_dlg3u")]
+layout_mode = 0
+offset_left = 1398.0
+offset_top = 428.0
+offset_right = 1498.0
+offset_bottom = 498.0
+text = "Level 4"

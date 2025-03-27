@@ -4,13 +4,14 @@ extends Node
 const _BASE_SCENE_PATH: String = "res://assets/scenes/"
 @export var GameSceneTree: Control
 # MUST MATCH TSCN FILE NAME
-enum SceneName { NONE, MAIN_MENU, BATTLE, UPGRADE }
+enum SceneName { NONE, MAIN_MENU, BATTLE, UPGRADE, MAP }
 
 
 func change_scene(sceneName: SceneName) -> void:
 	var _path: String = _get_scene_path(sceneName)
 	print("Changing to scene at: " + _path)
 	var _scene: PackedScene = load(_path)
+	assert(_scene != null, "Scene doesn't exists at path: " + _path)
 	var _sceneNode: Node = _scene.instantiate()
 	assert(_sceneNode != null, "Failed to load scene at: " + _path)
 

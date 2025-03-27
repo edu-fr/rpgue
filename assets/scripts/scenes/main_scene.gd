@@ -5,15 +5,24 @@ static var instance: MainScene
 
 @export var flowManager: FlowManager
 @export var dataManager: DataManager
+@export var runManager: RunManager
 
 
 func _ready() -> void:
+	_boot()
+
+	flowManager.go_to_main_menu()
+	return
+
+
+func _boot() -> void:
+	print("Boot started")
+
 	GM.init(self)
-
 	dataManager.init()
+	runManager.init()
 
-	print("Game started")
-	flowManager.boot_sequence()
+	print("Boot finished")
 
 	return
 

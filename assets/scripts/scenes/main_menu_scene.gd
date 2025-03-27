@@ -15,15 +15,18 @@ func _ready() -> void:
 
 
 func _on_start_pressed() -> void:
-	GM.flowManager.go_to_battle()
+	GM.flowManager.go_to_run_map()
+
 	return
 
 
 func _on_options_pressed() -> void:
 	print("options")
+
 	return
 
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
 	return
