@@ -1,6 +1,7 @@
 {
   "Upgrades": {
     "1": {
+      "PRIVATE NAME": "ignition_whetstone",
       "NAME": "Ignition Whetstone",
       "DESCRIPTION": "Attacks apply BURN",
       "CATEGORY": "BUFF",
@@ -20,6 +21,7 @@
       "RESTRICTIONS": ""
     },
     "2": {
+      "PRIVATE NAME": "tidal_training",
       "NAME": "Tidal Training",
       "DESCRIPTION": "Attacks SPLASH on other enemies",
       "CATEGORY": "BUFF",
@@ -39,6 +41,7 @@
       "RESTRICTIONS": ""
     },
     "3": {
+      "PRIVATE NAME": "frost_tome",
       "NAME": "Frost Tome",
       "DESCRIPTION": "Speels MAY FREEZE the enemies",
       "CATEGORY": "BUFF",
@@ -58,6 +61,7 @@
       "RESTRICTIONS": ""
     },
     "4": {
+      "PRIVATE NAME": "electric_scroll",
       "NAME": "Electric Scroll",
       "DESCRIPTION": "Enemies take electric DAMAGE after being hit by a spell",
       "CATEGORY": "BUFF",
@@ -77,6 +81,7 @@
       "RESTRICTIONS": ""
     },
     "5": {
+      "PRIVATE NAME": "titanium_plate",
       "NAME": "Titanium Plate",
       "DESCRIPTION": "Doubles your shielding ability",
       "CATEGORY": "BUFF",
@@ -96,6 +101,7 @@
       "RESTRICTIONS": ""
     },
     "6": {
+      "PRIVATE NAME": "sticky_spikes",
       "NAME": "Sticky Spikes",
       "DESCRIPTION": "When blocking, reflect damage to the enemy according to its move damage",
       "CATEGORY": "BUFF",
@@ -115,6 +121,7 @@
       "RESTRICTIONS": ""
     },
     "7": {
+      "PRIVATE NAME": "satanic_bible",
       "NAME": "Satanic Bible",
       "DESCRIPTION": "Doubles your DAMAGE, but halves your MAX HP",
       "CATEGORY": "BUFF, PENALTY",

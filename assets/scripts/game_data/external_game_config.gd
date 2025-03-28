@@ -1,6 +1,6 @@
 class_name ExternalGameConfig
 
-var _upgradesRawConfig: Dictionary = {}  # Dictionary<String, Upgrade>
+var _upgradesRawConfig: Dictionary[String, UpgradeData] = {}  # Dictionary<String, Upgrade>
 var _monstersRawConfig: Dictionary = {}  # Dictionary<String, Upgrade>
 
 
@@ -20,7 +20,7 @@ static func create_from_json(json_data: Dictionary) -> ExternalGameConfig:
 	return config
 
 
-func get_upgrades_data() -> Dictionary:
+func get_upgrades_data() -> Dictionary[String, UpgradeData]:
 	return _upgradesRawConfig.duplicate()
 
 

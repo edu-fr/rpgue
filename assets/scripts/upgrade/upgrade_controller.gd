@@ -8,24 +8,18 @@ extends Control
 var upgradeData: UpgradeData
 
 
-func init(upgrade_data: UpgradeData) -> void:
+func init(upgrade_data: UpgradeData, onUpgradeClicked: Callable) -> void:
 	upgradeData = upgrade_data
-	_setupButton()
+	_setupButton(onUpgradeClicked)
 
 	return
 
 
-func _setupButton() -> void:
+func _setupButton(onUpgradeClicked: Callable) -> void:
 	assert(upgradeData != null, "Can't setup buttons without setting the upgrade data")
 
 	titleText.text = upgradeData.name
 	descriptionText.text = upgradeData.description
-	button.pressed.connect(onClick)
-
-	return
-
-
-func onClick() -> void:
-	print("Clicked")
+	button.pressed.connect(onUpgradeClicked.bind(upgradeData))
 
 	return

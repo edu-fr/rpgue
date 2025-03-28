@@ -5,7 +5,7 @@ extends Control
 @export var _label: Label
 
 
-func init(_max: int, _current: int) -> void:
+func init(_max: float, _current: float) -> void:
 	_progressBar.max_value = _max
 	_progressBar.min_value = 0
 	_progressBar.value = _current if _current >= 0 else _max
@@ -14,18 +14,18 @@ func init(_max: int, _current: int) -> void:
 	return
 
 
-func get_current_health() -> int:
+func get_current_health() -> float:
 	return int(_progressBar.value)
 
 
-func take_damage(_damageValue: int) -> void:
+func take_damage(_damageValue: float) -> void:
 	_progressBar.value -= _damageValue
 	update_label()
 
 	return
 
 
-func heal(_healValue: int) -> void:
+func heal(_healValue: float) -> void:
 	_progressBar.value += _healValue
 	update_label()
 

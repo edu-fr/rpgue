@@ -6,7 +6,7 @@ extends Control
 
 
 func init() -> void:
-	var player = GM.runManager.currentRunDataRef.playerInstance
+	var player: PlayerInstance = GM.runManager.currentRunDataRef.playerInstance
 	_statusPanel.init(player.maxHp, player.currentHp)
 	_actionsPanel.init()
 
