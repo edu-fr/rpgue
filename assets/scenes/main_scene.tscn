@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dcamwpl3diqoc"]
 
-[ext_resource type="Script" path="res://assets/scripts/scenes/main_scene.gd" id="1_bbunw"]
+[ext_resource type="Script" uid="uid://ck0o7ytvbtkt5" path="res://assets/scripts/scenes/main_scene.gd" id="1_bbunw"]
 [ext_resource type="PackedScene" uid="uid://csb8wg2y7ql82" path="res://assets/prefabs/managers/scene_manager.tscn" id="2_q74jk"]
 [ext_resource type="PackedScene" uid="uid://cdpdd6sxylx7h" path="res://assets/prefabs/managers/flow_manager.tscn" id="3_od2kc"]
 [ext_resource type="PackedScene" uid="uid://cfyquefr30paa" path="res://assets/prefabs/managers/data_manager.tscn" id="4_owqop"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://e433ooeivcwr"]
 
-[ext_resource type="Script" path="res://assets/scripts/scenes/managers/run_manager.gd" id="1_3a74y"]
+[ext_resource type="Script" uid="uid://ba4dkivbhe88v" path="res://assets/scripts/scenes/managers/run_manager.gd" id="1_3a74y"]
 
 [node name="RunManager" type="Node"]
 script = ExtResource("1_3a74y")

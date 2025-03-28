@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://de4cdpppk0lf4"]
 
-[ext_resource type="Script" path="res://assets/scripts/scenes/upgrade_scene.gd" id="1_8e1t4"]
+[ext_resource type="Script" uid="uid://dhrhpj7fe6v26" path="res://assets/scripts/scenes/upgrade_scene.gd" id="1_8e1t4"]
 [ext_resource type="PackedScene" uid="uid://b26x5w04r3k5m" path="res://assets/prefabs/background_texture_rect.tscn" id="1_lbi6r"]
 [ext_resource type="Texture2D" uid="uid://cwmm70xh5e8jp" path="res://assets/art/backgrounds/upgrade_background.jpg" id="2_rumqp"]
 [ext_resource type="PackedScene" uid="uid://c41jk74pfw21h" path="res://assets/prefabs/overlay_color_rect.tscn" id="3_f1v28"]

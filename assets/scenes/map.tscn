@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bt3jow4sj3p05"]
 
-[ext_resource type="Script" path="res://assets/scripts/scenes/map_scene.gd" id="1_55u0w"]
+[ext_resource type="Script" uid="uid://c3p6nhe5na51b" path="res://assets/scripts/scenes/map_scene.gd" id="1_55u0w"]
 [ext_resource type="PackedScene" uid="uid://b26x5w04r3k5m" path="res://assets/prefabs/background_texture_rect.tscn" id="2_7rsy6"]
 [ext_resource type="Texture2D" uid="uid://ds0ir1gtlaefs" path="res://assets/art/backgrounds/map_backgorund.png" id="3_1fx55"]
 [ext_resource type="PackedScene" uid="uid://bhtiee7hbk73m" path="res://assets/prefabs/level_button.tscn" id="4_dlg3u"]
