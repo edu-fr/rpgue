@@ -28,6 +28,16 @@ func save_current_data_to_save_file() -> void:
 	return
 
 
+func erase_run_data() -> void:
+	if (!FileAccess.file_exists(_SAVE_DATA_PATH)):
+		print("Can't erase run data. Save file not found")
+		return
+
+	update_run_data(RunData.new())
+
+	return
+
+
 func update_run_data(runData: RunData) -> void:
 	print("Updating run data...")
 	_loadedSaveData.set_run_data(runData)
