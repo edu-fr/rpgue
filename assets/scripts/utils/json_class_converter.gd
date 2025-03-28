@@ -1,7 +1,9 @@
 class_name JsonClassConverter
 
+@warning_ignore_start("untyped_declaration", "unsafe_call_argument", "unsafe_cast", "unsafe_method_access")
 # Flag to control whether to save nested resources as separate .tres files 
 static var save_temp_resources_tres: bool = false
+
 
 ## Checks if the provided class is valid (not null)
 static func _check_cast_class(castClass: GDScript) -> bool:
@@ -10,10 +12,12 @@ static func _check_cast_class(castClass: GDScript) -> bool:
 		return false
 	return true
 
+
 ## Checks if the directory for the given file path exists, creating it if necessary.
 static func check_dir(file_path: String) -> void:
 	if !DirAccess.dir_exists_absolute(file_path.get_base_dir()):
 		DirAccess.make_dir_absolute(file_path.get_base_dir())
+
 
 #region Json to Class
 	
@@ -35,6 +39,7 @@ static func json_file_to_dict(file_path: String, security_key: String = "") -> D
 			return parsed_results
 	return {}
 
+
 ## Loads a JSON file and converts its contents into a Godot class instance.
 ## Uses the provided GDScript (castClass) as a template for the class.
 static func json_file_to_class(castClass: GDScript, file_path: String, security_key: String = "") -> Object:
@@ -45,6 +50,7 @@ static func json_file_to_class(castClass: GDScript, file_path: String, security_
 	if parsed_results == null:
 		return castClass.new()
 	return json_to_class(castClass, parsed_results)
+
 
 ## Converts a JSON string into a Godot class instance.
 static func json_string_to_class(castClass: GDScript, json_string: String) -> Object:
@@ -57,6 +63,7 @@ static func json_string_to_class(castClass: GDScript, json_string: String) -> Ob
 		return json_to_class(castClass, json.data)
 	return castClass.new()
 
+
 ## Converts a JSON dictionary into a Godot class instance.
 ## This is the core deserialization function.
 static func json_to_class(castClass: GDScript, json: Dictionary) -> Object:
@@ -67,7 +74,7 @@ static func json_to_class(castClass: GDScript, json: Dictionary) -> Object:
 	# Iterate through each key-value pair in the JSON dictionary
 	for key: String in json.keys():
 		var value: Variant = json[key]
-		
+
 		# Special handling for Vector types (stored as strings in JSON)
 		if type_string(typeof(value)) == "String" and value.begins_with("Vector"):
 			value = str_to_var(value)
@@ -108,15 +115,15 @@ static func json_to_class(castClass: GDScript, json: Dictionary) -> Object:
 							# Recursively deserialize nested objects
 							_class.set(property.name, json_to_class(script_type, value))
 
-				# Case 2: Property is an Array
+					# Case 2: Property is an Array
 				elif property_value is Array:
 					var arr_script: GDScript = null
 					if property_value.is_typed() and property_value.get_typed_script():
 						arr_script = load(property_value.get_typed_script().get_path())
-						# Recursively convert the JSON array to a Godot array
+					# Recursively convert the JSON array to a Godot array
 					var arrayTemp: Array = convert_json_to_array(value, arr_script)
-						
-						# Handle Vector arrays (convert string elements back to Vectors)
+
+					# Handle Vector arrays (convert string elements back to Vectors)
 					if type_string(property_value.get_typed_builtin()).begins_with("Vector"):
 						for obj_array: Variant in arrayTemp:
 							_class.get(property.name).append(str_to_var(type_string(property_value.get_typed_builtin()) + obj_array))
@@ -146,13 +153,15 @@ static func json_to_class(castClass: GDScript, json: Dictionary) -> Object:
 	# Return the fully deserialized class instance
 	return _class
 
+
 ## Helper function to find a GDScript by its class name.
 static func get_gdscript(hint_class: String) -> GDScript:
 	for className: Dictionary in ProjectSettings.get_global_class_list():
 		if className.class == hint_class:
 			return load(className.path)
 	return null
-	
+
+
 ## Helper function to recursively convert JSON arrays to Godot arrays.
 static func convert_json_to_array(json_array: Array, cast_class: GDScript = null) -> Array:
 	var godot_array: Array = []
@@ -167,6 +176,7 @@ static func convert_json_to_array(json_array: Array, cast_class: GDScript = null
 		else:
 			godot_array.append(element)
 	return godot_array
+
 
 ## Helper function to recursively convert JSON dictionaries to Godot arrays.
 static func convert_json_to_dictionary(propert_value: Dictionary, json_dictionary: Dictionary) -> void:
@@ -191,7 +201,7 @@ static func convert_json_to_dictionary(propert_value: Dictionary, json_dictionar
 			key_obj = str_to_var(json_key)
 			if !key_obj: # if null revert to json key
 				key_obj = json_key
-		
+
 		if propert_value.get_typed_value_script() and typeof(json_value) == TYPE_STRING:
 			var data = JSON.parse_string(json_value)
 			if data:
@@ -213,6 +223,7 @@ static func convert_json_to_dictionary(propert_value: Dictionary, json_dictionar
 				value_obj = json_value
 		propert_value.set(key_obj, value_obj)
 
+
 #endregion
 
 #region Class to Json
@@ -232,9 +243,11 @@ static func store_json_file(file_path: String, data: Dictionary, security_key: S
 	file.close()
 	return true
 
+
 ## Converts a Godot class instance into a JSON string.
 static func class_to_json_string(_class: Object, save_temp_res: bool = false) -> String:
 	return JSON.stringify(class_to_json(_class, save_temp_res))
+
 
 ## Converts a Godot class instance into a JSON dictionary.
 ## This is the core serialization function.
@@ -306,6 +319,7 @@ static func class_to_json(_class: Object, save_temp_res: bool = false, inheritan
 					dictionary[property.name] = property_value
 	return dictionary
 
+
 ## Extracts the main path from a resource path (removes node path if present).
 static func get_main_tres_path(path: String) -> String:
 	var path_parts: PackedStringArray = path.split("::", true, 1)
@@ -313,6 +327,7 @@ static func get_main_tres_path(path: String) -> String:
 		return path_parts[0]
 	else:
 		return path
+
 
 ## Extracts the node path from a resource path.
 static func get_node_tres_path(path: String) -> String:
@@ -330,6 +345,7 @@ static func convert_array_to_json(array: Array) -> Array:
 		json_array.append(refcounted_to_value(element, array.is_typed()))
 	return json_array
 
+
 ## Helper function to recursively convert Godot dictionaries to JSON dictionaries.
 static func convert_dictionary_to_json(dictionary: Dictionary) -> Dictionary:
 	var json_dictionary: Dictionary = {}
@@ -338,15 +354,17 @@ static func convert_dictionary_to_json(dictionary: Dictionary) -> Dictionary:
 		var parsed_value: Variant = refcounted_to_value(dictionary.get(key), dictionary.is_typed())
 		json_dictionary.set(parsed_key, parsed_value)
 	return json_dictionary
+
+
 #endregion
 
 ## Helper function to turn a refCount into parsable value.
 static func refcounted_to_value(variant_value: Variant, is_typed: bool = false) -> Variant:
-		if variant_value is Object:
-			return class_to_json(variant_value, save_temp_resources_tres, !is_typed)
-		elif variant_value is Array:
-			return convert_array_to_json(variant_value)
-		elif variant_value is Dictionary:
-			return convert_dictionary_to_json(variant_value)
-		else:
-			return variant_value
+	if variant_value is Object:
+		return class_to_json(variant_value, save_temp_resources_tres, !is_typed)
+	elif variant_value is Array:
+		return convert_array_to_json(variant_value)
+	elif variant_value is Dictionary:
+		return convert_dictionary_to_json(variant_value)
+	else:
+		return variant_value
