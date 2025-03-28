@@ -54,6 +54,14 @@ func update_in_game_data(inGameData: InGameData) -> void:
 	return
 
 
+func get_upgrades_data() -> Dictionary:
+	return _externalGameConfig.get_upgrades_data()
+
+
+func get_monsters_data() -> Dictionary:
+	return _externalGameConfig.get_monsters_data()
+
+
 func _load_data_from_save_file() -> bool:
 	if (FileAccess.file_exists(_SAVE_DATA_PATH)):
 		var loadedData: SaveData = JsonClassConverter.json_file_to_class(SaveData, _SAVE_DATA_PATH)

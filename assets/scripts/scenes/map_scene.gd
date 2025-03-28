@@ -3,7 +3,7 @@ extends Control
 
 @export var _stageButtons: Array[Button]
 
-func _start() -> void:
+func _ready() -> void:
 	if (GM.runManager.currentRunDataRef == null):
 		GM.runManager.create_new_run()
 
@@ -13,7 +13,6 @@ func _start() -> void:
 		_stageButtons[i].disabled = i != runDataRef.levelsBeated
 		if (i == runDataRef.levelsBeated):
 			_stageButtons[i].pressed.connect(_on_stage_clicked)
-
 
 	return
 
