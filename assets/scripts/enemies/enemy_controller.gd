@@ -37,7 +37,7 @@ func act() -> EnemyAction:
 	return null
 
 
-func on_damage_received(damage: int) -> void:
+func receive_player_attack(damage: int) -> void:
 	_alive_assertion()
 
 	_take_damage(damage)

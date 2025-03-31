@@ -121,7 +121,7 @@ func _execute_player_action(playerAction: PlayerAction) -> void:
 				if (!enemy.is_alive()):
 					continue
 
-				enemy.on_damage_received(_playerController.get_player_attack_damage())
+				enemy.receive_player_attack(10)
 
 			return
 
@@ -131,7 +131,7 @@ func _execute_player_action(playerAction: PlayerAction) -> void:
 				if (!enemy.is_alive()):
 					continue
 
-				enemy.on_damage_received(_playerController.get_player_magic_damage())
+				enemy.receive_player_attack(10)
 
 			return
 

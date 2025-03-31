@@ -7,7 +7,7 @@ extends Control
 
 func init() -> void:
 	var player: PlayerInstance = GM.runManager.currentRunDataRef.playerInstance
-	_statusPanel.init(player.maxHp, player.currentHp)
+	_statusPanel.init(player._baseMaxHp, player._baseCurrentHp)
 	_actionsPanel.init()
 
 	return
@@ -27,14 +27,6 @@ func is_player_alive() -> bool:
 
 func defend() -> void:
 	print("Defend")
-
-
-func get_player_attack_damage() -> int:
-	return 10
-
-
-func get_player_magic_damage() -> int:
-	return 15
 
 
 func damage_player(damage: int) -> bool:
