@@ -4,7 +4,7 @@ extends Control
 enum BATTLE_RESULT {NONE, WIN, LOSE}
 enum TURN_OWNER {NONE, PLAYER, ENEMIES}
 const _enemyScenePath: String = "E:/Godot/Projects/rpgue/assets/prefabs/enemy.tscn"
-@export var _playerController: PlayerController
+@export var _playerController: PlayerBattleUIController
 @export var _enemiesHBoxContainer: HBoxContainer
 @export var _textBoxController: TextBoxController
 
@@ -125,7 +125,7 @@ func _execute_player_action(playerAction: PlayerAction) -> void:
 
 			return
 
-		PlayerAction.ActionCategory.MAGIC:
+		PlayerAction.ActionCategory.TECH:
 			for enemyId: int in playerAction._enemiesIds:
 				var enemy: EnemyController = _get_remaining_enemy_by_id(enemyId)
 				if (!enemy.is_alive()):

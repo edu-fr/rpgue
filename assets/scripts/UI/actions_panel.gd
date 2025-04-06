@@ -1,10 +1,9 @@
 class_name ActionsPanelController
 extends Control
 
-enum BUTTON {NONE, ATTACK, MAGIC, DEFEND}
+enum BUTTON {NONE, ATTACK, TECH}
 @export var _attackButton: Button
-@export var _magicButton: Button
-@export var _defendButton: Button
+@export var _techButton: Button
 
 var _remainingEnemiesRef: Array[EnemyController]
 signal playerTurn(turnResult: PlayerAction)
@@ -12,12 +11,10 @@ signal playerTurn(turnResult: PlayerAction)
 
 func init() -> void:
 	_attackButton.pressed.connect(_on_attack_button_pressed)
-	_magicButton.pressed.connect(_on_magic_button_pressed)
-	_defendButton.pressed.connect(_on_defend_button_pressed)
+	_techButton.pressed.connect(_on_tech_button_pressed)
 
 	_attackButton.focus_mode = Control.FOCUS_ALL
-	_magicButton.focus_mode = Control.FOCUS_ALL
-	_defendButton.focus_mode = Control.FOCUS_ALL
+	_techButton.focus_mode = Control.FOCUS_ALL
 
 	_set_buttons_enabled(false) # buttons start disabled
 
@@ -38,35 +35,27 @@ func start_turn(remainingEnemies: Array[EnemyController]) -> PlayerAction:
 #region Button Selection
 
 func _on_attack_button_pressed() -> void:
-	_open_enemy_selection(BUTTON.ATTACK)
+	_open_move_selection(BUTTON.ATTACK)
 
 	return
 
 
-func _on_magic_button_pressed() -> void:
-	_open_enemy_selection(BUTTON.MAGIC, true)
-
-	return
-
-
-func _on_defend_button_pressed() -> void:
-	playerTurn.emit(PlayerAction.new(_buttonPressedToPlayerActionType(BUTTON.DEFEND), []))
+func _on_tech_button_pressed() -> void:
+	_open_move_selection(BUTTON.TECH)
 
 	return
 
 
 func _set_buttons_enabled(value: bool) -> void:
 	print("Setting buttons enabled: " + str(value))
-	_defendButton.disabled = !value
 	_attackButton.disabled = !value
-	_magicButton.disabled = !value
+	_techButton.disabled = !value
 
 	if (value == true):
 		_attackButton.grab_focus()
 	else:
 		_attackButton.release_focus()
-		_magicButton.release_focus()
-		_defendButton.release_focus()
+		_techButton.release_focus()
 
 	return
 
@@ -75,10 +64,8 @@ func _buttonPressedToPlayerActionType(button: BUTTON) -> PlayerAction.ActionCate
 	match button:
 		BUTTON.ATTACK:
 			return PlayerAction.ActionCategory.ATTACK
-		BUTTON.MAGIC:
-			return PlayerAction.ActionCategory.MAGIC
-		BUTTON.DEFEND:
-			return PlayerAction.ActionCategory.DEFEND
+		BUTTON.TECH:
+			return PlayerAction.ActionCategory.TECH
 		BUTTON.NONE:
 			push_error("Retornando acao de player sem ter botao escolhido definido")
 			return PlayerAction.ActionCategory.NONE
@@ -88,6 +75,29 @@ func _buttonPressedToPlayerActionType(button: BUTTON) -> PlayerAction.ActionCate
 	return PlayerAction.ActionCategory.NONE
 
 #endregion
+
+func _open_move_selection(buttonType: BUTTON) -> void:
+	match buttonType:
+		BUTTON.ATTACK:
+			_show_player_attacks()
+			pass
+		BUTTON.TECH:
+			_show_player_techs()
+			pass
+		BUTTON.NONE:
+			push_error("Trying to open attack selection with the wrong button type")
+
+	return
+
+
+func _show_player_attacks() -> void:
+	print("Showing player attacks")
+	return
+
+
+func _show_player_techs() -> void:
+	print("Showing player techs")
+	return
 
 
 #region Enemy Targeting
@@ -115,7 +125,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 	if (!_selecting):
 		return
 
-	if (_currentButtonPressed == BUTTON.ATTACK or _currentButtonPressed == BUTTON.MAGIC):
+	if (_currentButtonPressed == BUTTON.ATTACK or _currentButtonPressed == BUTTON.TECH):
 		_input_select_target(_event)
 
 	return

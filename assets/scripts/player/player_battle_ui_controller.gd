@@ -1,14 +1,18 @@
-class_name PlayerController
+class_name PlayerBattleUIController
 extends Control
 
 @export var _statusPanel: PlayerStatusPanelController
 @export var _actionsPanel: ActionsPanelController
+@export var _attackMovesPanel: BattleMovesPanel
+@export var _techMovesPanel: BattleMovesPanel
 
 
 func init() -> void:
 	var player: PlayerInstance = GM.runManager.currentRunDataRef.playerInstance
 	_statusPanel.init(player._baseMaxHp, player._baseCurrentHp)
 	_actionsPanel.init()
+	_attackMovesPanel.init()
+	_techMovesPanel.init()
 
 	return
 

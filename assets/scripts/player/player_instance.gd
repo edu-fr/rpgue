@@ -7,7 +7,7 @@ extends Resource
 @export var _baseCurrentHp: float
 @export var _baseDamage: float
 ##
-@export var _upgrades: Dictionary
+@export var _moves: Dictionary
 
 
 func _init() -> void:
@@ -15,28 +15,6 @@ func _init() -> void:
 	_baseMaxHp = _baseData.baseHealth
 	_baseCurrentHp = _baseMaxHp
 	_baseDamage = _baseData.baseDamage
-	_upgrades = Dictionary()
-
-	return
-
-
-func add_upgrade(upgradeData: UpgradeData) -> void:
-	assert(!_upgrades.has(upgradeData.privateName), "Player already have the upgrade " + upgradeData.privateName)
-	_upgrades[upgradeData.privateName] = upgradeData
-
-	print("Upgrade " + upgradeData.name + " added")
-	_print_upgrade_list()
-
-	return
-
-
-func _print_upgrade_list() -> void:
-	var string: String
-	string = "Player current upgrades: "
-	for upgrade: UpgradeData in _upgrades.values():
-		string += " " + upgrade.name + "\n"
-
-	print(string)
 
 	return
 
@@ -67,3 +45,17 @@ func get_current_hp() -> float:
 	# Apply current HP upgrades and stats changes
 
 	return finalCurrentHP
+
+
+func get_attack_moves() -> Array[BattleMove]:
+	var moves: Array[BattleMove] = []
+	## getting attack moves array
+
+	return moves
+
+
+func get_tech_moves() -> Array[BattleMove]:
+	var moves: Array[BattleMove] = []
+	## getting tech move array
+
+	return moves

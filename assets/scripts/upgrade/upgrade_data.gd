@@ -1,140 +1,113 @@
 class_name UpgradeData
+extends Resource
 
-enum Category { ATTACK, TECH, UPGRADE }
-enum MoveType { SLASH, FIRE, WATER, DEFENSIVE, STATUS, STATS, GRASS }
-enum Target { CURRENT, ADJACENT, ALL_ENEMIES, SELF, ADJACENT_ALLIES }
+enum UpgradeType { STATS, FIRE, STATUS, DEFENSIVE, GRASS }
+enum Target { SELF, ALLY, ENEMY }
 enum ValueType { NONE, VARIABLE, ABSOLUTE }
-enum ActivationWindow { NONE, STANDARD, POST_HIT }
-enum Requirement { WARRIOR, MAGE, OMNIBUFF }
+enum StatType { NONE, SKILLS, MAX_HP, CURRENT_HP }
+enum RequirementsToAppear { NONE, WARRIOR, MAGE, OMNIBUFF }
+
 var privateName: String
 var name: String
 var description: String
-var category: Category
-var moveTypes: Array[MoveType]
-var baseDamage: float
-var baseBlock: float
+var upgradeTypes: Array[UpgradeType]
 var targets: Array[Target]
-var statsCondition: String
 var activationChance: float
-var activationWindow: ActivationWindow
-var statsToIncrease: String
+var additionalDamageType: String
+var additionalDamageValue: float
+var statsToIncrease: StatType
 var valueTypeToIncrease: ValueType
 var valueToIncrease: float
-var statsToDecrease: String
+var statsToDecrease: StatType
 var valueTypeToDecrease: ValueType
 var valueToDecrease: float
-var requirements: Array[Requirement]
+var requirements: Array[RequirementsToAppear]
 var restrictions: String
 var pool: int
 
 
 static func create_from_json(data: Dictionary) -> UpgradeData:
-	var upgrade := UpgradeData.new()
+	var upgrade = UpgradeData.new()
 
-	# Validação de campos obrigatórios
 	upgrade.privateName = data.get("PRIVATE NAME", "")
-	assert(upgrade.privateName != "", "Missing PRIVATE NAME in upgrade data")
-
 	upgrade.name = data.get("NAME", "")
-	assert(upgrade.name != "", "Missing NAME in upgrade data")
-
 	upgrade.description = data.get("DESCRIPTION", "")
-	assert(upgrade.description != "", "Missing DESCRIPTION in upgrade data")
 
-	upgrade.category = _parse_category(data.get("CATEGORY", ""))
-	upgrade.moveTypes = _parse_move_types(data.get("TYPE(S)", ""))
+	upgrade.upgradeTypes = _parse_upgrade_types(data.get("TYPE(S)", ""))
 	upgrade.targets = _parse_targets(data.get("TARGETS", ""))
-	upgrade.requirements = _parse_requirements(data.get("REQUIREMENTS TO APPEAR", ""))
-
-	upgrade.baseDamage = _parse_numeric(data.get("BASE DAMAGE", 0.0))
-	upgrade.baseBlock = _parse_numeric(data.get("BASE BLOCK", 0.0))
-	upgrade.activationChance = _parse_numeric(data.get("ACTIVATION CHANCE", 0.0))
-	upgrade.valueToIncrease = _parse_numeric(data.get("VALUE TO INCREASE", 0.0))
-	upgrade.valueToDecrease = _parse_numeric(data.get("VALUE TO DECREASE", 0.0))
-
-	upgrade.statsCondition = data.get("STATS CONDITION", "")
-	upgrade.activationWindow = _parse_activation_window(data.get("ACTIVATION WINDOW", ""))
+	upgrade.statsToIncrease = _parse_stat_type(data.get("STATS TO INCREASE", "NONE"))
 	upgrade.valueTypeToIncrease = _parse_value_type(data.get("VALUE TYPE TO INCREASE", ""))
+	upgrade.statsToDecrease = _parse_stat_type(data.get("STATS TO DECREASE", "NONE"))
 	upgrade.valueTypeToDecrease = _parse_value_type(data.get("VALUE TYPE TO DECREASE", ""))
-	upgrade.statsToIncrease = data.get("STATS TO INCREASE", "")
-	upgrade.statsToDecrease = data.get("STATS TO DECREASE", "")
-	upgrade.restrictions = data.get("RESTRICTIONS", "")
+
+	upgrade.activationChance = data.get("ACTIVATION CHANCE", 0.0)
+	upgrade.additionalDamageValue = data.get("ADDITIONAL DAMAGE VALUE", 0.0)
+	upgrade.valueToIncrease = data.get("VALUE TO INCREASE", 0.0)
+	upgrade.valueToDecrease = data.get("VALUE TO DECREASE", 0.0)
+	upgrade.requirements = _parse_requirement_to_appear(data.get("REQUIREMENTS TO APPEAR", ""))
+	upgrade.restrictions = data.get("RESTRICTIONS", "NONE")
 	upgrade.pool = data.get("POOL", 1)
 
 	return upgrade
 
 
-#region Parsing Methods
-static func _parse_category(raw: String) -> Category:
-	match raw.strip_edges().to_upper():
-		"ATTACK": return Category.ATTACK
-		"TECH": return Category.TECH
-		"UPGRADE": return Category.UPGRADE
-		_:
-			push_error("Categoria inválida: ", raw)
+# UpgradeData.gd
+static func _parse_upgrade_types(raw: Variant) -> Array[UpgradeType]:
+	var rawAsStr: String = str(raw)
+	var types: Array[UpgradeType] = []
 
-			return Category.ATTACK
-
-
-static func _parse_move_types(raw: String) -> Array[MoveType]:
-	var types: Array[MoveType] = []
-	for type: String in raw.split(",", false):
-		match type.strip_edges().to_upper():
-			"SLASH": types.append(MoveType.SLASH)
-			"FIRE": types.append(MoveType.FIRE)
-			"WATER": types.append(MoveType.WATER)
-			"DEFENSIVE": types.append(MoveType.DEFENSIVE)
-			"STATUS": types.append(MoveType.STATUS)
-			"STATS": types.append(MoveType.STATS)
-			"GRASS": types.append(MoveType.GRASS)
+	for typeStr in rawAsStr.split(",", false):
+		var normalized = typeStr.strip_edges().to_upper()
+		match normalized:
+			"STATS": types.append(UpgradeType.STATS)
+			"FIRE": types.append(UpgradeType.FIRE)
+			"STATUS": types.append(UpgradeType.STATUS)
+			"DEFENSIVE": types.append(UpgradeType.DEFENSIVE)
+			"GRASS": types.append(UpgradeType.GRASS)
 
 	return types
 
 
-static func _parse_targets(raw: String) -> Array[Target]:
+static func _parse_stat_type(raw: Variant) -> StatType:
+	var rawAsStr: String = str(raw).replace(" ", "_").strip_edges().to_upper()
+	match rawAsStr:
+		"SKILLS": return StatType.SKILLS
+		"MAX_HP": return StatType.MAX_HP
+		"CURRENT_HP": return StatType.CURRENT_HP
+		_: return StatType.NONE
+
+
+static func _parse_targets(raw: Variant) -> Array[Target]:
+	var rawAsStr: String = str(raw)
 	var targets: Array[Target] = []
-	for target: String in raw.split(",", false):
-		match target.strip_edges().replace(" ", "_").to_upper():
-			"CURRENT": targets.append(Target.CURRENT)
-			"ADJACENT": targets.append(Target.ADJACENT)
-			"ALL_ENEMIES": targets.append(Target.ALL_ENEMIES)
+
+	for targetStr in rawAsStr.split(",", false):
+		var normalized = targetStr.strip_edges().replace(" ", "_").to_upper()
+		match normalized:
 			"SELF": targets.append(Target.SELF)
-			"ADJACENT_ALLIES": targets.append(Target.ADJACENT_ALLIES)
+			"ALLY": targets.append(Target.ALLY)
+			"ENEMY": targets.append(Target.ENEMY)
 
 	return targets
 
 
-static func _parse_requirements(raw: String) -> Array[Requirement]:
-	var reqs: Array[Requirement] = []
-	for req: String in raw.split(",", false):
-		match req.strip_edges().to_upper():
-			"WARRIOR": reqs.append(Requirement.WARRIOR)
-			"MAGE": reqs.append(Requirement.MAGE)
-			"OMNIBUFF": reqs.append(Requirement.OMNIBUFF)
-
-	return reqs
-
-
-static func _parse_activation_window(raw: String) -> ActivationWindow:
-	var normalized: String = raw.replace("-", "_").strip_edges().to_upper()
-	match normalized:
-		"STANDARD": return ActivationWindow.STANDARD
-		"POST_HIT": return ActivationWindow.POST_HIT
-
-		_: return ActivationWindow.NONE
-
-
-static func _parse_value_type(raw: String) -> ValueType:
-	match raw.strip_edges().to_upper():
+static func _parse_value_type(raw: Variant) -> ValueType:
+	var rawAsStr: String = str(raw).strip_edges().to_upper()
+	match rawAsStr:
 		"VARIABLE": return ValueType.VARIABLE
 		"ABSOLUTE": return ValueType.ABSOLUTE
-
 		_: return ValueType.NONE
 
 
-static func _parse_numeric(value: Variant) -> float:
-	if typeof(value) == TYPE_STRING:
-		if value == "-": return 0.0
-		if value.is_valid_float(): return value.to_float()
+static func _parse_requirement_to_appear(raw: Variant) -> Array[RequirementsToAppear]:
+	var _rawAsStr: String = str(raw).strip_edges().to_upper()
+	var _requirements: Array[RequirementsToAppear] = []
+	for _req: String in _rawAsStr:
+		match _rawAsStr:
+			"NONE": _requirements.append(RequirementsToAppear.NONE)
+			"WARRIOR": _requirements.append(RequirementsToAppear.WARRIOR)
+			"MAGE": _requirements.append(RequirementsToAppear.MAGE)
+			"OMNIBUFF": _requirements.append(RequirementsToAppear.OMNIBUFF)
+			_: _requirements.append(RequirementsToAppear.NONE)
 
-	return float(value)
+	return _requirements

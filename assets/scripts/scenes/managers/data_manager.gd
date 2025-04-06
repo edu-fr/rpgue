@@ -67,11 +67,11 @@ func _load_data_from_save_file() -> bool:
 		var loadedData: SaveData = JsonClassConverter.json_file_to_class(SaveData, _SAVE_DATA_PATH)
 		if (loadedData != null):
 			_loadedSaveData = loadedData
-			print("Data successfully loaded!")
+			print("Local data successfully loaded!")
 
 			return true
 		else:
-			print("Data failed to load!")
+			print("Local data failed to load!")
 
 			return false
 
