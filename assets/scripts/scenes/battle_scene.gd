@@ -8,14 +8,16 @@ const _enemyScenePath: String = "E:/Godot/Projects/rpgue/assets/prefabs/enemy.ts
 @export var _enemiesHBoxContainer: HBoxContainer
 @export var _textBoxController: TextBoxController
 
+var _stateMachine: BattleStateMachine
+
 var _allEnemies: Array[EnemyController]
+
 var _playerReward: PlayerReward
 
 
 func _ready() -> void:
-	_setup_scene()
-
-	Utils.set_key_action(KEY_F, GM.flowManager.open_upgrade_scene)
+	_stateMachine = BattleStateMachine.new(self)
+	_stateMachine.push_state(BattleSetupState) ## PAREI AQUI
 
 	var battleResult: BATTLE_RESULT = await _start_battle()
 
@@ -29,7 +31,7 @@ func _ready() -> void:
 
 #region Battle Setup
 
-func _setup_scene() -> void:
+func setup_scene() -> void:
 	_spawn_enemies(4)
 	_setup_player()
 	_setup_UI()
@@ -110,11 +112,6 @@ func _wait_turn_owner_action(nextToPlay: TURN_OWNER) -> TURN_OWNER:
 
 func _execute_player_action(playerAction: PlayerAction) -> void:
 	match (playerAction._actionCategory):
-		PlayerAction.ActionCategory.DEFEND:
-			_playerController.defend()
-
-			return
-
 		PlayerAction.ActionCategory.ATTACK:
 			for enemyId: int in playerAction._enemiesIds:
 				var enemy: EnemyController = _get_remaining_enemy_by_id(enemyId)

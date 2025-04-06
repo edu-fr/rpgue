@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bytpyetjp5qo5"]
+[gd_scene load_steps=22 format=3 uid="uid://bytpyetjp5qo5"]
 
 [ext_resource type="Script" uid="uid://d175r3802fi5t" path="res://assets/scripts/scenes/battle_scene.gd" id="1_7hjph"]
 [ext_resource type="Script" uid="uid://cohgkgfx73n8t" path="res://assets/scripts/player/player_status_panel_controller.gd" id="2_4yxab"]
@@ -11,6 +11,7 @@
 [ext_resource type="LabelSettings" uid="uid://bk76npxe4v3st" path="res://assets/config/label_settings/text_box_label_settings.tres" id="5_kmdtb"]
 [ext_resource type="Script" uid="uid://cunyru3l2w6ye" path="res://assets/scripts/UI/text_box.gd" id="5_x10or"]
 [ext_resource type="Script" uid="uid://cm85vrnyj38lf" path="res://assets/scripts/UI/health_progress_bar.gd" id="6_jo7rj"]
+[ext_resource type="Script" uid="uid://rncy7c0ss217" path="res://assets/scripts/UI/battle_moves_panel.gd" id="10_pbdns"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4mow"]
 bg_color = Color(0, 0, 0, 0.168627)
@@ -97,7 +98,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PlayerController" type="Control" parent="."]
+[node name="PlayerController" type="Control" parent="." node_paths=PackedStringArray("_statusPanel", "_actionsPanel", "_attackMovesPanel", "_techMovesPanel")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -105,6 +106,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_pbdns")
+_statusPanel = NodePath("PlayerStatusPanel")
+_actionsPanel = NodePath("PlayerActionsPanel")
+_attackMovesPanel = NodePath("PlayerAttackMovesPanel")
+_techMovesPanel = NodePath("PlayerTechMovesPanel")
 
 [node name="PlayerStatusPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("_playerNameLabel", "_healthBarController")]
 z_index = 1
@@ -242,7 +247,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
 theme_override_styles/normal = ExtResource("4_lsh0s")
 text = "Magic"
 
-[node name="PlayerAttackMovesPanel" type="Panel" parent="PlayerController"]
+[node name="PlayerAttackMovesPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("BattleMoveSlots")]
 z_index = 1
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 1
@@ -250,6 +255,8 @@ anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vd2et")
+script = ExtResource("10_pbdns")
+BattleMoveSlots = [NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer/AttackButton"), NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer2/AttackButton2"), NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer3/AttackButton3"), NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer4/AttackButton4")]
 
 [node name="AttackActionsHBoxContainer" type="VBoxContainer" parent="PlayerController/PlayerAttackMovesPanel"]
 layout_mode = 1
@@ -349,7 +356,7 @@ theme_override_styles/normal = ExtResource("4_lsh0s")
 keep_pressed_outside = true
 text = "ATTACK 4"
 
-[node name="PlayerTechMovesPanel" type="Panel" parent="PlayerController"]
+[node name="PlayerTechMovesPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("BattleMoveSlots")]
 z_index = 1
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 1
@@ -360,6 +367,8 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vd2et")
+script = ExtResource("10_pbdns")
+BattleMoveSlots = [NodePath("TechActionsHBoxContainer/TechButtonMarginContainer/TechButton"), NodePath("TechActionsHBoxContainer/TechButtonMarginContainer2/TechButton2"), NodePath("TechActionsHBoxContainer/TechButtonMarginContainer3/TechButton3"), NodePath("TechActionsHBoxContainer/TechButtonMarginContainer4/TechButton4")]
 
 [node name="TechActionsHBoxContainer" type="VBoxContainer" parent="PlayerController/PlayerTechMovesPanel"]
 layout_mode = 1

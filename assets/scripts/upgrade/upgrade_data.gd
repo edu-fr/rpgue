@@ -27,7 +27,7 @@ var pool: int
 
 
 static func create_from_json(data: Dictionary) -> UpgradeData:
-	var upgrade = UpgradeData.new()
+	var upgrade: UpgradeData = UpgradeData.new()
 
 	upgrade.privateName = data.get("PRIVATE NAME", "")
 	upgrade.name = data.get("NAME", "")
@@ -53,24 +53,24 @@ static func create_from_json(data: Dictionary) -> UpgradeData:
 
 # UpgradeData.gd
 static func _parse_upgrade_types(raw: Variant) -> Array[UpgradeType]:
-	var rawAsStr: String = str(raw)
-	var types: Array[UpgradeType] = []
+	var _rawAsStr: String = str(raw)
+	var _types: Array[UpgradeType] = []
 
-	for typeStr in rawAsStr.split(",", false):
-		var normalized = typeStr.strip_edges().to_upper()
-		match normalized:
-			"STATS": types.append(UpgradeType.STATS)
-			"FIRE": types.append(UpgradeType.FIRE)
-			"STATUS": types.append(UpgradeType.STATUS)
-			"DEFENSIVE": types.append(UpgradeType.DEFENSIVE)
-			"GRASS": types.append(UpgradeType.GRASS)
+	for _typeStr: String in _rawAsStr.split(",", false):
+		var _normalized: String = _typeStr.strip_edges().to_upper()
+		match _normalized:
+			"STATS": _types.append(UpgradeType.STATS)
+			"FIRE": _types.append(UpgradeType.FIRE)
+			"STATUS": _types.append(UpgradeType.STATUS)
+			"DEFENSIVE": _types.append(UpgradeType.DEFENSIVE)
+			"GRASS": _types.append(UpgradeType.GRASS)
 
-	return types
+	return _types
 
 
 static func _parse_stat_type(raw: Variant) -> StatType:
-	var rawAsStr: String = str(raw).replace(" ", "_").strip_edges().to_upper()
-	match rawAsStr:
+	var _rawAsStr: String = str(raw).replace(" ", "_").strip_edges().to_upper()
+	match _rawAsStr:
 		"SKILLS": return StatType.SKILLS
 		"MAX_HP": return StatType.MAX_HP
 		"CURRENT_HP": return StatType.CURRENT_HP
@@ -78,22 +78,22 @@ static func _parse_stat_type(raw: Variant) -> StatType:
 
 
 static func _parse_targets(raw: Variant) -> Array[Target]:
-	var rawAsStr: String = str(raw)
-	var targets: Array[Target] = []
+	var _rawAsStr: String = str(raw)
+	var _targets: Array[Target] = []
 
-	for targetStr in rawAsStr.split(",", false):
-		var normalized = targetStr.strip_edges().replace(" ", "_").to_upper()
-		match normalized:
-			"SELF": targets.append(Target.SELF)
-			"ALLY": targets.append(Target.ALLY)
-			"ENEMY": targets.append(Target.ENEMY)
+	for _targetStr: String in _rawAsStr.split(",", false):
+		var _normalized: String = _targetStr.strip_edges().replace(" ", "_").to_upper()
+		match _normalized:
+			"SELF": _targets.append(Target.SELF)
+			"ALLY": _targets.append(Target.ALLY)
+			"ENEMY": _targets.append(Target.ENEMY)
 
-	return targets
+	return _targets
 
 
 static func _parse_value_type(raw: Variant) -> ValueType:
-	var rawAsStr: String = str(raw).strip_edges().to_upper()
-	match rawAsStr:
+	var _rawAsStr: String = str(raw).strip_edges().to_upper()
+	match _rawAsStr:
 		"VARIABLE": return ValueType.VARIABLE
 		"ABSOLUTE": return ValueType.ABSOLUTE
 		_: return ValueType.NONE

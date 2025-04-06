@@ -1,10 +1,13 @@
 class_name BattleMove
 
-enum MOVE_TYPE { ATTACK, TECH }
-var _moveType: MOVE_TYPE
+var _publicName: String
+var _description: String
+var _moveType: MoveData.MoveType
 
 
-func _init(moveType: MOVE_TYPE) -> void:
-	_moveType = moveType
+func _init(moveData: MoveData, player: PlayerInstance) -> void:
+	_publicName = moveData.name
+	_description = moveData.description
+	_moveType = moveData.MoveType
 
 	return

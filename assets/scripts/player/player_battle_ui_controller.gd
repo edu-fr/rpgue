@@ -11,8 +11,27 @@ func init() -> void:
 	var player: PlayerInstance = GM.runManager.currentRunDataRef.playerInstance
 	_statusPanel.init(player._baseMaxHp, player._baseCurrentHp)
 	_actionsPanel.init()
-	_attackMovesPanel.init()
-	_techMovesPanel.init()
+
+	## MOCK
+	var _moves: Dictionary[String, MoveData] = GM.dataManager._externalGameConfig._movesRawConfig
+	var _attackMoves: Array[MoveData] = _moves.values().filter(\
+		func(x: MoveData) -> Array[MoveData]: return x.Category.values()[x.category] == MoveData.Category.ATTACK)
+	var _techMoves: Array[MoveData] = _moves.values().filter(\
+		func(x: MoveData) -> Array[MoveData]: return x.Category.values()[x.category] == MoveData.Category.TECH)	
+
+	var _playerBattleAttackMoves: Array[BattleMove]
+	var _playerBattleTechMoves: Array[BattleMove]
+	
+	for i: int in 4:
+		var _chooseAttackMove: MoveData = _attackMoves.get(i)
+		_playerBattleAttackMoves.append(BattleMove.new(_chooseAttackMove, player))
+
+		var _chooseTechMove: MoveData = _techMoves.get(i)
+		_playerBattleTechMoves.append(BattleMove.new(_chooseTechMove, player))
+	##
+
+	_attackMovesPanel._init(_playerBattleAttackMoves)
+	_techMovesPanel._init(_playerBattleTechMoves)
 
 	return
 
@@ -27,10 +46,6 @@ func get_player_health() -> int:
 
 func is_player_alive() -> bool:
 	return _statusPanel.get_player_current_health() > 0
-
-
-func defend() -> void:
-	print("Defend")
 
 
 func damage_player(damage: int) -> bool:
