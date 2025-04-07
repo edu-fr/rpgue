@@ -6,22 +6,22 @@ extends Control
 @export var _attackMovesPanel: BattleMovesPanel
 @export var _techMovesPanel: BattleMovesPanel
 
-
-func init() -> void:
+func init(stateMachine: BattleStateMachine) -> void:
 	var player: PlayerInstance = GM.runManager.currentRunDataRef.playerInstance
+
 	_statusPanel.init(player._baseMaxHp, player._baseCurrentHp)
-	_actionsPanel.init()
+	_actionsPanel.init(stateMachine)
 
 	## MOCK
 	var _moves: Dictionary[String, MoveData] = GM.dataManager._externalGameConfig._movesRawConfig
 	var _attackMoves: Array[MoveData] = _moves.values().filter(\
-		func(x: MoveData) -> Array[MoveData]: return x.Category.values()[x.category] == MoveData.Category.ATTACK)
+		func(x: MoveData) -> bool: return x.category == MoveData.Category.ATTACK)
 	var _techMoves: Array[MoveData] = _moves.values().filter(\
-		func(x: MoveData) -> Array[MoveData]: return x.Category.values()[x.category] == MoveData.Category.TECH)	
+		func(x: MoveData) -> bool: return x.category == MoveData.Category.TECH)
 
 	var _playerBattleAttackMoves: Array[BattleMove]
 	var _playerBattleTechMoves: Array[BattleMove]
-	
+
 	for i: int in 4:
 		var _chooseAttackMove: MoveData = _attackMoves.get(i)
 		_playerBattleAttackMoves.append(BattleMove.new(_chooseAttackMove, player))
@@ -30,8 +30,8 @@ func init() -> void:
 		_playerBattleTechMoves.append(BattleMove.new(_chooseTechMove, player))
 	##
 
-	_attackMovesPanel._init(_playerBattleAttackMoves)
-	_techMovesPanel._init(_playerBattleTechMoves)
+	_attackMovesPanel.init(_playerBattleAttackMoves)
+	_techMovesPanel.init(_playerBattleTechMoves)
 
 	return
 

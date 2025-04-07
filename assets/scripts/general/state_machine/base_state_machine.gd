@@ -15,7 +15,7 @@ func _init() -> void:
 	return
 
 
-func push_state(state) -> void:
+func push_state(state: Object) -> void:
 	_assert_state_type(state)
 
 	if (currentState != null):
@@ -47,7 +47,7 @@ func swap_state(state: Object) -> void:
 	return
 
 
-func _assert_state_type(state) -> void:
+func _assert_state_type(state: Object) -> void:
 	assert(state is BaseState, "Must be a subclass from State")
 
 	return

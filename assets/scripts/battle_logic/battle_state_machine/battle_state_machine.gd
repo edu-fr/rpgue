@@ -1,6 +1,8 @@
-class_name BattleStateMachine extends BaseStateMachine
+class_name BattleStateMachine
+extends BaseStateMachine
 
 var battleScene: BattleScene
+
 
 func _init(scene: BattleScene) -> void:
 	super() # Super() initialize the stack
@@ -8,7 +10,6 @@ func _init(scene: BattleScene) -> void:
 	battleScene = scene
 
 	return
-
 
 
 func on_attack_clicked() -> void:

@@ -9,15 +9,13 @@ const _enemyScenePath: String = "E:/Godot/Projects/rpgue/assets/prefabs/enemy.ts
 @export var _textBoxController: TextBoxController
 
 var _stateMachine: BattleStateMachine
-
 var _allEnemies: Array[EnemyController]
-
 var _playerReward: PlayerReward
 
 
 func _ready() -> void:
 	_stateMachine = BattleStateMachine.new(self)
-	_stateMachine.push_state(BattleSetupState) ## PAREI AQUI
+	_stateMachine.push_state(BattleSetupState.new(_stateMachine)) ## PAREI AQUI
 
 	var battleResult: BATTLE_RESULT = await _start_battle()
 
@@ -40,7 +38,7 @@ func setup_scene() -> void:
 
 
 func _setup_player() -> void:
-	_playerController.init()
+	_playerController.init(_stateMachine)
 	_playerReward = PlayerReward.new()
 
 	return

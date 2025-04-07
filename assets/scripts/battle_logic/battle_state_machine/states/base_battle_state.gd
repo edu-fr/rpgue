@@ -1,5 +1,5 @@
-class_name BaseBattleState extends BaseState
-
+class_name BaseBattleState
+extends BaseState
 
 var stateMachine: BattleStateMachine
 

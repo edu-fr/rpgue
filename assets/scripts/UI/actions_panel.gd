@@ -8,8 +8,12 @@ enum BUTTON {NONE, ATTACK, TECH}
 var _remainingEnemiesRef: Array[EnemyController]
 signal playerTurn(turnResult: PlayerAction)
 
+var _stateMachine: BattleStateMachine
 
-func init() -> void:
+
+func init(battleStateMachine: BattleStateMachine) -> void:
+	_stateMachine = battleStateMachine
+
 	_attackButton.pressed.connect(_on_attack_button_pressed)
 	_techButton.pressed.connect(_on_tech_button_pressed)
 
@@ -35,13 +39,13 @@ func start_turn(remainingEnemies: Array[EnemyController]) -> PlayerAction:
 #region Button Selection
 
 func _on_attack_button_pressed() -> void:
-	_open_move_selection(BUTTON.ATTACK)
+	_stateMachine.on_attack_clicked()
 
 	return
 
 
 func _on_tech_button_pressed() -> void:
-	_open_move_selection(BUTTON.TECH)
+	_stateMachine.on_tech_clicked()
 
 	return
 
