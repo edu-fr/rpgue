@@ -3,6 +3,7 @@ extends Control
 
 @export var BattleMoveSlots: Array[Button]
 
+
 func init(movesInfo: Array[BattleMove]) -> void:
 	assert(movesInfo.size() <= 4, "Can't create more than 4 move buttons")
 
@@ -11,7 +12,20 @@ func init(movesInfo: Array[BattleMove]) -> void:
 			BattleMoveSlots[i].set_visible(false)
 			continue
 
-		BattleMoveSlots[i].text = "Move " + str(i)
+		BattleMoveSlots[i].text = movesInfo[i]._publicName
 
+	return
+
+
+func set_buttons_enabled(value: bool) -> void:
+	print("Setting moves buttons enabled: " + str(value))
+	for button: Button in BattleMoveSlots:
+		button.disabled = !value
+
+	if (value == true):
+		BattleMoveSlots[0].grab_focus()
+	else:
+		for button: Button in BattleMoveSlots:
+			button.release_focus()
 
 	return

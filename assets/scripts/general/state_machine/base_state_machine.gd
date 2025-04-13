@@ -15,13 +15,13 @@ func _init() -> void:
 	return
 
 
-func push_state(state: Object) -> void:
-	_assert_state_type(state)
+func push_state(newState: Object) -> void:
+	_assert_state_type(newState)
 
 	if (currentState != null):
 		currentState.on_state_end()
 
-	stateStack.push(state)
+	stateStack.push(newState)
 	currentState.on_state_start()
 
 	return
@@ -36,12 +36,23 @@ func pop_state() -> void:
 	return
 
 
-func swap_state(state: Object) -> void:
-	_assert_state_type(state)
+func swap_state(newState: Object) -> void:
+	_assert_state_type(newState)
 
 	currentState.on_state_end()
 	stateStack.pop()
-	stateStack.push(state)
+	stateStack.push(newState)
+	currentState.on_state_start()
+
+	return
+
+
+func pop_stack(newBaseState: Object) -> void:
+	_assert_state_type(newBaseState)
+
+	currentState.on_state_end()
+	stateStack.clear()
+	stateStack.push(newBaseState)
 	currentState.on_state_start()
 
 	return

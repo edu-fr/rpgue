@@ -3,6 +3,6 @@ extends BaseBattleState
 
 func on_state_start() -> void:
 	stateMachine.battleScene.setup_scene()
-	stateMachine.swap_state(IdlePlayerBattleState.new(stateMachine))
+	stateMachine.swap_state(PlayerIdleBattleState.new(stateMachine))
 
 	return

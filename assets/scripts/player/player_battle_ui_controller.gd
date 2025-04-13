@@ -6,6 +6,7 @@ extends Control
 @export var _attackMovesPanel: BattleMovesPanel
 @export var _techMovesPanel: BattleMovesPanel
 
+
 func init(stateMachine: BattleStateMachine) -> void:
 	var player: PlayerInstance = GM.runManager.currentRunDataRef.playerInstance
 
@@ -14,26 +15,34 @@ func init(stateMachine: BattleStateMachine) -> void:
 
 	## MOCK
 	var _moves: Dictionary[String, MoveData] = GM.dataManager._externalGameConfig._movesRawConfig
-	var _attackMoves: Array[MoveData] = _moves.values().filter(\
-		func(x: MoveData) -> bool: return x.category == MoveData.Category.ATTACK)
-	var _techMoves: Array[MoveData] = _moves.values().filter(\
-		func(x: MoveData) -> bool: return x.category == MoveData.Category.TECH)
 
-	var _playerBattleAttackMoves: Array[BattleMove]
-	var _playerBattleTechMoves: Array[BattleMove]
+var _attackMoves: Array[MoveData] = _moves.values().filter(\
+	func(x: MoveData) -> bool: return x.category == MoveData.Category.ATTACK)
 
-	for i: int in 4:
+var _techMoves: Array[MoveData] = _moves.values().filter(\
+	func(x: MoveData) -> bool: return x.category == MoveData.Category.TECH)
+
+var _playerBattleAttackMoves: Array[BattleMove]
+
+var _playerBattleTechMoves: Array[BattleMove]
+
+for
+
+i: int in 4:
 		var _chooseAttackMove: MoveData = _attackMoves.get(i)
-		_playerBattleAttackMoves.append(BattleMove.new(_chooseAttackMove, player))
+_playerBattleAttackMoves.append(BattleMove.new(_chooseAttackMove, player))
 
-		var _chooseTechMove: MoveData = _techMoves.get(i)
-		_playerBattleTechMoves.append(BattleMove.new(_chooseTechMove, player))
-	##
+var _chooseTechMove: MoveData = _techMoves.get(i)
+_playerBattleTechMoves.append(BattleMove.new(_chooseTechMove, player))
+##
 
-	_attackMovesPanel.init(_playerBattleAttackMoves)
-	_techMovesPanel.init(_playerBattleTechMoves)
+_attackMovesPanel.init(_playerBattleAttackMoves)
+_techMovesPanel.init(_playerBattleTechMoves)
 
-	return
+return
+
+
+
 
 
 func start_player_turn(remainingEnemies: Array[EnemyController]) -> PlayerAction:
@@ -52,3 +61,40 @@ func damage_player(damage: int) -> bool:
 	_statusPanel.damage_player(damage)
 
 	return is_player_alive()
+
+
+func hide_and_disable_actions_panel() -> void:
+	_actionsPanel.hide()
+	_actionsPanel.set_moves_enabled(false)
+
+	return
+
+
+func show_and_enable_actions_panel() -> void:
+	_actionsPanel.set_moves_enabled(true)
+	_actionsPanel.show()
+
+	return
+
+
+func hide_and_disable_moves_panels() -> void:
+	_attackMovesPanel.hide()
+	_techMovesPanel.hide()
+	_attackMovesPanel.set_buttons_enabled(false)
+	_techMovesPanel.set_buttons_enabled(false)
+
+	return
+
+
+func show_attack_moves_panel() -> void:
+	_attackMovesPanel.set_buttons_enabled(true)
+	_attackMovesPanel.show()
+
+	return
+
+
+func show_tech_moves_panel() -> void:
+	_techMovesPanel.set_buttons_enabled(true)
+	_techMovesPanel.show()
+
+	return

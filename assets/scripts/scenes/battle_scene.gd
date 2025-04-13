@@ -1,8 +1,8 @@
 class_name BattleScene
 extends Control
 
-enum BATTLE_RESULT {NONE, WIN, LOSE}
-enum TURN_OWNER {NONE, PLAYER, ENEMIES}
+enum BattleResult {NONE, ONGOING, PLAYER_WIN, PLAYER_LOSE }
+enum TurnOwner {NONE, PLAYER, ENEMIES}
 const _enemyScenePath: String = "E:/Godot/Projects/rpgue/assets/prefabs/enemy.tscn"
 @export var _playerController: PlayerBattleUIController
 @export var _enemiesHBoxContainer: HBoxContainer
@@ -17,9 +17,9 @@ func _ready() -> void:
 	_stateMachine = BattleStateMachine.new(self)
 	_stateMachine.push_state(BattleSetupState.new(_stateMachine)) ## PAREI AQUI
 
-	var battleResult: BATTLE_RESULT = await _start_battle()
+	var battleResult: BattleResult = await _start_battle()
 
-	if (battleResult == BATTLE_RESULT.WIN):
+	if (battleResult == BattleResult.PLAYER_WIN):
 		GM.flowManager.open_upgrade_scene()
 	else:
 		GM.flowManager.open_upgrade_scene()
@@ -28,6 +28,7 @@ func _ready() -> void:
 
 
 #region Battle Setup
+# called by SetupState
 
 func setup_scene() -> void:
 	_spawn_enemies(4)
@@ -39,6 +40,8 @@ func setup_scene() -> void:
 
 func _setup_player() -> void:
 	_playerController.init(_stateMachine)
+	_playerController.hide_and_disable_moves_panels()
+	_playerController.hide_and_disable_actions_panel()
 	_playerReward = PlayerReward.new()
 
 	return
@@ -62,47 +65,62 @@ func _spawn_enemies(_quantity: int) -> void:
 	return
 
 
+#endregion
+
+#region Battle Result Check
+# called by check battle end state
+func get_battle_result() -> BattleResult:
+	if (!_is_player_alive()):
+		return BattleResult.PLAYER_LOSE
+
+	if (_get_remaining_enemies().size() == 0):
+		return BattleResult.PLAYER_WIN
+
+	return BattleResult.ONGOING
+
+
 func _get_remaining_enemies() -> Array[EnemyController]:
 	return _allEnemies.filter(func(enemy: EnemyController) -> bool: return enemy.is_alive())
 
 
-#endregion
+func _is_player_alive() -> bool:
+	return _playerController.is_player_alive()
 
 
-func _start_battle() -> BATTLE_RESULT:
+func _start_battle() -> BattleResult:
 	await _textBoxController.display_text("A wild enemy appears")
-	var battleResult: BATTLE_RESULT = await _battle_turn_logic()
+	var battleResult: BattleResult = await _battle_turn_logic()
 
 	return battleResult
 
 
 #region Turn Logic
 
-func _battle_turn_logic() -> BATTLE_RESULT:
-	var nextToPlay: TURN_OWNER = TURN_OWNER.PLAYER
+func _battle_turn_logic() -> BattleResult:
+	var nextToPlay: TurnOwner = TurnOwner.PLAYER
 	var battleDecided: bool = false
 
 	while (!battleDecided):
 		nextToPlay = await _wait_turn_owner_action(nextToPlay)
 		battleDecided = _playerController.get_player_health() < 0 || _get_remaining_enemies().size() == 0
 
-	return BATTLE_RESULT.WIN if _playerController.get_player_health() > 0 else BATTLE_RESULT.LOSE
+	return BattleResult.PLAYER_WIN if _playerController.get_player_health() > 0 else BattleResult.PLAYER_LOSE
 
 
-func _wait_turn_owner_action(nextToPlay: TURN_OWNER) -> TURN_OWNER:
-	var _next_turn_owner: TURN_OWNER = TURN_OWNER.NONE
+func _wait_turn_owner_action(nextToPlay: TurnOwner) -> TurnOwner:
+	var _next_turn_owner: TurnOwner = TurnOwner.NONE
 
-	if (nextToPlay == TURN_OWNER.PLAYER):
+	if (nextToPlay == TurnOwner.PLAYER):
 		print("== PLAYER TURN ==")
 		var playerAction: PlayerAction = await _get_player_action()
 		_execute_player_action(playerAction)
-		_next_turn_owner = TURN_OWNER.ENEMIES
+		_next_turn_owner = TurnOwner.ENEMIES
 		print("== FINISHING PLAYER TURN ==")
 
-	elif (nextToPlay == TURN_OWNER.ENEMIES):
+	elif (nextToPlay == TurnOwner.ENEMIES):
 		print("!! ENEMY TURN !!")
 		await _execute_enemies_action()
-		_next_turn_owner = TURN_OWNER.PLAYER
+		_next_turn_owner = TurnOwner.PLAYER
 		print("!! FINISHING ENEMY TURN !!")
 
 	return _next_turn_owner

@@ -7,7 +7,6 @@ enum BUTTON {NONE, ATTACK, TECH}
 
 var _remainingEnemiesRef: Array[EnemyController]
 signal playerTurn(turnResult: PlayerAction)
-
 var _stateMachine: BattleStateMachine
 
 
@@ -20,18 +19,18 @@ func init(battleStateMachine: BattleStateMachine) -> void:
 	_attackButton.focus_mode = Control.FOCUS_ALL
 	_techButton.focus_mode = Control.FOCUS_ALL
 
-	_set_buttons_enabled(false) # buttons start disabled
+	set_buttons_enabled(false) # buttons start disabled
 
 	return
 
 
 func start_turn(remainingEnemies: Array[EnemyController]) -> PlayerAction:
 	_remainingEnemiesRef = remainingEnemies
-	_set_buttons_enabled(true)
+	set_buttons_enabled(true)
 
 	self.show()
 	var playerAction: PlayerAction = await playerTurn
-	_set_buttons_enabled(false)
+	set_buttons_enabled(false)
 
 	return playerAction
 
@@ -50,7 +49,7 @@ func _on_tech_button_pressed() -> void:
 	return
 
 
-func _set_buttons_enabled(value: bool) -> void:
+func set_buttons_enabled(value: bool) -> void:
 	print("Setting buttons enabled: " + str(value))
 	_attackButton.disabled = !value
 	_techButton.disabled = !value
@@ -77,6 +76,7 @@ func _buttonPressedToPlayerActionType(button: BUTTON) -> PlayerAction.ActionCate
 	push_error("Tipo de botao pressionado na acao do player nao existente")
 
 	return PlayerAction.ActionCategory.NONE
+
 
 #endregion
 
@@ -112,7 +112,7 @@ var _selecting: bool
 
 
 func _open_enemy_selection(buttonType: BUTTON, all: bool = false) -> void:
-	_set_buttons_enabled(false) # button clicks must be disabled during enemy selection
+	set_buttons_enabled(false) # button clicks must be disabled during enemy selection
 	_currentButtonPressed = buttonType
 
 	if (all):
@@ -144,7 +144,7 @@ func _input_select_target(_event: InputEvent) -> void:
 
 	elif (_event.is_action_pressed("ui_cancel")):
 		_cancel_enemy_selection()
-		_set_buttons_enabled(true)
+		set_buttons_enabled(true)
 
 	elif (_event.is_action_pressed("ui_right")):
 		_hover_next_enemy()
