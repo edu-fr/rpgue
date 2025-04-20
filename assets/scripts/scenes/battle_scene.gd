@@ -3,10 +3,11 @@ extends Control
 
 enum BattleResult {NONE, ONGOING, PLAYER_WIN, PLAYER_LOSE }
 enum TurnOwner {NONE, PLAYER, ENEMIES}
-const _enemyScenePath: String = "E:/Godot/Projects/rpgue/assets/prefabs/enemy.tscn"
+const _enemyScenePath: String = "res://assets/prefabs/enemy.tscn"
 @export var _playerController: PlayerBattleUIController
 @export var _enemiesHBoxContainer: HBoxContainer
 @export var _textBoxController: TextBoxController
+@export var _debugVisualStack: VisualStackVBoxContainer
 
 var _stateMachine: BattleStateMachine
 var _allEnemies: Array[EnemyController]
@@ -15,6 +16,8 @@ var _playerReward: PlayerReward
 
 func _ready() -> void:
 	_stateMachine = BattleStateMachine.new(self)
+	_setup_debug_visual_state_machine_stack()
+
 	_stateMachine.push_state(BattleSetupState.new(_stateMachine)) ## PAREI AQUI
 
 	var battleResult: BattleResult = await _start_battle()
@@ -23,6 +26,17 @@ func _ready() -> void:
 		GM.flowManager.open_upgrade_scene()
 	else:
 		GM.flowManager.open_upgrade_scene()
+
+	return
+
+
+func _setup_debug_visual_state_machine_stack() -> void:
+	assert(_stateMachine != null,
+	"Need to instantiate the state machine before setting up the debug visual stack")
+
+	_stateMachine.statePushed.connect(_debugVisualStack.stack)
+	_stateMachine.statePop.connect(_debugVisualStack.pop)
+	_stateMachine.stackPop.connect(_debugVisualStack.stack_pop)
 
 	return
 

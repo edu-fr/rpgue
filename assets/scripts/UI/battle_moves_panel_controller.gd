@@ -4,7 +4,7 @@ extends Control
 @export var BattleMoveSlots: Array[Button]
 
 
-func init(movesInfo: Array[BattleMove]) -> void:
+func init(onBattleMoveIndexClicked: Callable, movesInfo: Array[BattleMove]) -> void:
 	assert(movesInfo.size() <= 4, "Can't create more than 4 move buttons")
 
 	for i: int in BattleMoveSlots.size():
@@ -13,6 +13,8 @@ func init(movesInfo: Array[BattleMove]) -> void:
 			continue
 
 		BattleMoveSlots[i].text = movesInfo[i]._publicName
+		var actionCallable: Callable = func() -> void: onBattleMoveIndexClicked.call(i)
+		BattleMoveSlots[i].pressed.connect(actionCallable)
 
 	return
 

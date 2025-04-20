@@ -68,7 +68,7 @@ func is_alive() -> bool:
 	return _healthBar.alive()
 
 
-func _setup_health_bar(maxHealth: int, current: int = -1) -> void:
+func _setup_health_bar(maxHealth: float, current: float = -1) -> void:
 	_healthBar.init(maxHealth, current)
 
 	return

@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd2ommhe1ikme"]
+
+[ext_resource type="Script" uid="uid://bph8cs8dh08gt" path="res://assets/scripts/general/visual_stack_text_margin_container.gd" id="1_t0yxf"]
+
+[node name="StateTextMarginContainer" type="MarginContainer" node_paths=PackedStringArray("_textLabel")]
+custom_minimum_size = Vector2(0, 30)
+script = ExtResource("1_t0yxf")
+_textLabel = NodePath("RichTextLabel")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+text = "BaseState1"

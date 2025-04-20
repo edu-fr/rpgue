@@ -16,40 +16,34 @@ func init(stateMachine: BattleStateMachine) -> void:
 	## MOCK
 	var _moves: Dictionary[String, MoveData] = GM.dataManager._externalGameConfig._movesRawConfig
 
-var _attackMoves: Array[MoveData] = _moves.values().filter(\
-	func(x: MoveData) -> bool: return x.category == MoveData.Category.ATTACK)
+	var _attackMoves: Array[MoveData] = _moves.values().filter(\
+		func(x: MoveData) -> bool: return x.category == MoveData.Category.ATTACK)
+	
+	var _techMoves: Array[MoveData] = _moves.values().filter(\
+		func(x: MoveData) -> bool: return x.category == MoveData.Category.TECH)
+	
+	var _playerBattleAttackMoves: Array[BattleMove]
+	
+	var _playerBattleTechMoves: Array[BattleMove];
 
-var _techMoves: Array[MoveData] = _moves.values().filter(\
-	func(x: MoveData) -> bool: return x.category == MoveData.Category.TECH)
-
-var _playerBattleAttackMoves: Array[BattleMove]
-
-var _playerBattleTechMoves: Array[BattleMove]
-
-for
-
-i: int in 4:
+	for i: int in 4:
 		var _chooseAttackMove: MoveData = _attackMoves.get(i)
-_playerBattleAttackMoves.append(BattleMove.new(_chooseAttackMove, player))
+		_playerBattleAttackMoves.append(BattleMove.new(_chooseAttackMove, player))
+		var _chooseTechMove: MoveData = _techMoves.get(i)
+		_playerBattleTechMoves.append(BattleMove.new(_chooseTechMove, player))
+		##
 
-var _chooseTechMove: MoveData = _techMoves.get(i)
-_playerBattleTechMoves.append(BattleMove.new(_chooseTechMove, player))
-##
+	_attackMovesPanel.init(stateMachine.on_attack_index_cliked, _playerBattleAttackMoves)
+	_techMovesPanel.init(stateMachine.on_tech_clicked, _playerBattleTechMoves)
 
-_attackMovesPanel.init(_playerBattleAttackMoves)
-_techMovesPanel.init(_playerBattleTechMoves)
-
-return
-
-
-
+	return
 
 
 func start_player_turn(remainingEnemies: Array[EnemyController]) -> PlayerAction:
 	return await _actionsPanel.start_turn(remainingEnemies)
 
 
-func get_player_health() -> int:
+func get_player_health() -> float:
 	return _statusPanel.get_player_current_health()
 
 
@@ -65,13 +59,13 @@ func damage_player(damage: int) -> bool:
 
 func hide_and_disable_actions_panel() -> void:
 	_actionsPanel.hide()
-	_actionsPanel.set_moves_enabled(false)
+	_actionsPanel.set_buttons_enabled(false)
 
 	return
 
 
 func show_and_enable_actions_panel() -> void:
-	_actionsPanel.set_moves_enabled(true)
+	_actionsPanel.set_buttons_enabled(true)
 	_actionsPanel.show()
 
 	return

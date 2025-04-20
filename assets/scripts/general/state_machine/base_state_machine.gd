@@ -1,6 +1,9 @@
 class_name BaseStateMachine
 
 var stateStack: Stack
+signal statePushed(state_name: String)
+signal statePop()
+signal stackPop()
 
 var currentState: BaseState:
 	get:
@@ -15,45 +18,48 @@ func _init() -> void:
 	return
 
 
-func push_state(newState: Object) -> void:
+func push_state(newState: BaseState) -> void:
 	_assert_state_type(newState)
 
 	if (currentState != null):
 		currentState.on_state_end()
 
 	stateStack.push(newState)
+
+	statePushed.emit(Utils.get_clear_script_name(newState))
 	currentState.on_state_start()
 
 	return
 
 
-func pop_state() -> void:
+func pop_state(resumeCurrent: bool = true) -> void:
 	currentState.on_state_end()
 
 	stateStack.pop()
-	currentState.resume()
+	statePop.emit()
+
+	if (resumeCurrent):
+		currentState.resume()
 
 	return
 
 
-func swap_state(newState: Object) -> void:
+func swap_state(newState: BaseState) -> void:
 	_assert_state_type(newState)
 
-	currentState.on_state_end()
-	stateStack.pop()
-	stateStack.push(newState)
-	currentState.on_state_start()
+	pop_state(false)
+	push_state(newState)
 
 	return
 
 
-func pop_stack(newBaseState: Object) -> void:
+func pop_stack(newBaseState: BaseState) -> void:
 	_assert_state_type(newBaseState)
 
 	currentState.on_state_end()
 	stateStack.clear()
-	stateStack.push(newBaseState)
-	currentState.on_state_start()
+	stackPop.emit()
+	push_state(newBaseState)
 
 	return
 

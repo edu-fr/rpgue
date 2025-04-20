@@ -1,17 +1,18 @@
-[gd_scene load_steps=22 format=3 uid="uid://bytpyetjp5qo5"]
+[gd_scene load_steps=23 format=3 uid="uid://bytpyetjp5qo5"]
 
 [ext_resource type="Script" uid="uid://d175r3802fi5t" path="res://assets/scripts/scenes/battle_scene.gd" id="1_7hjph"]
 [ext_resource type="Script" uid="uid://cohgkgfx73n8t" path="res://assets/scripts/player/player_status_panel_controller.gd" id="2_4yxab"]
 [ext_resource type="PackedScene" uid="uid://b26x5w04r3k5m" path="res://assets/prefabs/background_texture_rect.tscn" id="2_txouv"]
 [ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="2_wjigb"]
 [ext_resource type="Texture2D" uid="uid://dpwjd00ofe7rl" path="res://assets/art/backgrounds/battle_background.png" id="3_0slls"]
-[ext_resource type="Script" uid="uid://ch6vq2bfelgfx" path="res://assets/scripts/UI/actions_panel.gd" id="4_7lnlx"]
+[ext_resource type="Script" uid="uid://gvr87ys6n1p3" path="res://assets/scripts/UI/actions_panel_controller.gd" id="4_7lnlx"]
 [ext_resource type="StyleBox" uid="uid://cwld1tb0waeaq" path="res://assets/config/colors/button_default.tres" id="4_lsh0s"]
 [ext_resource type="Script" uid="uid://5xju5142fku4" path="res://assets/scripts/player/player_battle_ui_controller.gd" id="4_pbdns"]
 [ext_resource type="LabelSettings" uid="uid://bk76npxe4v3st" path="res://assets/config/label_settings/text_box_label_settings.tres" id="5_kmdtb"]
-[ext_resource type="Script" uid="uid://cunyru3l2w6ye" path="res://assets/scripts/UI/text_box.gd" id="5_x10or"]
-[ext_resource type="Script" uid="uid://cm85vrnyj38lf" path="res://assets/scripts/UI/health_progress_bar.gd" id="6_jo7rj"]
-[ext_resource type="Script" uid="uid://rncy7c0ss217" path="res://assets/scripts/UI/battle_moves_panel.gd" id="10_pbdns"]
+[ext_resource type="Script" uid="uid://cykqu710qfcuw" path="res://assets/scripts/UI/text_box_controller.gd" id="5_x10or"]
+[ext_resource type="Script" uid="uid://2sl453ikgn7p" path="res://assets/scripts/UI/health_progress_bar_controller.gd" id="6_jo7rj"]
+[ext_resource type="Script" uid="uid://ddlw8t05f50xm" path="res://assets/scripts/UI/battle_moves_panel_controller.gd" id="10_pbdns"]
+[ext_resource type="PackedScene" uid="uid://pq2chwno6jao" path="res://assets/prefabs/visual_stack.tscn" id="13_hd3ej"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4mow"]
 bg_color = Color(0, 0, 0, 0.168627)
@@ -59,7 +60,7 @@ border_width_right = 4
 border_width_bottom = 4
 border_color = Color(1, 1, 1, 1)
 
-[node name="Battle" type="Control" node_paths=PackedStringArray("_playerController", "_enemiesHBoxContainer", "_textBoxController")]
+[node name="Battle" type="Control" node_paths=PackedStringArray("_playerController", "_enemiesHBoxContainer", "_textBoxController", "_debugVisualStack")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,6 +71,7 @@ script = ExtResource("1_7hjph")
 _playerController = NodePath("PlayerController")
 _enemiesHBoxContainer = NodePath("EnemiesHBoxContainer")
 _textBoxController = NodePath("TextBoxMarginContainer")
+_debugVisualStack = NodePath("VisualStackVBoxContainer")
 
 [node name="BackgroundTextureRect" parent="." instance=ExtResource("2_txouv")]
 modulate = Color(1, 1, 1, 1)
@@ -527,3 +529,7 @@ text = ">
 label_settings = ExtResource("5_kmdtb")
 horizontal_alignment = 2
 vertical_alignment = 2
+
+[node name="VisualStackVBoxContainer" parent="." instance=ExtResource("13_hd3ej")]
+layout_mode = 1
+offset_left = -250.0

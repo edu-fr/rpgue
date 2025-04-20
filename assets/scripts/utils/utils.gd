@@ -8,6 +8,13 @@ static func dev_only(func_ref: Callable) -> void:
 		func_ref.call()
 
 
+static func get_clear_script_name(object: Object) -> String:
+	var _script: Script = object.get_script()
+	var _scriptName: String = _script.resource_path.get_file()
+
+	return _scriptName.split(".")[0]
+
+
 ## DICT UTILS
 
 static func get_random_elements(original_dict: Dictionary, quantity: int) -> Dictionary:
@@ -109,3 +116,4 @@ static func _execute_action(key_data: Dictionary) -> void:
 		action.call()
 	else:
 		push_error("Invalid Callable in key action")
+		
