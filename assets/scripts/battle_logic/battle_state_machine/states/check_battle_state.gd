@@ -12,13 +12,13 @@ func _init(battleStateMachine: BattleStateMachine, nextState: BaseBattleState) -
 
 
 func on_state_start() -> void:
-	var battle_result: BattleScene.BattleResult = stateMachine.battleScene.get_battle_result()
+	var battle_result: BattleScene.BattleResult = _stateMachine.battleScene.get_battle_result()
 	match(battle_result):
 		BattleScene.BattleResult.ONGOING:
-			stateMachine.swap_state(_nextState)
+			_stateMachine.swap_state(_nextState)
 		BattleScene.BattleResult.PLAYER_WIN:
-			stateMachine.pop_stack(BattleWinState.new(stateMachine))
+			_stateMachine.pop_stack(BattleWinState.new(_stateMachine))
 		BattleScene.BattleResult.ONGOING:
-			stateMachine.pop_stack(BattleLossState.new(stateMachine))
+			_stateMachine.pop_stack(BattleLossState.new(_stateMachine))
 
 	return

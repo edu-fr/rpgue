@@ -1,37 +1,25 @@
 class_name PlayerAttackResultState
 extends BaseBattleState
 
+var _battleMove: BattleMove
+var _targetEnemiesIds: Array[int]
+
+
+func _init(battleMove: BattleMove, targetEnemiesIndexes: Array[int], stateMachine: BattleStateMachine) -> void:
+	super(stateMachine)
+	_battleMove = battleMove
+	_targetEnemiesIds = targetEnemiesIndexes
+
+	return
+
+
 func on_state_start() -> void:
+	print("MOVE USED: " + _battleMove.publicName + \
+		"; Should do " + str(_battleMove.getMoveData().baseDamage) + " damage.")
 
-	return
-
-
-func on_confirm_clicked() -> void:
-	print("Player attack result battle state confirm clicked")
-	stateMachine.swap_state(CheckBattleState.new(stateMachine, EnemyTurnStartState.new(stateMachine)))
-
-	return
-
-
-func on_attack_clicked() -> void:
-	print("Player attack result battle state attack clicked")
-
-	return
-
-
-func on_tech_clicked() -> void:
-	print("Player attack result battle state tech clicked")
-
-	return
-
-
-func on_attack_index_cliked(index: int) -> void:
-	print("Player attack result battle state attack index " + str(index) + " clicked")
-
-	return
-
-
-func on_tech_index_cliked(index: int) -> void:
-	print("Player attack result battle state tech index " + str(index) + " clicked")
+	# create the attack move
+	# do the effect
+	# change to check battle state state
+	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, EnemyTurnStartState.new(_stateMachine)))
 
 	return

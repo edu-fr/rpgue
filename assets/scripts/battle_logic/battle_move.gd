@@ -1,13 +1,23 @@
 class_name BattleMove
 
-var _publicName: String
-var _description: String
-var _moveTypes: Array[MoveData.MoveType]
+var publicName: String
+var description: String
+var moveTypes: Array[MoveData.MoveType]
+
+var _playerInstance: PlayerInstance
+var _moveData: MoveData
 
 
 func _init(moveData: MoveData, player: PlayerInstance) -> void:
-	_publicName = moveData.name
-	_description = moveData.description
-	_moveTypes = moveData.moveTypes
+	_moveData = moveData
+	_playerInstance = player
+
+	publicName = moveData.name
+	description = moveData.description
+	moveTypes = moveData.moveTypes
 
 	return
+
+
+func getMoveData() -> MoveData:
+	return _moveData

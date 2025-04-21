@@ -3,7 +3,7 @@ extends Resource
 
 enum Category { ATTACK, TECH }
 enum MoveType { SLASH, PIERCE, STRIKE, FIRE, WATER, GRASS, LIGHT, DARK, DEFENSIVE, STATUS, STATS }
-enum Target { CURRENT, ADJACENT, ALL_ENEMIES, SELF, ADJACENT_ALLIES, ALL_ALLIES }
+enum MoveTarget { CURRENT, ADJACENT, ALL_ENEMIES, SELF, ADJACENT_ALLIES, ALL_ALLIES }
 enum ValueType { NONE, VARIABLE, ABSOLUTE }
 enum ActivationWindow { NONE, PRE_HIT, STANDARD, POST_HIT }
 enum StatusCondition { NONE, STAGGER, BURN, FREEZE }
@@ -17,7 +17,7 @@ var category: Category
 var moveTypes: Array[MoveType]
 var baseDamage: float
 var baseBlock: float
-var targets: Array[Target]
+var targets: Array[MoveTarget]
 var statusCondition: StatusCondition
 var activationChance: float
 var additionalDamageType: AdditionalDamageType
@@ -102,19 +102,19 @@ static func _parse_move_types(raw: Variant) -> Array[MoveType]:
 	return types
 
 
-static func _parse_targets(raw: Variant) -> Array[Target]:
+static func _parse_targets(raw: Variant) -> Array[MoveTarget]:
 	var _rawAsStr: String = str(raw)
-	var _targets: Array[Target] = []
+	var _targets: Array[MoveTarget] = []
 
 	for _targetStr: String in _rawAsStr.split(",", false):
 		var _normalized: String = _targetStr.strip_edges().replace(" ", "_").to_upper()
 		match _normalized:
-			"CURRENT": _targets.append(Target.CURRENT)
-			"ADJACENT": _targets.append(Target.ADJACENT)
-			"ALL_ENEMIES": _targets.append(Target.ALL_ENEMIES)
-			"SELF": _targets.append(Target.SELF)
-			"ADJACENT_ALLIES": _targets.append(Target.ADJACENT_ALLIES)
-			"ALL_ALLIES": _targets.append(Target.ALL_ALLIES)
+			"CURRENT": _targets.append(MoveTarget.CURRENT)
+			"ADJACENT": _targets.append(MoveTarget.ADJACENT)
+			"ALL_ENEMIES": _targets.append(MoveTarget.ALL_ENEMIES)
+			"SELF": _targets.append(MoveTarget.SELF)
+			"ADJACENT_ALLIES": _targets.append(MoveTarget.ADJACENT_ALLIES)
+			"ALL_ALLIES": _targets.append(MoveTarget.ALL_ALLIES)
 
 	return _targets
 

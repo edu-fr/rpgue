@@ -4,7 +4,7 @@ extends Control
 enum BattleResult {NONE, ONGOING, PLAYER_WIN, PLAYER_LOSE }
 enum TurnOwner {NONE, PLAYER, ENEMIES}
 const _enemyScenePath: String = "res://assets/prefabs/enemy.tscn"
-@export var _playerController: PlayerBattleUIController
+@export var _playerBattleUIController: PlayerBattleUIController
 @export var _enemiesHBoxContainer: HBoxContainer
 @export var _textBoxController: TextBoxController
 @export var _debugVisualStack: VisualStackVBoxContainer
@@ -53,9 +53,9 @@ func setup_scene() -> void:
 
 
 func _setup_player() -> void:
-	_playerController.init(_stateMachine)
-	_playerController.hide_and_disable_moves_panels()
-	_playerController.hide_and_disable_actions_panel()
+	_playerBattleUIController.init(_stateMachine)
+	_playerBattleUIController.hide_and_disable_moves_panels()
+	_playerBattleUIController.hide_and_disable_actions_panel()
 	_playerReward = PlayerReward.new()
 
 	return
@@ -98,7 +98,7 @@ func _get_remaining_enemies() -> Array[EnemyController]:
 
 
 func _is_player_alive() -> bool:
-	return _playerController.is_player_alive()
+	return _playerBattleUIController.is_player_alive()
 
 
 func _start_battle() -> BattleResult:
@@ -116,9 +116,9 @@ func _battle_turn_logic() -> BattleResult:
 
 	while (!battleDecided):
 		nextToPlay = await _wait_turn_owner_action(nextToPlay)
-		battleDecided = _playerController.get_player_health() < 0 || _get_remaining_enemies().size() == 0
+		battleDecided = _playerBattleUIController.get_player_health() < 0 || _get_remaining_enemies().size() == 0
 
-	return BattleResult.PLAYER_WIN if _playerController.get_player_health() > 0 else BattleResult.PLAYER_LOSE
+	return BattleResult.PLAYER_WIN if _playerBattleUIController.get_player_health() > 0 else BattleResult.PLAYER_LOSE
 
 
 func _wait_turn_owner_action(nextToPlay: TurnOwner) -> TurnOwner:
@@ -180,7 +180,7 @@ func _get_remaining_enemy_by_id(id: int) -> EnemyController:
 
 
 func _get_player_action() -> PlayerAction:
-	return await _playerController.start_player_turn(_get_remaining_enemies())
+	return await _playerBattleUIController.start_player_turn(_get_remaining_enemies())
 
 
 func _execute_enemies_action() -> void:
@@ -209,7 +209,7 @@ func _create_enemy_action_text(_enemy: EnemyController, _enemyAction: EnemyActio
 func _execute_enemy_action(enemy: EnemyController, enemyAction: EnemyAction) -> void:
 	match (enemyAction.actionCategory):
 		enemyAction.EnemyActionCategory.ATTACK:
-			_playerController.damage_player(enemyAction.actionValue)
+			_playerBattleUIController.damage_player(enemyAction.actionValue)
 
 		enemyAction.EnemyActionCategory.HEAL:
 			enemy.heal(enemyAction.actionValue)

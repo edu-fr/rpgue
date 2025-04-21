@@ -2,7 +2,7 @@ class_name UpgradeData
 extends Resource
 
 enum UpgradeType { STATS, FIRE, STATUS, DEFENSIVE, GRASS }
-enum Target { SELF, ALLY, ENEMY }
+enum UpgradeTarget { SELF, ALLY, ENEMY }
 enum ValueType { NONE, VARIABLE, ABSOLUTE }
 enum StatType { NONE, SKILLS, MAX_HP, CURRENT_HP }
 enum RequirementsToAppear { NONE, WARRIOR, MAGE, OMNIBUFF }
@@ -11,7 +11,7 @@ var privateName: String
 var name: String
 var description: String
 var upgradeTypes: Array[UpgradeType]
-var targets: Array[Target]
+var targets: Array[UpgradeTarget]
 var activationChance: float
 var additionalDamageType: String
 var additionalDamageValue: float
@@ -77,16 +77,16 @@ static func _parse_stat_type(raw: Variant) -> StatType:
 		_: return StatType.NONE
 
 
-static func _parse_targets(raw: Variant) -> Array[Target]:
+static func _parse_targets(raw: Variant) -> Array[UpgradeTarget]:
 	var _rawAsStr: String = str(raw)
-	var _targets: Array[Target] = []
+	var _targets: Array[UpgradeTarget] = []
 
 	for _targetStr: String in _rawAsStr.split(",", false):
 		var _normalized: String = _targetStr.strip_edges().replace(" ", "_").to_upper()
 		match _normalized:
-			"SELF": _targets.append(Target.SELF)
-			"ALLY": _targets.append(Target.ALLY)
-			"ENEMY": _targets.append(Target.ENEMY)
+			"SELF": _targets.append(UpgradeTarget.SELF)
+			"ALLY": _targets.append(UpgradeTarget.ALLY)
+			"ENEMY": _targets.append(UpgradeTarget.ENEMY)
 
 	return _targets
 

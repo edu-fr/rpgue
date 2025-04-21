@@ -15,7 +15,7 @@ func init(stateMachine: BattleStateMachine) -> void:
 
 	## MOCK
 	var _moves: Dictionary[String, MoveData] = GM.dataManager._externalGameConfig._movesRawConfig
-
+	
 	var _attackMoves: Array[MoveData] = _moves.values().filter(\
 		func(x: MoveData) -> bool: return x.category == MoveData.Category.ATTACK)
 	
@@ -25,8 +25,8 @@ func init(stateMachine: BattleStateMachine) -> void:
 	var _playerBattleAttackMoves: Array[BattleMove]
 	
 	var _playerBattleTechMoves: Array[BattleMove];
-
-	for i: int in 4:
+	
+	for	i: int in 4:
 		var _chooseAttackMove: MoveData = _attackMoves.get(i)
 		_playerBattleAttackMoves.append(BattleMove.new(_chooseAttackMove, player))
 		var _chooseTechMove: MoveData = _techMoves.get(i)
@@ -80,14 +80,24 @@ func hide_and_disable_moves_panels() -> void:
 	return
 
 
-func show_attack_moves_panel() -> void:
+func show_and_enable_selected_moves_panel(category: MoveData.Category) -> void:
+	match(category):
+		MoveData.Category.ATTACK:
+			_show_and_enable_attack_moves_panel()
+		MoveData.Category.TECH:
+			show_and_enable_actions_panel()
+
+	return
+
+
+func _show_and_enable_attack_moves_panel() -> void:
 	_attackMovesPanel.set_buttons_enabled(true)
 	_attackMovesPanel.show()
 
 	return
 
 
-func show_tech_moves_panel() -> void:
+func _show_and_enable_tech_moves_panel() -> void:
 	_techMovesPanel.set_buttons_enabled(true)
 	_techMovesPanel.show()
 

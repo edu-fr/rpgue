@@ -8,7 +8,7 @@ func on_state_start() -> void:
 
 func on_confirm_clicked() -> void:
 	print("enemy turn start battle state confirm clicked")
-	stateMachine.swap_state(CheckBattleState.new(stateMachine, EnemyTurnMainState.new(stateMachine)))
+	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, EnemyTurnMainState.new(_stateMachine)))
 
 	return
 

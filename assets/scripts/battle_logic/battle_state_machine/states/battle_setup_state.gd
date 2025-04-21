@@ -2,7 +2,7 @@ class_name BattleSetupState
 extends BaseBattleState
 
 func on_state_start() -> void:
-	stateMachine.battleScene.setup_scene()
-	stateMachine.swap_state(PlayerIdleBattleState.new(stateMachine))
+	_stateMachine.battleScene.setup_scene()
+	_stateMachine.swap_state(PlayerIdleBattleState.new(_stateMachine))
 
 	return

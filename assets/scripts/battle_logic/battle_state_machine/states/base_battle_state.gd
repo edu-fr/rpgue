@@ -1,11 +1,11 @@
 class_name BaseBattleState
 extends BaseState
 
-var stateMachine: BattleStateMachine
+var _stateMachine: BattleStateMachine
 
 
 func _init(machine: BattleStateMachine) -> void:
-	stateMachine = machine
+	_stateMachine = machine
 
 	return
 
