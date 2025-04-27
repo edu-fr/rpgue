@@ -17,13 +17,20 @@ func stack(text: String) -> void:
 func pop() -> void:
 	assert(self.get_child_count() > 0, "Can't pop on the visual stack if child count is zero")
 
-	self.get_child(self.get_child_count() - 1).queue_free()
+	var _stateObject: Node = self.get_child(0)
+	self.remove_child(_stateObject)
+	_stateObject.queue_free()
 
 	return
 
 
 func stack_pop() -> void:
-	while (self.get_child_count() > 0):
+	var childCount: int = self.get_child_count()
+	assert(childCount > 0, "Can't pop stack on the visual stack if child count is zero")
+
+	while (childCount > 0):
 		pop()
+		assert(childCount != self.get_child_count(), "Child text not been properly removed")
+		childCount = self.get_child_count()
 
 	return

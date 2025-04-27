@@ -15,28 +15,33 @@ func init(stateMachine: BattleStateMachine) -> void:
 
 	## MOCK
 	var _moves: Dictionary[String, MoveData] = GM.dataManager._externalGameConfig._movesRawConfig
-	
-	var _attackMoves: Array[MoveData] = _moves.values().filter(\
-		func(x: MoveData) -> bool: return x.category == MoveData.Category.ATTACK)
-	
-	var _techMoves: Array[MoveData] = _moves.values().filter(\
-		func(x: MoveData) -> bool: return x.category == MoveData.Category.TECH)
-	
-	var _playerBattleAttackMoves: Array[BattleMove]
-	
-	var _playerBattleTechMoves: Array[BattleMove];
-	
-	for	i: int in 4:
+
+var _attackMoves: Array[MoveData] = _moves.values().filter(\
+	func(x: MoveData) -> bool: return x.category == MoveData.Category.ATTACK)
+
+var _techMoves: Array[MoveData] = _moves.values().filter(\
+	func(x: MoveData) -> bool: return x.category == MoveData.Category.TECH)
+
+var _playerBattleAttackMoves: Array[BattleMove]
+
+var _playerBattleTechMoves: Array[BattleMove];
+
+for
+
+i: int in 4:
 		var _chooseAttackMove: MoveData = _attackMoves.get(i)
-		_playerBattleAttackMoves.append(BattleMove.new(_chooseAttackMove, player))
-		var _chooseTechMove: MoveData = _techMoves.get(i)
-		_playerBattleTechMoves.append(BattleMove.new(_chooseTechMove, player))
-		##
+_playerBattleAttackMoves.append(BattleMove.new(_chooseAttackMove, player))
+var _chooseTechMove: MoveData = _techMoves.get(i)
+_playerBattleTechMoves.append(BattleMove.new(_chooseTechMove, player))
+##
 
-	_attackMovesPanel.init(stateMachine.on_attack_index_cliked, _playerBattleAttackMoves)
-	_techMovesPanel.init(stateMachine.on_tech_clicked, _playerBattleTechMoves)
+_attackMovesPanel.init(stateMachine.on_attack_index_cliked, _playerBattleAttackMoves)
+_techMovesPanel.init(stateMachine.on_tech_clicked, _playerBattleTechMoves)
 
-	return
+return
+
+
+
 
 
 func start_player_turn(remainingEnemies: Array[EnemyController]) -> PlayerAction:
@@ -85,7 +90,7 @@ func show_and_enable_selected_moves_panel(category: MoveData.Category) -> void:
 		MoveData.Category.ATTACK:
 			_show_and_enable_attack_moves_panel()
 		MoveData.Category.TECH:
-			show_and_enable_actions_panel()
+			_show_and_enable_tech_moves_panel()
 
 	return
 
@@ -102,3 +107,4 @@ func _show_and_enable_tech_moves_panel() -> void:
 	_techMovesPanel.show()
 
 	return
+	

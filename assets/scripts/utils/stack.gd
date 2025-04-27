@@ -1,13 +1,14 @@
 class_name Stack
 
-
 var _elements: Array = []
 
 
 func push(element) -> void:
 	assert(element != null, "Element can't be null")
 
-	_elements.append(element)
+	_elements.push_back(element)
+
+	# print_current()
 
 	return
 
@@ -17,7 +18,11 @@ func pop() -> Variant:
 		push_error("Error: Trying to pop in an empty stack")
 		return null as Variant
 
-	return _elements.pop_back()
+	var element: Variant = _elements.pop_back()
+
+	# print_current()
+
+	return element
 
 
 func peek() -> Variant:
@@ -37,5 +42,13 @@ func size() -> int:
 
 func clear() -> void:
 	_elements.clear()
+
+	return
+
+
+func print_current() -> void:
+	print("Stack state")
+	for i in _elements.size():
+		print("Stack[" + str(i) + "]: " + str(_elements[i]))
 
 	return

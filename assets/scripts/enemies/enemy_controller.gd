@@ -37,7 +37,7 @@ func act() -> EnemyAction:
 	return null
 
 
-func receive_player_attack(damage: int) -> void:
+func receive_player_attack(damage: float) -> void:
 	_alive_assertion()
 
 	_take_damage(damage)
@@ -74,7 +74,7 @@ func _setup_health_bar(maxHealth: float, current: float = -1) -> void:
 	return
 
 
-func _take_damage(damageValue: int) -> void:
+func _take_damage(damageValue: float) -> void:
 	_alive_assertion()
 
 	_healthBar.take_damage(damageValue)

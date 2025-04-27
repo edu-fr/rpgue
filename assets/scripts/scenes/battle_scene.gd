@@ -18,14 +18,7 @@ func _ready() -> void:
 	_stateMachine = BattleStateMachine.new(self)
 	_setup_debug_visual_state_machine_stack()
 
-	_stateMachine.push_state(BattleSetupState.new(_stateMachine)) ## PAREI AQUI
-
-	var battleResult: BattleResult = await _start_battle()
-
-	if (battleResult == BattleResult.PLAYER_WIN):
-		GM.flowManager.open_upgrade_scene()
-	else:
-		GM.flowManager.open_upgrade_scene()
+	_stateMachine.push_state(BattleSetupState.new(_stateMachine))
 
 	return
 
@@ -101,71 +94,22 @@ func _is_player_alive() -> bool:
 	return _playerBattleUIController.is_player_alive()
 
 
-func _start_battle() -> BattleResult:
-	await _textBoxController.display_text("A wild enemy appears")
-	var battleResult: BattleResult = await _battle_turn_logic()
-
-	return battleResult
-
-
 #region Turn Logic
 
-func _battle_turn_logic() -> BattleResult:
-	var nextToPlay: TurnOwner = TurnOwner.PLAYER
-	var battleDecided: bool = false
+func _input(event: InputEvent) -> void:
+	if (event.is_action_pressed("ui_left")):
+		_stateMachine.on_left_arrow_clicked()
+	elif (event.is_action_pressed("ui_right")):
+		_stateMachine.on_right_arrow_clicked()
+	elif (event.is_action_pressed("ui_down")):
+		_stateMachine.on_down_arrow_clicked()
+	elif (event.is_action_pressed("ui_up")):
+		_stateMachine.on_up_arrow_clicked()
+	elif (event.is_action_pressed("ui_accept")):
+		_stateMachine.on_confirm_clicked()
+	elif (event.is_action_pressed("ui_cancel")):
+		_stateMachine.on_back_clicked()
 
-	while (!battleDecided):
-		nextToPlay = await _wait_turn_owner_action(nextToPlay)
-		battleDecided = _playerBattleUIController.get_player_health() < 0 || _get_remaining_enemies().size() == 0
-
-	return BattleResult.PLAYER_WIN if _playerBattleUIController.get_player_health() > 0 else BattleResult.PLAYER_LOSE
-
-
-func _wait_turn_owner_action(nextToPlay: TurnOwner) -> TurnOwner:
-	var _next_turn_owner: TurnOwner = TurnOwner.NONE
-
-	if (nextToPlay == TurnOwner.PLAYER):
-		print("== PLAYER TURN ==")
-		var playerAction: PlayerAction = await _get_player_action()
-		_execute_player_action(playerAction)
-		_next_turn_owner = TurnOwner.ENEMIES
-		print("== FINISHING PLAYER TURN ==")
-
-	elif (nextToPlay == TurnOwner.ENEMIES):
-		print("!! ENEMY TURN !!")
-		await _execute_enemies_action()
-		_next_turn_owner = TurnOwner.PLAYER
-		print("!! FINISHING ENEMY TURN !!")
-
-	return _next_turn_owner
-
-
-func _execute_player_action(playerAction: PlayerAction) -> void:
-	match (playerAction._actionCategory):
-		PlayerAction.ActionCategory.ATTACK:
-			for enemyId: int in playerAction._enemiesIds:
-				var enemy: EnemyController = _get_remaining_enemy_by_id(enemyId)
-				if (!enemy.is_alive()):
-					continue
-
-				enemy.receive_player_attack(10)
-
-			return
-
-		PlayerAction.ActionCategory.TECH:
-			for enemyId: int in playerAction._enemiesIds:
-				var enemy: EnemyController = _get_remaining_enemy_by_id(enemyId)
-				if (!enemy.is_alive()):
-					continue
-
-				enemy.receive_player_attack(10)
-
-			return
-
-		_:
-			push_error("Invalid player action category: " + str(playerAction._actionCategory))
-
-	push_error("Invalid player action category: " + str(playerAction._actionCategory))
 	return
 
 
@@ -177,19 +121,6 @@ func _get_remaining_enemy_by_id(id: int) -> EnemyController:
 
 	push_error("Remaining enemy not found with id " + str(id))
 	return null
-
-
-func _get_player_action() -> PlayerAction:
-	return await _playerBattleUIController.start_player_turn(_get_remaining_enemies())
-
-
-func _execute_enemies_action() -> void:
-	for _enemy: EnemyController in _get_remaining_enemies():
-		var _enemyAction: EnemyAction = _enemy.act()
-		await _textBoxController.display_text(_create_enemy_action_text(_enemy, _enemyAction))
-		_execute_enemy_action(_enemy, _enemyAction)
-
-	return
 
 
 func _create_enemy_action_text(_enemy: EnemyController, _enemyAction: EnemyAction) -> String:
@@ -204,17 +135,6 @@ func _create_enemy_action_text(_enemy: EnemyController, _enemyAction: EnemyActio
 			push_error("Invalid enemy action " + str(_enemyAction.actionCategory) + " during text setup")
 
 	return (_enemyInfoText + " " + _actionText + "!")
-
-
-func _execute_enemy_action(enemy: EnemyController, enemyAction: EnemyAction) -> void:
-	match (enemyAction.actionCategory):
-		enemyAction.EnemyActionCategory.ATTACK:
-			_playerBattleUIController.damage_player(enemyAction.actionValue)
-
-		enemyAction.EnemyActionCategory.HEAL:
-			enemy.heal(enemyAction.actionValue)
-
-	return
 
 
 func _increase_player_reward(goldReward: int) -> void:

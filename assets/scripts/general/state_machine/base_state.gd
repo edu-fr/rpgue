@@ -18,7 +18,7 @@ func on_state_end() -> void:
 	return
 
 
-func resume() -> void:
+func on_state_resumed() -> void:
 	print("Base resume called")
 
 	return

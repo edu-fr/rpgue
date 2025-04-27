@@ -27,6 +27,7 @@ func push_state(newState: BaseState) -> void:
 	stateStack.push(newState)
 
 	statePushed.emit(Utils.get_clear_script_name(newState))
+	print("After push: New current state: " + str(Utils.get_clear_script_name(currentState)))
 	currentState.on_state_start()
 
 	return
@@ -39,7 +40,10 @@ func pop_state(resumeCurrent: bool = true) -> void:
 	statePop.emit()
 
 	if (resumeCurrent):
-		currentState.resume()
+		currentState.on_state_resumed()
+
+	if (currentState != null):
+		print("After pop: New current state: " + str(Utils.get_clear_script_name(currentState)))
 
 	return
 

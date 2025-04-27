@@ -247,7 +247,7 @@ theme_override_font_sizes/font_size = 50
 theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
 theme_override_styles/normal = ExtResource("4_lsh0s")
-text = "Magic"
+text = "Tech"
 
 [node name="PlayerAttackMovesPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("battleMoveButtonsSlots")]
 z_index = 1

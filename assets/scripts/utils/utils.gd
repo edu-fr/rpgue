@@ -116,4 +116,3 @@ static func _execute_action(key_data: Dictionary) -> void:
 		action.call()
 	else:
 		push_error("Invalid Callable in key action")
-		

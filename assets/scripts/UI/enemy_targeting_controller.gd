@@ -9,11 +9,17 @@ func _init(battleMove: BattleMove, enemiesRef: Array[EnemyController]) -> void:
 	_battleMove = battleMove
 	_enemiesRef = enemiesRef
 
+	return
+
+
+func initial_hover() -> void:
 	# TODO: Create additional target types
-	if (battleMove.getMoveData().targets.has(MoveData.MoveTarget.ALL_ENEMIES)):
+	if (_battleMove.getMoveData().targets.has(MoveData.MoveTarget.ALL_ENEMIES)):
 		_hover_all_enemies()
-	else:
+	elif (_battleMove.getMoveData().targets.has(MoveData.MoveTarget.CURRENT)):
 		_hover_first_enemy()
+	else: # No target
+		return
 
 	return
 
@@ -70,7 +76,7 @@ func _on_hover_changed() -> void:
 	return
 
 
-func _cancel_enemy_selection() -> void:
+func cancel_enemy_selection() -> void:
 	_hoveredEnemies = []
 	_on_hover_changed()
 
