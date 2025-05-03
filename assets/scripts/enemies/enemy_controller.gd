@@ -64,6 +64,14 @@ func set_selected(value: bool) -> void:
 	return
 
 
+func set_semi_selected(value: bool) -> void:
+	_alive_assertion()
+
+	_enemyImage.modulate = Color(1.3, 1.3, 1.3) if value else Color(1, 1, 1)
+
+	return
+
+
 func is_alive() -> bool:
 	return _healthBar.alive()
 

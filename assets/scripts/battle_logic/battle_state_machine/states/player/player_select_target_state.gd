@@ -11,16 +11,7 @@ func _init(battleMove: BattleMove, battleStateMachine: BattleStateMachine) -> vo
 	_battleMove = battleMove
 	var enemiesRef: Array[EnemyController] = _stateMachine.battleScene._get_remaining_enemies()
 	_enemyTargetingController = EnemyTargetingController.new(_battleMove, enemiesRef)
-
-	return
-
-
-func on_state_start() -> void:
-	var _moveTargets: Array[MoveData.MoveTarget] = _battleMove.getMoveData().targets
-	if (_moveTargets.has(MoveData.MoveTarget.SELF) or _moveTargets.has(MoveData.MoveTarget.ALL_ALLIES)):
-		return
-
-	_enemyTargetingController.initial_hover()
+	_enemyTargetingController.target_selection_finished.connect(_on_target_selection_finished)
 
 	return
 
@@ -32,6 +23,7 @@ func on_state_resumed() -> void:
 
 
 func on_state_end() -> void:
+	_enemyTargetingController.target_selection_finished.disconnect(_on_target_selection_finished)
 	_enemyTargetingController.cancel_enemy_selection()
 
 	return
@@ -39,20 +31,17 @@ func on_state_end() -> void:
 
 func on_confirm_clicked() -> void:
 	print("player select target battle state confirm clicked")
-	var _targetEnemiesIds: Array[int] = _enemyTargetingController.get_selected_enemies_ids()
-	_enemyTargetingController.cancel_enemy_selection()
-	_stateMachine.pop_stack(PlayerAttackResultState.new(_battleMove, _targetEnemiesIds, _stateMachine))
-
+	_enemyTargetingController.handle_confirm_click()
 	return
 
 
 func on_left_arrow_clicked() -> void:
-	_enemyTargetingController.hover_previous_enemy()
+	_enemyTargetingController.handle_left_click()
 	return
 
 
 func on_right_arrow_clicked() -> void:
-	_enemyTargetingController.hover_next_enemy()
+	_enemyTargetingController.handle_right_click()
 	return
 
 
@@ -64,8 +53,16 @@ func on_up_arrow_clicked() -> void:
 	return
 
 
+func _on_target_selection_finished(enemy_indices: Array[int]) -> void:
+	print("[SIGNAL] target_selection_finished received successfully")
+	_stateMachine.pop_stack(PlayerAttackResultState.new(_battleMove, enemy_indices, _stateMachine))
+
+	return
+
+
 func on_back_clicked() -> void:
 	print("player_select_target_state on back clicked. Popping state")
+	_enemyTargetingController.handle_back_click()
 	_stateMachine.pop_state()
 
 	return
