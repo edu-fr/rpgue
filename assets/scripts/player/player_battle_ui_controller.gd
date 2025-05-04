@@ -15,27 +15,27 @@ func init(stateMachine: BattleStateMachine) -> void:
 
 	## MOCK
 	var _moves: Dictionary[String, MoveData] = GM.dataManager._externalGameConfig._movesRawConfig
-	
+
 	var _attackMoves: Array[MoveData] = _moves.values().filter(\
 		func(x: MoveData) -> bool: return x.category == MoveData.Category.ATTACK)
-	
+
 	var _techMoves: Array[MoveData] = _moves.values().filter(\
 		func(x: MoveData) -> bool: return x.category == MoveData.Category.TECH)
-	
+
 	var _playerBattleAttackMoves: Array[BattleMove]
-	
+
 	var _playerBattleTechMoves: Array[BattleMove];
-	
+
 	for i: int in 4:
 		var _chooseAttackMove: MoveData = _attackMoves.get(i)
 		_playerBattleAttackMoves.append(BattleMove.new(_chooseAttackMove, player))
 		var _chooseTechMove: MoveData = _techMoves.get(i)
 		_playerBattleTechMoves.append(BattleMove.new(_chooseTechMove, player))
 		##
-	
+
 	_attackMovesPanel.init(stateMachine.on_attack_index_cliked, _playerBattleAttackMoves)
-	_techMovesPanel.init(stateMachine.on_tech_clicked, _playerBattleTechMoves)
-	
+	_techMovesPanel.init(stateMachine.on_tech_index_cliked, _playerBattleTechMoves)
+
 	return
 
 
@@ -105,4 +105,3 @@ func _show_and_enable_tech_moves_panel() -> void:
 	_techMovesPanel.show()
 
 	return
-	
