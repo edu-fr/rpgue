@@ -12,7 +12,7 @@ func init(onBattleMoveIndexClicked: Callable, movesInfo: Array[BattleMove]) -> v
 	battleMovesList = []
 
 	for i: int in battleMoveButtonsSlots.size():
-		if (movesInfo.size() < i):
+		if (movesInfo.size() <= i):
 			battleMoveButtonsSlots[i].set_visible(false)
 			continue
 

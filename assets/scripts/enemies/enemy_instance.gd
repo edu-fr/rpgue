@@ -1,0 +1,3 @@
+class_name EnemyInstance
+extends LivingBeing
+

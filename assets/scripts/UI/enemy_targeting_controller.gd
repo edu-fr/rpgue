@@ -63,15 +63,15 @@ func _calculate_target_indices() -> Array[int]:
 	if MoveData.MoveTarget.ALL_ENEMIES in _battleMove.getMoveData().targets:
 		return range(_enemies.size())
 
-	var indices: Array[int] = []
+	var _indices: Array[int] = []
 
 	for target_type: MoveData.MoveTarget in _battleMove.getMoveData().targets:
 		match target_type:
 			MoveData.MoveTarget.CURRENT:
 				if _is_valid_index(_currentIndex):
-					indices.append(_currentIndex)
+					_indices.append(_currentIndex)
 			MoveData.MoveTarget.ADJACENT:
-				indices += _get_adjacent_indices(_currentIndex)
+				_indices += _get_adjacent_indices(_currentIndex)
 			MoveData.MoveTarget.ADJACENT_ALLIES:
 				pass
 			MoveData.MoveTarget.ALL_ALLIES:
@@ -81,21 +81,21 @@ func _calculate_target_indices() -> Array[int]:
 			MoveData.MoveTarget.ALL_ENEMIES:
 				pass
 
-	return _get_unique_sorted_indices(indices)
+	return _get_unique_sorted_indices(_indices)
 
 
 func _get_adjacent_indices(center_index: int) -> Array[int]:
 	if not _is_valid_index(center_index):
 		return []
 
-	var adjacent: Array[int] = []
+	var _adjacent: Array[int] = []
 
 	if center_index > 0:
-		adjacent.append(center_index - 1)
+		_adjacent.append(center_index - 1)
 	if center_index < _enemies.size() - 1:
-		adjacent.append(center_index + 1)
+		_adjacent.append(center_index + 1)
 
-	return adjacent
+	return _adjacent
 
 
 func _is_valid_index(index: int) -> bool:
@@ -103,20 +103,20 @@ func _is_valid_index(index: int) -> bool:
 
 
 func _get_unique_sorted_indices(indices: Array[int]) -> Array[int]:
-	var unique: Array[int] = []
-	for index: int in indices:
-		if _is_valid_index(index) && not unique.has(index):
-			unique.append(index)
-	unique.sort()
+	var _unique: Array[int] = []
+	for _index: int in indices:
+		if _is_valid_index(_index) && not _unique.has(_index):
+			_unique.append(_index)
+	_unique.sort()
 
-	return unique
+	return _unique
 
 
 func _highlight_targets(indices: Array[int]) -> void:
 	# Implemente a lógica de highlight na sua UI
 	for i: int in _enemies.size():
-		var enemy: EnemyController = _enemies[i]
-		enemy.set_selected(i in indices)
+		var _enemy: EnemyController = _enemies[i]
+		_enemy.set_selected(i in indices)
 
 	return
 

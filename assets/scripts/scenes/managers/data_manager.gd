@@ -13,8 +13,8 @@ var currentRunData: RunData
 
 
 func init() -> void:
-	_loadOrCreateSaveData()
 	_import_external_data()
+	_loadOrCreateSaveData()
 
 	return
 
@@ -62,20 +62,25 @@ func get_monsters_data() -> Dictionary:
 	return _externalGameConfig.get_monsters_data()
 
 
+func get_player_default_data() -> PlayerBaseData:
+	return _externalGameConfig.get_player_default_data()
+
+
+# TODO: Voltar a carregar data do save file
 func _load_data_from_save_file() -> bool:
-	if (FileAccess.file_exists(_SAVE_DATA_PATH)):
-		var loadedData: SaveData = JsonClassConverter.json_file_to_class(SaveData, _SAVE_DATA_PATH)
-		if (loadedData != null):
-			_loadedSaveData = loadedData
-			print("Local data successfully loaded!")
-
-			return true
-		else:
-			print("Local data failed to load!")
-
-			return false
-
-	print ("Save file doesn't exists")
+#	if (FileAccess.file_exists(_SAVE_DATA_PATH)):
+#		var loadedData: SaveData = JsonClassConverter.json_file_to_class(SaveData, _SAVE_DATA_PATH)
+#		if (loadedData != null):
+#			_loadedSaveData = loadedData
+#			print("Local data successfully loaded!")
+#
+#			return true
+#		else:
+#			print("Local data failed to load!")
+#
+#			return false
+#
+#	print ("Save file doesn't exists")
 
 	return false
 
@@ -102,6 +107,7 @@ func _create_save_data() -> void:
 func _import_external_data() -> void:
 	var data: Dictionary = _get_json_from_path(DataFileName.EXTERNAL_DATA)
 	_externalGameConfig = ExternalGameConfig.create_from_json(data)
+	print("External data imported")
 
 	return
 

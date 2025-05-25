@@ -10,31 +10,11 @@ extends Control
 func init(stateMachine: BattleStateMachine) -> void:
 	var player: PlayerInstance = GM.runManager.currentRunDataRef.playerInstance
 
-	_statusPanel.init(player._baseMaxHp, player._baseCurrentHp)
+	_statusPanel.init(player.get_max_HP(), player.get_current_HP())
 	_actionsPanel.init(stateMachine)
 
-	## MOCK
-	var _moves: Dictionary[String, MoveData] = GM.dataManager._externalGameConfig._movesRawConfig
-
-	var _attackMoves: Array[MoveData] = _moves.values().filter(\
-		func(x: MoveData) -> bool: return x.category == MoveData.Category.ATTACK)
-
-	var _techMoves: Array[MoveData] = _moves.values().filter(\
-		func(x: MoveData) -> bool: return x.category == MoveData.Category.TECH)
-
-	var _playerBattleAttackMoves: Array[BattleMove]
-
-	var _playerBattleTechMoves: Array[BattleMove];
-
-	for i: int in 4:
-		var _chooseAttackMove: MoveData = _attackMoves.get(i)
-		_playerBattleAttackMoves.append(BattleMove.new(_chooseAttackMove, player))
-		var _chooseTechMove: MoveData = _techMoves.get(i)
-		_playerBattleTechMoves.append(BattleMove.new(_chooseTechMove, player))
-		##
-
-	_attackMovesPanel.init(stateMachine.on_attack_index_cliked, _playerBattleAttackMoves)
-	_techMovesPanel.init(stateMachine.on_tech_index_cliked, _playerBattleTechMoves)
+	_attackMovesPanel.init(stateMachine.on_attack_index_cliked, player.get_battle_moves_by_category(MoveData.Category.ATTACK))
+	_techMovesPanel.init(stateMachine.on_tech_index_cliked, player.get_battle_moves_by_category(MoveData.Category.TECH))
 
 	return
 

@@ -1,8 +1,8 @@
 class_name PlayerBaseData
 extends Resource
 
-var baseHealth: int
-var baseDamage: int
+var baseHealth: float
+var baseDamage: float
 
 
 func _init() -> void:

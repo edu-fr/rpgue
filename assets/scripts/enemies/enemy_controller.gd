@@ -4,6 +4,8 @@ extends Control
 @export var _healthBar: HealthBarController
 @export var _enemyImage: TextureRect
 
+var _enemy: EnemyInstance
+
 var _enemyAttackPower: int
 var _enemyHealPower: int
 var enemy_id: int
