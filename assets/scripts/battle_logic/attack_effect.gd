@@ -1,7 +1,7 @@
 class_name AttackEffect
 
-enum EffectDamageType { NONE, VARIABLE, ABSOLUTE }
-enum EffectActivationWindow { NONE, PRE_HIT, STANDARD, POST_HIT }
+enum EffectDamageType { UNKNOWN, NONE, VARIABLE, ABSOLUTE }
+enum EffectActivationWindow { UNKNOWN, NONE, PRE_HIT, STANDARD, POST_HIT }
 
 var damageType: EffectDamageType
 var damageValue: float

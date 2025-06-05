@@ -4,7 +4,7 @@ extends Node
 const _BASE_DATA_PATH: String = "res://assets/data/"
 const _SAVE_DATA_PATH: String = "user://save_data.json"
 # MUST MATCH DATA FILE NAME
-enum DataFileName { NONE, EXTERNAL_DATA }
+enum DataFileName { UNKNOWN, NONE, EXTERNAL_DATA }
 var _loadedSaveData: SaveData
 var _externalGameConfig: ExternalGameConfig
 

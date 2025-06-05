@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://b8bm4yg8pn8n6"]
+
+[node name="StatusConditionController" type="TextureRect"]
+physics_interpolation_mode = 0

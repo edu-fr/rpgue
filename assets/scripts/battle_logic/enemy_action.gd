@@ -1,6 +1,6 @@
 class_name EnemyAction
 
-enum EnemyActionCategory {NONE = 0, ATTACK = 1, HEAL = 2}
+enum EnemyActionCategory { UNKNOWN = 0, NONE = 1, ATTACK = 2, HEAL = 3}
 var actionCategory: EnemyActionCategory
 var actionValue: int
 

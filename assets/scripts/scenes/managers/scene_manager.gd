@@ -4,7 +4,7 @@ extends Node
 const _BASE_SCENE_PATH: String = "res://assets/scenes/"
 @export var GameSceneTree: Control
 # MUST MATCH TSCN FILE NAME
-enum SceneName { NONE, MAIN_MENU, BATTLE, UPGRADE, MAP }
+enum SceneName { UNKNOWN, NONE, MAIN_MENU, BATTLE, UPGRADE, MAP }
 
 
 func change_scene(sceneName: SceneName) -> void:

@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://7rliwei46ypd"]
+[gd_scene load_steps=9 format=3 uid="uid://7rliwei46ypd"]
 
 [ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="1_nrcy3"]
 [ext_resource type="Script" uid="uid://bfp2pko3wqksu" path="res://assets/scripts/enemies/enemy_controller.gd" id="1_vweea"]
 [ext_resource type="Script" uid="uid://2sl453ikgn7p" path="res://assets/scripts/UI/health_progress_bar_controller.gd" id="2_1psk3"]
 [ext_resource type="Texture2D" uid="uid://csumf0mk4tank" path="res://assets/art/enemies/dark_mage.png" id="2_k0iwk"]
+[ext_resource type="PackedScene" uid="uid://ck1t7tuamnowk" path="res://assets/prefabs/UI/grids/status_condition_panel_controller.tscn" id="5_kxbfq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1b44g"]
 bg_color = Color(0, 0, 0, 1)
@@ -71,3 +72,6 @@ size_flags_vertical = 4
 texture = ExtResource("2_k0iwk")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
+
+[node name="StatusConditionPanelController" parent="." instance=ExtResource("5_kxbfq")]
+layout_mode = 2

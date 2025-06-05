@@ -1,6 +1,6 @@
 class_name PlayerAction
 
-enum ActionCategory {NONE, ATTACK, TECH}
+enum ActionCategory { UNKNOWN, NONE, ATTACK, TECH }
 var _actionCategory: ActionCategory
 var _enemiesIds: Array[int]
 

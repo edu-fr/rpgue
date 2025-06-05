@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck1t7tuamnowk"]
+
+[ext_resource type="Script" uid="uid://dqk1fn8c4xicx" path="res://assets/scripts/UI/status_condition_panel_controller.gd" id="1_vmtrh"]
+
+[node name="StatusConditionPanelController" type="GridContainer"]
+script = ExtResource("1_vmtrh")

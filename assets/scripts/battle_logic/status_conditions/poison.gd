@@ -1,12 +1,17 @@
 class_name Poison
 extends AbstractBaseStatusCondition
 
-func pre_turn() -> void:
-	return
+func get_type() -> StatusConditionEnums.Type:
+	return StatusConditionEnums.Type.POISON
 
-func action_phase() -> void:
-	return
 
-func post_turn() -> void:
+func pre_turn() -> StatusConditionTurnEffect:
+	return null
 
-	return
+
+func action_phase() -> StatusConditionTurnEffect:
+	return null
+
+
+func post_turn() -> StatusConditionTurnEffect:
+	return StatusConditionTurnEffect.new(10, TurnEffectType.DAMAGE)

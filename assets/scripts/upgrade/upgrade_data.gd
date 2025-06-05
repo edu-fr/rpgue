@@ -1,11 +1,11 @@
 class_name UpgradeData
 extends Resource
 
-enum UpgradeType { STATS, FIRE, STATUS, DEFENSIVE, GRASS }
-enum UpgradeTarget { SELF, ALLY, ENEMY }
-enum ValueType { NONE, VARIABLE, ABSOLUTE }
-enum StatType { NONE, SKILLS, MAX_HP, CURRENT_HP }
-enum RequirementsToAppear { NONE, WARRIOR, MAGE, OMNIBUFF }
+enum UpgradeType { UNKNOWN, STATS, FIRE, STATUS, DEFENSIVE, GRASS }
+enum UpgradeTarget { UNKNOWN, SELF, ALLY, ENEMY }
+enum ValueType { UNKNOWN, NONE, VARIABLE, ABSOLUTE }
+enum StatType { UNKNOWN, NONE, SKILLS, MAX_HP, CURRENT_HP }
+enum RequirementsToAppear { UNKNOWN, NONE, WARRIOR, MAGE, OMNIBUFF }
 
 var privateName: String
 var name: String

@@ -1,14 +1,14 @@
 class_name MoveData
 extends Resource
 
-enum Category { ATTACK, TECH }
-enum MoveType { SLASH, PIERCE, STRIKE, FIRE, WATER, GRASS, LIGHT, DARK, DEFENSIVE, STATUS, STATS }
-enum MoveTarget { CURRENT, ADJACENT, ALL_ENEMIES, SELF, ADJACENT_ALLIES, ALL_ALLIES }
-enum ValueType { NONE, VARIABLE, ABSOLUTE }
-enum ActivationWindow { NONE, PRE_HIT, STANDARD, POST_HIT }
-enum StatusCondition { NONE, STAGGER, BURN, FREEZE }
-enum AdditionalDamageType { NONE, FIXED, VARIABLE }
-enum RequirementsToAppear { NONE, WARRIOR, MAGE, OMNIBUFF }
+enum Category { UNKNOWN, ATTACK, TECH }
+enum MoveType { UNKNOWN, SLASH, PIERCE, STRIKE, FIRE, WATER, GRASS, LIGHT, DARK, DEFENSIVE, STATUS, STATS }
+enum MoveTarget { UNKNOWN, CURRENT, ADJACENT, ALL_ENEMIES, SELF, ADJACENT_ALLIES, ALL_ALLIES }
+enum ValueType { UNKNOWN, NONE, VARIABLE, ABSOLUTE }
+enum ActivationWindow { UNKNOWN, NONE, PRE_HIT, STANDARD, POST_HIT }
+enum StatusCondition { UNKNOWN, NONE, STAGGER, BURN, FREEZE }
+enum AdditionalDamageType { UNKNOWN, NONE, FIXED, VARIABLE }
+enum RequirementsToAppear { UNKNOWN, NONE, WARRIOR, MAGE, OMNIBUFF }
 
 var privateName: String
 var name: String

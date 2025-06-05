@@ -3,7 +3,7 @@ class_name Stack
 var _elements: Array = []
 
 
-func push(element) -> void:
+func push(element: Variant) -> void:
 	assert(element != null, "Element can't be null")
 
 	_elements.push_back(element)
@@ -48,7 +48,7 @@ func clear() -> void:
 
 func print_current() -> void:
 	print("Stack state")
-	for i in _elements.size():
+	for i: int in _elements.size():
 		print("Stack[" + str(i) + "]: " + str(_elements[i]))
 
 	return

@@ -1,7 +1,7 @@
 class_name ActionsPanelController
 extends Control
 
-enum BUTTON {NONE, ATTACK, TECH}
+enum BUTTON { UNKNOWN, NONE, ATTACK, TECH }
 @export var _attackButton: Button
 @export var _techButton: Button
 

@@ -1,8 +1,8 @@
 class_name BattleScene
 extends Control
 
-enum BattleResult {NONE, ONGOING, PLAYER_WIN, PLAYER_LOSE }
-enum TurnOwner {NONE, PLAYER, ENEMIES}
+enum BattleResult { UNKNOWN, NONE, ONGOING, PLAYER_WIN, PLAYER_LOSE }
+enum TurnOwner { UNKNOWN, NONE, PLAYER, ENEMIES}
 const _enemyScenePath: String = "res://assets/prefabs/enemy.tscn"
 @export var _playerBattleUIController: PlayerBattleUIController
 @export var _enemiesHBoxContainer: HBoxContainer
