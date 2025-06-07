@@ -62,8 +62,12 @@ func get_monsters_data() -> Dictionary:
 	return _externalGameConfig.get_monsters_data()
 
 
-func get_player_default_data() -> PlayerBaseData:
-	return _externalGameConfig.get_player_default_data()
+func get_player_default_class_data() -> PlayerClassData:
+	return _externalGameConfig.get_player_default_class_data()
+
+
+func get_enemy_data_with_name(privateName: String) -> EnemyData:
+	return _externalGameConfig.get_monsters_data().find_key(privateName)
 
 
 # TODO: Voltar a carregar data do save file

@@ -4,18 +4,17 @@ extends Control
 @export var _healthBar: HealthBarController
 @export var _enemyImage: TextureRect
 
-var _enemy: EnemyInstance
+var _enemyInstance: EnemyInstance
 
-var _enemyAttackPower: int
-var _enemyHealPower: int
 var enemy_id: int
 var rewardCoinsAmount: int
 
 
-func init(id: int) -> void:
+func init(enemyInstance: EnemyInstance, id: int) -> void:
+	enemyInstance = _enemyInstance
+
+	## CONTINUAR INSTANCIACAO DO INIMIGO AGORA COM DADOS REAIS
 	_setup_health_bar(50)
-	_enemyAttackPower = 10
-	_enemyHealPower = 5
 	rewardCoinsAmount = 10
 	enemy_id = id
 

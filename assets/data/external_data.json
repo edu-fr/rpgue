@@ -156,7 +156,7 @@
       "STATUS CONDITION": "NONE",
       "ACTIVATION CHANCE": 0,
       "ADDITIONAL DAMAGE TYPE": "VARIABLE",
-      "ADDITIONAL DAMAGE VALUE": 100,
+      "ADDITIONAL DAMAGE VALUE": 1,
       "ACTIVATION WINDOW": "POST-HIT",
       "STATS TO INCREASE": "NONE",
       "VALUE TYPE TO INCREASE": "NONE",
@@ -169,6 +169,30 @@
       "POOL": 1
     },
     "8": {
+      "PRIVATE NAME": "scorching_orb",
+      "NAME": "Scorching Orb",
+      "DESCRIPTION": "Move quickly to press a fireball against the opponent chest",
+      "CATEGORY": "ATTACK",
+      "TYPE(S)": "FIRE, STRIKE",
+      "BASE DAMAGE": 5,
+      "BASE BLOCK": 0,
+      "TARGETS": "CURRENT",
+      "STATUS CONDITION": "BURN",
+      "ACTIVATION CHANCE": 0.1,
+      "ADDITIONAL DAMAGE TYPE": "NONE",
+      "ADDITIONAL DAMAGE VALUE": 0,
+      "ACTIVATION WINDOW": "STANDARD",
+      "STATS TO INCREASE": "NONE",
+      "VALUE TYPE TO INCREASE": "NONE",
+      "VALUE TO INCREASE": 0,
+      "STATS TO DECREASE": "NONE",
+      "VALUE TYPE TO DECREASE": "NONE",
+      "VALUE TO DECREASE": 0,
+      "REQUIREMENTS TO APPEAR": "MAGE, OMNIBUFF",
+      "RESTRICTIONS": "NONE",
+      "POOL": 1
+    },
+    "9": {
       "PRIVATE NAME": "shields_up",
       "NAME": "Shields up",
       "DESCRIPTION": "Defend the next blow with chance to take the enemy's balance",
@@ -192,7 +216,31 @@
       "RESTRICTIONS": "NONE",
       "POOL": 1
     },
-    "9": {
+    "10": {
+      "PRIVATE NAME": "spellfire_parry",
+      "NAME": "Spellfire Parry",
+      "DESCRIPTION": "Parry the next enemy move with a focused fire wall",
+      "CATEGORY": "TECH",
+      "TYPE(S)": "FIRE, DEFENSIVE",
+      "BASE DAMAGE": 10,
+      "BASE BLOCK": 5,
+      "TARGETS": "CURRENT",
+      "STATUS CONDITION": "NONE",
+      "ACTIVATION CHANCE": 0,
+      "ADDITIONAL DAMAGE TYPE": "VARIABLE",
+      "ADDITIONAL DAMAGE VALUE": 0.25,
+      "ACTIVATION WINDOW": "POST-HIT",
+      "STATS TO INCREASE": "NONE",
+      "VALUE TYPE TO INCREASE": "NONE",
+      "VALUE TO INCREASE": 0,
+      "STATS TO DECREASE": "NONE",
+      "VALUE TYPE TO DECREASE": "NONE",
+      "VALUE TO DECREASE": 0,
+      "REQUIREMENTS TO APPEAR": "MAGE, OMNIBUFF",
+      "RESTRICTIONS": "NONE",
+      "POOL": 1
+    },
+    "11": {
       "PRIVATE NAME": "grass_wall",
       "NAME": "Grass Wall",
       "DESCRIPTION": "Protect yourself from the next move behind a plant wall",
@@ -216,7 +264,7 @@
       "RESTRICTIONS": "NONE",
       "POOL": 1
     },
-    "10": {
+    "12": {
       "PRIVATE NAME": "meditation",
       "NAME": "Meditation",
       "DESCRIPTION": "The next move you use will deal double damage",
@@ -240,7 +288,7 @@
       "RESTRICTIONS": "NONE",
       "POOL": 1
     },
-    "11": {
+    "13": {
       "PRIVATE NAME": "torch_throw",
       "NAME": "Torch throw",
       "DESCRIPTION": "Throw a torch in the enemy, applying burning if hit",
@@ -264,7 +312,7 @@
       "RESTRICTIONS": "NONE",
       "POOL": 1
     },
-    "12": {
+    "14": {
       "PRIVATE NAME": "hard_strike",
       "NAME": "Hard Strike",
       "DESCRIPTION": "A powerful strike onto the targets head. May stagger",
@@ -288,7 +336,7 @@
       "RESTRICTIONS": "NONE",
       "POOL": 1
     },
-    "13": {
+    "15": {
       "PRIVATE NAME": "poisonous_fangs",
       "NAME": "Poisonous Fangs",
       "DESCRIPTION": "Bites the target and spray venom into the enemy bloodstream.",
@@ -312,7 +360,7 @@
       "RESTRICTIONS": "NONE",
       "POOL": 1
     },
-    "14": {
+    "16": {
       "PRIVATE NAME": "take_cover",
       "NAME": "Take cover",
       "DESCRIPTION": "Try to protect itself from the next move",
@@ -410,7 +458,10 @@
       "BASE DAMAGE": 10,
       "BASE BLOCK": 0,
       "MOVE LIST": "hard_strike",
-      "MAP": 1
+      "MAX HP": 50,
+      "STARTING HP": 50,
+      "STARTING STATUS CONDITION": "STAGGER",
+      "HABITAT": 1
     },
     "2": {
       "PRIVATE NAME": "crazy_bat",
@@ -419,7 +470,30 @@
       "BASE DAMAGE": 12,
       "BASE BLOCK": 2,
       "MOVE LIST": "poisonous_fangs, take_cover",
-      "MAP": 1
+      "MAX HP": 25,
+      "STARTING HP": 20,
+      "STARTING STATUS CONDITION": "NONE",
+      "HABITAT": 1
+    }
+  },
+  "Player Classes": {
+    "1": {
+      "PRIVATE NAME": "hero",
+      "NAME": "Hero",
+      "DESCRIPTION": "Dual sword wielder with a radiant confidence.",
+      "BASE DAMAGE": 14,
+      "BASE BLOCK": 0,
+      "INITIAL MOVE LIST": "vertical_slash",
+      "BASE MAX HP": 50
+    },
+    "2": {
+      "PRIVATE NAME": "rogue_mage",
+      "NAME": "Rogue mage",
+      "DESCRIPTION": "Combines quick and furtive movement with powerful low-range spells.",
+      "BASE DAMAGE": 10,
+      "BASE BLOCK": 2,
+      "INITIAL MOVE LIST": "scorching_orb",
+      "BASE MAX HP": 25
     }
   }
 }
