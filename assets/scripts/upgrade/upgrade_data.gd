@@ -5,7 +5,7 @@ enum UpgradeType { UNKNOWN, STATS, FIRE, STATUS, DEFENSIVE, GRASS }
 enum UpgradeTarget { UNKNOWN, SELF, ALLY, ENEMY }
 enum ValueType { UNKNOWN, NONE, VARIABLE, ABSOLUTE }
 enum StatType { UNKNOWN, NONE, SKILLS, MAX_HP, CURRENT_HP }
-enum RequirementsToAppear { UNKNOWN, NONE, WARRIOR, MAGE, OMNIBUFF }
+enum RequirementsToAppear { UNKNOWN, NONE, WARRIOR, MAGE, OMNIBUFF, ENEMY, THIEF }
 
 var privateName: String
 var name: String
@@ -102,12 +102,24 @@ static func _parse_value_type(raw: Variant) -> ValueType:
 static func _parse_requirement_to_appear(raw: Variant) -> Array[RequirementsToAppear]:
 	var _rawAsStr: String = str(raw).strip_edges().to_upper()
 	var _requirements: Array[RequirementsToAppear] = []
-	for _req: String in _rawAsStr:
-		match _rawAsStr:
-			"NONE": _requirements.append(RequirementsToAppear.NONE)
+
+	# Se for NONE ou vazio, retorna array com NONE
+	if _rawAsStr == "NONE" or _rawAsStr.is_empty():
+		_requirements.append(RequirementsToAppear.NONE)
+		return _requirements
+
+	# Divide a string em partes separadas por vírgula
+	for _req in _rawAsStr.split(",", false):
+		var requirement = _req.strip_edges()
+		match requirement:
 			"WARRIOR": _requirements.append(RequirementsToAppear.WARRIOR)
 			"MAGE": _requirements.append(RequirementsToAppear.MAGE)
+			"THIEF": _requirements.append(RequirementsToAppear.THIEF)
 			"OMNIBUFF": _requirements.append(RequirementsToAppear.OMNIBUFF)
 			_: _requirements.append(RequirementsToAppear.NONE)
 
 	return _requirements
+
+
+func _to_string() -> String:
+	return ObjectPrinter.print_object(self)

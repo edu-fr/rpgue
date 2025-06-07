@@ -39,10 +39,10 @@ func act() -> EnemyAction:
 	return null
 
 
-func receive_player_attack(damage: float) -> void:
+func receive_player_attack(moveData: MoveData) -> void:
 	_alive_assertion()
 
-	_take_damage(damage)
+	_take_damage(moveData.baseDamage)
 
 	if (!is_alive()):
 		_on_death()

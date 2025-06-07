@@ -263,6 +263,78 @@
       "REQUIREMENTS TO APPEAR": "NONE",
       "RESTRICTIONS": "NONE",
       "POOL": 1
+    },
+    "12": {
+      "PRIVATE NAME": "hard_strike",
+      "NAME": "Hard Strike",
+      "DESCRIPTION": "A powerful strike onto the targets head. May stagger",
+      "CATEGORY": "ATTACK",
+      "TYPE(S)": "STRIKE",
+      "BASE DAMAGE": 12,
+      "BASE BLOCK": 0,
+      "TARGETS": "CURRENT",
+      "STATUS CONDITION": "STAGGER",
+      "ACTIVATION CHANCE": 0.2,
+      "ADDITIONAL DAMAGE TYPE": "NONE",
+      "ADDITIONAL DAMAGE VALUE": 0,
+      "ACTIVATION WINDOW": "STANDARD",
+      "STATS TO INCREASE": "NONE",
+      "VALUE TYPE TO INCREASE": "NONE",
+      "VALUE TO INCREASE": 0,
+      "STATS TO DECREASE": "NONE",
+      "VALUE TYPE TO DECREASE": "NONE",
+      "VALUE TO DECREASE": 0,
+      "REQUIREMENTS TO APPEAR": "ENEMY, THIEF",
+      "RESTRICTIONS": "NONE",
+      "POOL": 1
+    },
+    "13": {
+      "PRIVATE NAME": "poisonous_fangs",
+      "NAME": "Poisonous Fangs",
+      "DESCRIPTION": "Bites the target and spray venom into the enemy bloodstream.",
+      "CATEGORY": "ATTACK",
+      "TYPE(S)": "PIERCE, STATUS CONDITION",
+      "BASE DAMAGE": 4,
+      "BASE BLOCK": 0,
+      "TARGETS": "CURRENT",
+      "STATUS CONDITION": "POISON",
+      "ACTIVATION CHANCE": 1,
+      "ADDITIONAL DAMAGE TYPE": "NONE",
+      "ADDITIONAL DAMAGE VALUE": 0,
+      "ACTIVATION WINDOW": "POST-HIT",
+      "STATS TO INCREASE": "NONE",
+      "VALUE TYPE TO INCREASE": "NONE",
+      "VALUE TO INCREASE": 0,
+      "STATS TO DECREASE": "NONE",
+      "VALUE TYPE TO DECREASE": "NONE",
+      "VALUE TO DECREASE": 0,
+      "REQUIREMENTS TO APPEAR": "ENEMY, THIEF",
+      "RESTRICTIONS": "NONE",
+      "POOL": 1
+    },
+    "14": {
+      "PRIVATE NAME": "take_cover",
+      "NAME": "Take cover",
+      "DESCRIPTION": "Try to protect itself from the next move",
+      "CATEGORY": "TECH",
+      "TYPE(S)": "DEFENSIVE",
+      "BASE DAMAGE": 0,
+      "BASE BLOCK": 12,
+      "TARGETS": "SELF",
+      "STATUS CONDITION": "NONE",
+      "ACTIVATION CHANCE": 0,
+      "ADDITIONAL DAMAGE TYPE": "NONE",
+      "ADDITIONAL DAMAGE VALUE": 0,
+      "ACTIVATION WINDOW": "STANDARD",
+      "STATS TO INCREASE": "NONE",
+      "VALUE TYPE TO INCREASE": "NONE",
+      "VALUE TO INCREASE": 0,
+      "STATS TO DECREASE": "NONE",
+      "VALUE TYPE TO DECREASE": "NONE",
+      "VALUE TO DECREASE": 0,
+      "REQUIREMENTS TO APPEAR": "ENEMY, THIEF",
+      "RESTRICTIONS": "NONE",
+      "POOL": 1
     }
   },
   "Upgrades": {
@@ -330,5 +402,24 @@
       "POOL": 1
     }
   },
-  "Enemies": {}
+  "Enemies": {
+    "1": {
+      "PRIVATE NAME": "zombie",
+      "NAME": "Zombie",
+      "DESCRIPTION": "A rotting corpse that stalks the living, driven by hunger.",
+      "BASE DAMAGE": 10,
+      "BASE BLOCK": 0,
+      "MOVE LIST": "hard_strike",
+      "MAP": 1
+    },
+    "2": {
+      "PRIVATE NAME": "crazy_bat",
+      "NAME": "Crazy Bat",
+      "DESCRIPTION": "A bat infected with a desease that make it violent.",
+      "BASE DAMAGE": 12,
+      "BASE BLOCK": 2,
+      "MOVE LIST": "poisonous_fangs, take_cover",
+      "MAP": 1
+    }
+  }
 }

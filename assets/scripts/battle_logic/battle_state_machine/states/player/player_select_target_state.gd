@@ -36,12 +36,12 @@ func on_confirm_clicked() -> void:
 
 
 func on_left_arrow_clicked() -> void:
-	_enemyTargetingController.handle_left_click()
+	_enemyTargetingController.handle_press_left()
 	return
 
 
 func on_right_arrow_clicked() -> void:
-	_enemyTargetingController.handle_right_click()
+	_enemyTargetingController.handle_press_right()
 	return
 
 

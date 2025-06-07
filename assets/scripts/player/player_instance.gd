@@ -1,7 +1,6 @@
 class_name PlayerInstance
 extends LivingBeing
 
-
 func _init() -> void:
 	## MOCK
 	var _rawBaseData: PlayerBaseData = GM.dataManager._externalGameConfig.get_player_default_data()
@@ -40,8 +39,8 @@ func get_battle_moves_by_category(category: MoveData.Category) -> Array[BattleMo
 	var _moves: Array[BattleMove] = get_moves()
 	assert(_moves.size() > 0, "No moves found on player")
 
-	var _movesFromCategory: Array[BattleMove] =\
-		_moves.filter(func(move: BattleMove) -> bool: return move.category == category)
+	var _movesFromCategory: Array[BattleMove] = \
+	_moves.filter(func(move: BattleMove) -> bool: return move.category == category)
 	assert(_movesFromCategory.size() > 0, "Can't find any move from category " + str(category))
 
 	return _movesFromCategory

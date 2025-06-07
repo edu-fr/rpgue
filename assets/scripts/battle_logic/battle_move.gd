@@ -19,5 +19,5 @@ func _init(moveData: MoveData) -> void:
 	return
 
 
-func getMoveData() -> MoveData:
+func get_move_data() -> MoveData:
 	return _moveData
