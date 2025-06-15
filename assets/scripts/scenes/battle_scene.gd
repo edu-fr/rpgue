@@ -10,8 +10,10 @@ const _enemyScenePath: String = "res://assets/prefabs/enemy.tscn"
 @export var _debugVisualStack: VisualStackVBoxContainer
 
 var _stateMachine: BattleStateMachine
+var _playerInstance: PlayerInstance
 var _allEnemies: Array[EnemyController]
 var _playerReward: PlayerReward
+var turnFlowController: TurnFlowController
 
 
 func _ready() -> void:
@@ -41,11 +43,14 @@ func setup_scene() -> void:
 	_spawn_enemies(4)
 	_setup_player()
 	_setup_UI()
+	_setup_turn_queue()
 
 	return
 
 
 func _setup_player() -> void:
+	_playerInstance = GM.runManager.currentRunDataRef.playerInstance.duplicate(true)
+
 	_playerBattleUIController.init(_stateMachine)
 	_playerBattleUIController.hide_and_disable_moves_panels()
 	_playerBattleUIController.hide_and_disable_actions_panel()
@@ -61,13 +66,22 @@ func _setup_UI() -> void:
 
 
 func _spawn_enemies(_quantity: int) -> void:
+	var currentLevelEnemyData: EnemyData = GM.DataManager.get_random_enemy() # TODO: Select by habitat
+
 	for i: int in _quantity:
 		var enemy: Node = preload(_enemyScenePath).instantiate()
 		var enemyController: EnemyController = enemy
-		enemyController.init(i)
+
+		enemyController.init(EnemyInstance.new(currentLevelEnemyData.privateName), i)
 
 		_allEnemies.append(enemyController)
 		_enemiesHBoxContainer.add_child(enemy)
+
+	return
+
+
+func _setup_turn_queue() -> void:
+	turnFlowController = TurnFlowController.new()
 
 	return
 
@@ -92,6 +106,12 @@ func _get_remaining_enemies() -> Array[EnemyController]:
 
 func _is_player_alive() -> bool:
 	return _playerBattleUIController.is_player_alive()
+
+
+func _apply_attack_on_player(battle_move: BattleMove) -> void:
+	_playerInstance.take_damage(battle_move.power)
+
+	return
 
 
 #region Turn Logic

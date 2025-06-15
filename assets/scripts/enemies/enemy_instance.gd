@@ -11,11 +11,11 @@ func _init(privateName: String) -> void:
 	var _enemyBattleTechMoves: Array[BattleMove];
 
 	for _moveName: String in _enemyData.moveNameList:
-		var _move: MoveData = GM.dataManager._externalGameConfig.get_move_with_name(_moveName)
+		var _move: MoveData = GM.dataManager._externalGameConfig.get_move_data_with_name(_moveName)
 		if (_move.category == MoveData.Category.ATTACK):
-			_enemyBattleAttackMoves.append(BattleMove.new(_move))
+			_enemyBattleAttackMoves.append(BattleMove.new(_move, self))
 		elif (_move.category == MoveData.Category.TECH):
-			_enemyBattleTechMoves.append(BattleMove.new(_move))
+			_enemyBattleTechMoves.append(BattleMove.new(_move, self))
 
 	var _totalMoves: Array[BattleMove]
 	_totalMoves.append_array(_enemyBattleAttackMoves.duplicate(true))

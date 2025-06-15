@@ -16,25 +16,26 @@ static func create_from_json(jsonData: Dictionary) -> ExternalGameConfig:
 	for key: String in _movesData.keys():
 		var _movesDataDict: Dictionary = _movesData[key]
 		var _moveData: MoveData = MoveData.create_from_json(_movesDataDict)
-		_config._movesRawConfig[key] = _moveData
+		_config._movesRawConfig[_moveData.privateName] = _moveData
 
 	var _upgradesData: Dictionary = jsonData.get("Upgrades", {})
 	for key: String in _upgradesData.keys():
 		var _upgradesDataDict: Dictionary = _upgradesData[key]
 		var _upgradeData: UpgradeData = UpgradeData.create_from_json(_upgradesDataDict)
-		_config._upgradesRawConfig[key] = _upgradeData
+		_config._upgradesRawConfig[_upgradeData.privateName] = _upgradeData
 
 	var _enemiesData: Dictionary = jsonData.get("Enemies", {})
 	for key: String in _enemiesData.keys():
 		var _enemiesDataDict: Dictionary = _enemiesData[key]
 		var _enemyData: EnemyData = EnemyData.create_from_json(_enemiesDataDict)
-		_config._enemiesRawConfig[key] = _enemyData
+		_config._enemiesRawConfig[_enemyData.privateName] = _enemyData
 
 	var _playerClassesData: Dictionary = jsonData.get("Player Classes", {})
 	for key: String in _playerClassesData.keys():
 		var _playerClassDataDict: Dictionary = _playerClassesData[key]
 		var _playerClassData: PlayerClassData = PlayerClassData.create_from_json(_playerClassDataDict)
-		_config._playerClassesRawConfig[key] = _playerClassData
+		print("player class key: " + _playerClassData.privateName)
+		_config._playerClassesRawConfig[_playerClassData.privateName] = _playerClassData
 
 	if (_verbose):
 		print("\n########### MOVES DATA ##############\n")
@@ -68,7 +69,7 @@ func get_upgrades_data() -> Dictionary[String, UpgradeData]:
 	return _upgradesRawConfig.duplicate(true)
 
 
-func get_monsters_data() -> Dictionary:
+func get_enemies_data() -> Dictionary:
 	assert(_enemiesRawConfig.size() > 0, "Enemies raw config is empty")
 
 	return _enemiesRawConfig.duplicate(true)
@@ -76,16 +77,17 @@ func get_monsters_data() -> Dictionary:
 
 func get_player_default_class_data() -> PlayerClassData:
 	assert(_playerClassesRawConfig.size() > 0, "Player classes raw config is empty")
+	assert(_playerClassesRawConfig["hero"] != null, "Default class hero not found in class data")
 
-	return _playerClassesRawConfig["hero"].duplicate()
-
-
-func get_move_with_name(privateName: String) -> MoveData:
-	return _movesRawConfig.find_key(privateName)
+	return _playerClassesRawConfig.duplicate(true)["hero"]
 
 
-func get_enemy_with_name(privateName: String) -> EnemyData:
-	return _enemiesRawConfig.find_key(privateName)
+func get_move_data_with_name(privateName: String) -> MoveData:
+	return _movesRawConfig.duplicate(true)[privateName]
+
+
+func get_enemy_data_with_name(privateName: String) -> EnemyData:
+	return _enemiesRawConfig.duplicate(true)[privateName]
 
 
 func mock_get_X_moves_of_type(category: MoveData.Category, amount: int) -> Array[MoveData]:

@@ -6,9 +6,11 @@ extends Control
 @export var _healthBarController: HealthBarController
 
 
-func init(maxHp: float, currentHp: float) -> void:
-	_healthBarController.init(maxHp, currentHp)
+func init(playerInstance: PlayerInstance) -> void:
 	_playerNameLabel.text = _playerName
+	_healthBarController.init(playerInstance.get_max_HP(), playerInstance.get_current_HP())
+	playerInstance.current_hp_changed.connect(_healthBarController.update_value)
+	playerInstance.max_hp_changed.connect(_healthBarController.update_max_value)
 
 	return
 

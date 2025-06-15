@@ -1,7 +1,17 @@
-class_name EnemyTurnMainState
+class_name EnemyTurnActionState
 extends BaseBattleState
 
+var _moveToUse: BattleMove
+
+func _init(stateMachine: BattleStateMachine, moveToUse: BattleMove) -> void:
+	super(stateMachine)
+	_moveToUse = moveToUse
+
+	return
+
+
 func on_state_start() -> void:
+	_stateMachine.battleScene.player
 
 	return
 

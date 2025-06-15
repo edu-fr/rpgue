@@ -109,8 +109,8 @@ static func _parse_requirement_to_appear(raw: Variant) -> Array[RequirementsToAp
 		return _requirements
 
 	# Divide a string em partes separadas por vírgula
-	for _req in _rawAsStr.split(",", false):
-		var requirement = _req.strip_edges()
+	for _req: String in _rawAsStr.split(",", false):
+		var requirement: String = _req.strip_edges()
 		match requirement:
 			"WARRIOR": _requirements.append(RequirementsToAppear.WARRIOR)
 			"MAGE": _requirements.append(RequirementsToAppear.MAGE)

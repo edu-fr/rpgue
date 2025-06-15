@@ -12,13 +12,10 @@ func _init(battleStateMachine: BattleStateMachine, nextState: BaseBattleState) -
 
 
 func on_state_start() -> void:
-	var battle_result: BattleScene.BattleResult = _stateMachine.battleScene.get_battle_result()
-	match(battle_result):
-		BattleScene.BattleResult.ONGOING:
-			_stateMachine.swap_state(_nextState)
-		BattleScene.BattleResult.PLAYER_WIN:
-			_stateMachine.pop_stack(BattleWinState.new(_stateMachine))
-		BattleScene.BattleResult.ONGOING:
-			_stateMachine.pop_stack(BattleLossState.new(_stateMachine))
+	var result: BattleScene.BattleResult = _check_battle_ended()
+	if (result == BattleScene.BattleResult.ONGOING):
+		_stateMachine.swap_state(_nextState)
+	else:
+		print("Battle ended with result: " + str(result) + ". Base battle state machine will now transition to the end state. ")
 
 	return

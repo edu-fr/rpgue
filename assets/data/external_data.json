@@ -461,7 +461,7 @@
       "MAX HP": 50,
       "STARTING HP": 50,
       "STARTING STATUS CONDITION": "STAGGER",
-      "HABITAT": 1
+      "HABITAT": "1"
     },
     "2": {
       "PRIVATE NAME": "crazy_bat",
@@ -473,7 +473,7 @@
       "MAX HP": 25,
       "STARTING HP": 20,
       "STARTING STATUS CONDITION": "NONE",
-      "HABITAT": 1
+      "HABITAT": "1"
     }
   },
   "Player Classes": {

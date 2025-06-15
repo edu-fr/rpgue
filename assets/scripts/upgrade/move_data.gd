@@ -136,9 +136,9 @@ static func _parse_status_condition(raw: Variant) -> StatusCondition:
 static func _parse_activation_window(raw: Variant) -> ActivationWindow:
 	var _rawAsStr: String = str(raw).strip_edges().to_upper()
 	match _rawAsStr:
-		"PRE_HIT": return ActivationWindow.PRE_HIT
+		"PRE-HIT": return ActivationWindow.PRE_HIT
 		"STANDARD": return ActivationWindow.STANDARD
-		"POST_HIT": return ActivationWindow.POST_HIT
+		"POST-HIT": return ActivationWindow.POST_HIT
 		"NONE": return ActivationWindow.NONE
 		_:
 			push_error("Activation window desconhecida: " + _rawAsStr)

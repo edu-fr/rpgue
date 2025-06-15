@@ -29,7 +29,11 @@ static func create_from_json(data: Dictionary) -> PlayerClassData:
 	var _baseDamage: float = float(str(data.get("BASE DAMAGE", 0.0)))
 	var _baseBlock: float = float(str(data.get("BASE BLOCK", 0.0)))
 	var _baseMaxHP: float = float(str(data.get("BASE MAX HP", 0.0)))
-	var _moves: Array = data.get("INITIAL MOVE LIST", [])  # INITIAL MOVE LIST as in the .json
+
+	var _movesListData: String = data.get("INITIAL MOVE LIST", "")  # INITIAL MOVE LIST as in the .json
+	var _moves: Array[String] = []  # INITIAL MOVE LIST as in the .json
+	for _move: String in _movesListData.split(",", false):
+		_moves.append(_move.strip_edges())
 
 	return PlayerClassData.new(_privateName, _name, _description, _baseDamage, _baseBlock, _baseMaxHP, _moves)
 

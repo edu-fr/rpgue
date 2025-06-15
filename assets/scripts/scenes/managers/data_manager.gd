@@ -58,8 +58,12 @@ func get_upgrades_data() -> Dictionary:
 	return _externalGameConfig.get_upgrades_data()
 
 
-func get_monsters_data() -> Dictionary:
-	return _externalGameConfig.get_monsters_data()
+func get_enemies_data() -> Dictionary:
+	return _externalGameConfig.get_enemies_data()
+
+
+func get_random_enemy() -> EnemyData:
+	return get_enemies_data().keys().pick_random()
 
 
 func get_player_default_class_data() -> PlayerClassData:
@@ -67,7 +71,7 @@ func get_player_default_class_data() -> PlayerClassData:
 
 
 func get_enemy_data_with_name(privateName: String) -> EnemyData:
-	return _externalGameConfig.get_monsters_data().find_key(privateName)
+	return _externalGameConfig.get_enemies_data().find_key(privateName)
 
 
 # TODO: Voltar a carregar data do save file
@@ -87,6 +91,7 @@ func _load_data_from_save_file() -> bool:
 #	print ("Save file doesn't exists")
 
 	return false
+
 
 func _loadOrCreateSaveData() -> void:
 	if (!_load_data_from_save_file()):

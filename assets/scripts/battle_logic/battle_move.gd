@@ -4,20 +4,22 @@ var publicName: String
 var description: String
 var moveTypes: Array[MoveData.MoveType]
 var category: MoveData.Category
+var power: float
 
-var _moveData: MoveData
+var _baseMoveData: MoveData
 
 
-func _init(moveData: MoveData) -> void:
-	_moveData = moveData
+func _init(moveData: MoveData, user: LivingBeing) -> void:
+	_baseMoveData = moveData
 
 	publicName = moveData.name
 	description = moveData.description
 	moveTypes = moveData.moveTypes
 	category = moveData.category
+	power = _baseMoveData.baseDamage * user.get_attack_damage_multiplier()
 
 	return
 
 
 func get_move_data() -> MoveData:
-	return _moveData
+	return _baseMoveData

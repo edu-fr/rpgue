@@ -5,37 +5,16 @@ extends Control
 @export var _enemyImage: TextureRect
 
 var _enemyInstance: EnemyInstance
-
 var enemy_id: int
-var rewardCoinsAmount: int
 
 
 func init(enemyInstance: EnemyInstance, id: int) -> void:
 	enemyInstance = _enemyInstance
 
-	## CONTINUAR INSTANCIACAO DO INIMIGO AGORA COM DADOS REAIS
-	_setup_health_bar(50)
-	rewardCoinsAmount = 10
+	_setup_health_bar(enemyInstance.get_max_HP(), enemyInstance.get_current_HP())
 	enemy_id = id
 
 	return
-
-
-func act() -> EnemyAction:
-	_alive_assertion()
-
-	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-	var value: int = rng.randi_range(1, 2)
-
-	assert(value == 1 or value == 2)
-
-	match value:
-		1:
-			return _attackAction()
-		2:
-			return _healAction()
-
-	return null
 
 
 func receive_player_attack(moveData: MoveData) -> void:
@@ -74,7 +53,11 @@ func set_semi_selected(value: bool) -> void:
 
 
 func is_alive() -> bool:
-	return _healthBar.alive()
+	return _enemyInstance.alive()
+
+
+func get_random_move() -> BattleMove:
+	return _enemyInstance.get_random_move()
 
 
 func _setup_health_bar(maxHealth: float, current: float = -1) -> void:
@@ -89,21 +72,6 @@ func _take_damage(damageValue: float) -> void:
 	_healthBar.take_damage(damageValue)
 
 	return
-
-
-func _attackAction() -> EnemyAction:
-	_alive_assertion()
-	# Do attack animation & SFX
-	# Actions that affect other actors are applied outside of this script
-
-	return EnemyAction.new(EnemyAction.EnemyActionCategory.ATTACK, _enemyAttackPower)
-
-
-func _healAction() -> EnemyAction:
-	_alive_assertion()
-	# Do heal anim & SFX
-
-	return EnemyAction.new(EnemyAction.EnemyActionCategory.HEAL, _enemyHealPower)
 
 
 func _on_death() -> void:
