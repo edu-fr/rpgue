@@ -3,7 +3,7 @@ extends LivingBeing
 
 var _playerClassData: PlayerClassData
 
-func _init() -> void:
+func _init(id: int) -> void:
 	## MOCK
 	_playerClassData = GM.dataManager.get_player_default_class_data()
 
@@ -23,7 +23,7 @@ func _init() -> void:
 
 	assert(_totalMoves.size() > 0, "Couldn't create player total battle moves array")
 
-	super(_playerClassData.baseMaxHP, _playerClassData.baseMaxHP, _playerClassData.baseDamage, _totalMoves)
+	super(id, _playerClassData.baseMaxHP, _playerClassData.baseMaxHP, _playerClassData.baseDamage, _totalMoves)
 
 	print("Player instance criada! Total moves list count: " + str(_totalMoves.size()) + "; Move list count: " + str(_moveList.size()))
 

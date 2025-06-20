@@ -3,7 +3,7 @@ extends LivingBeing
 
 var _enemyData: EnemyData
 
-func _init(privateName: String) -> void:
+func _init(privateName: String, id: int) -> void:
 	## MOCK
 	_enemyData = GM.dataManager.get_enemy_data_with_name(privateName)
 
@@ -23,7 +23,7 @@ func _init(privateName: String) -> void:
 
 	assert(_totalMoves.size() > 0, "Couldn't create enemy total battle moves array")
 
-	super(_enemyData.maxHP, _enemyData.startingHP, _enemyData.baseDamage, _totalMoves)
+	super(id, _enemyData.maxHP, _enemyData.startingHP, _enemyData.baseDamage, _totalMoves)
 
 	print("enemy instance criada! Total moves list count: " + str(_totalMoves.size()) + "; Move list count: " + str(_moveList.size()))
 

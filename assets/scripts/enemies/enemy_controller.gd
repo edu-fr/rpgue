@@ -5,14 +5,12 @@ extends Control
 @export var _enemyImage: TextureRect
 
 var _enemyInstance: EnemyInstance
-var enemy_id: int
 
 
-func init(enemyInstance: EnemyInstance, id: int) -> void:
-	enemyInstance = _enemyInstance
+func init(enemyInstance: EnemyInstance) -> void:
+	_enemyInstance = enemyInstance
 
-	_setup_health_bar(enemyInstance.get_max_HP(), enemyInstance.get_current_HP())
-	enemy_id = id
+	_setup_health_bar(_enemyInstance.get_max_HP(), _enemyInstance.get_current_HP())
 
 	return
 
@@ -58,6 +56,14 @@ func is_alive() -> bool:
 
 func get_random_move() -> BattleMove:
 	return _enemyInstance.get_random_move()
+
+
+func get_id() -> int:
+	return _enemyInstance._id
+
+
+func get_instance() -> EnemyInstance:
+	return _enemyInstance
 
 
 func _setup_health_bar(maxHealth: float, current: float = -1) -> void:

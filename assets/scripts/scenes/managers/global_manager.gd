@@ -4,6 +4,7 @@ extends Node
 var flowManager: FlowManager
 var dataManager: DataManager
 var runManager: RunManager
+var verbose: bool = false
 
 
 func init(main_scene: MainScene) -> void:

@@ -1,4 +1,4 @@
-class_name EnemyTurnStartState
+class_name EnemyPreTurnState
 extends BaseBattleState
 
 var _enemyInstance: EnemyInstance

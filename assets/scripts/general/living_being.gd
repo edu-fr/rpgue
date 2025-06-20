@@ -4,6 +4,7 @@ extends Resource
 signal current_hp_changed(oldHP: float, newHp: float, animate: bool)
 signal max_hp_changed(oldMaxHP: float, newMaxHP: float, animate: bool)
 
+var _id: int
 var _maxHP: float
 var _currentHP: float
 var _attackDamageMultiplier: float
@@ -11,7 +12,8 @@ var _statusConditions: Array[AbstractBaseStatusCondition]
 var _moveList: Array[BattleMove]
 
 
-func _init(maxHP: float, currentHP: float, attackDamageMultiplier: float, moveList: Array[BattleMove]) -> void:
+func _init(id: int, maxHP: float, currentHP: float, attackDamageMultiplier: float, moveList: Array[BattleMove]) -> void:
+	_id = id
 	_maxHP = maxHP
 	_currentHP = currentHP
 	_attackDamageMultiplier = attackDamageMultiplier
@@ -138,3 +140,6 @@ func activate_post_turn_start_effects() -> void:
 func alive() -> bool:
 	return get_current_HP() > 0
 
+
+func get_id() -> int:
+	return _id

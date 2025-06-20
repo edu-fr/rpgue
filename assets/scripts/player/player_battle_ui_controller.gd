@@ -19,9 +19,6 @@ func init(stateMachine: BattleStateMachine) -> void:
 	return
 
 
-
-
-
 func start_player_turn(remainingEnemies: Array[EnemyController]) -> PlayerAction:
 	return await _actionsPanel.start_turn(remainingEnemies)
 

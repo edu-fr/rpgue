@@ -6,7 +6,7 @@ enum MoveType { UNKNOWN, SLASH, PIERCE, STRIKE, FIRE, WATER, GRASS, LIGHT, DARK,
 enum MoveTarget { UNKNOWN, CURRENT, ADJACENT, ALL_ENEMIES, SELF, ADJACENT_ALLIES, ALL_ALLIES }
 enum ValueType { UNKNOWN, NONE, VARIABLE, ABSOLUTE }
 enum ActivationWindow { UNKNOWN, NONE, PRE_HIT, STANDARD, POST_HIT }
-enum StatusCondition { UNKNOWN, NONE, STAGGER, BURN, FREEZE }
+enum StatusCondition { UNKNOWN, NONE, STAGGER, BURN, FREEZE, POISON }
 enum AdditionalDamageType { UNKNOWN, NONE, FIXED, VARIABLE }
 enum RequirementsToAppear { UNKNOWN, NONE, WARRIOR, MAGE, THIEF, OMNIBUFF, ENEMY }
 var privateName: String
@@ -127,6 +127,7 @@ static func _parse_status_condition(raw: Variant) -> StatusCondition:
 		"STAGGER": return StatusCondition.STAGGER
 		"BURN": return StatusCondition.BURN
 		"FREEZE": return StatusCondition.FREEZE
+		"POISON": return StatusCondition.POISON
 		"NONE": return StatusCondition.NONE
 		_:
 			push_error("Status condition desconhecida: " + _rawAsStr)

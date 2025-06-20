@@ -2,10 +2,11 @@ class_name PlayerSelectMoveState
 extends BaseBattleState
 
 var _category: MoveData.Category
+var _playerInstance: PlayerInstance
 
-
-func _init(category: MoveData.Category, stateMachine: BattleStateMachine) -> void:
+func _init(category: MoveData.Category, playerInstance: PlayerInstance, stateMachine: BattleStateMachine) -> void:
 	super(stateMachine)
+	_playerInstance = playerInstance
 	_category = category
 
 	return
@@ -36,7 +37,7 @@ func on_attack_index_cliked(index: int) -> void:
 	var _battleUI: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
 	var _batteMove: BattleMove = _battleUI._attackMovesPanel.battleMovesList[index]
 	_battleUI.hide_and_disable_moves_panels()
-	_stateMachine.push_state(PlayerSelectTargetState.new(_batteMove, _stateMachine))
+	_stateMachine.push_state(PlayerSelectTargetState.new(_batteMove, _playerInstance, _stateMachine))
 
 	return
 
@@ -45,7 +46,7 @@ func on_tech_index_cliked(index: int) -> void:
 	var _battleUI: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
 	var _batteMove: BattleMove = _battleUI._techMovesPanel.battleMovesList[index]
 	_battleUI.hide_and_disable_moves_panels()
-	_stateMachine.push_state(PlayerSelectTargetState.new(_batteMove, _stateMachine))
+	_stateMachine.push_state(PlayerSelectTargetState.new(_batteMove, _playerInstance, _stateMachine))
 
 	return
 

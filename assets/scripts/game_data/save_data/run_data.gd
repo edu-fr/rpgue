@@ -7,7 +7,7 @@ extends Resource
 
 func _init() -> void:
 	levelsBeated = 0
-	playerInstance = PlayerInstance.new()
+	playerInstance = PlayerInstance.new(10)
 
 	return
 

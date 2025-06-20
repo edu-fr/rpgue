@@ -37,6 +37,25 @@ func clear() -> void:
 	return
 
 
+func contains(element: Variant) -> bool:
+	return _elements.has(element)
+
+
+func force_remove_aparitions(element: Variant) -> void:
+	assert(contains(element), "Trying to force remove a non-existent element")
+	while (contains(element)):
+		_elements.erase(element)
+
+	return
+
+
+func peek_queue_end() -> Variant:
+	if is_empty():
+		return null as Variant
+
+	return _elements.back()
+
+
 func print_current() -> void:
 	print("Queue state")
 	for i: int in _elements.size():
