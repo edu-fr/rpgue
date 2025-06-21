@@ -36,32 +36,31 @@ var pool: int
 static func create_from_json(data: Dictionary) -> MoveData:
 	var move: MoveData = MoveData.new()
 
-	move.privateName = str(data.get("PRIVATE NAME", ""))
-	move.name = str(data.get("NAME", ""))
-	move.description = str(data.get("DESCRIPTION", ""))
-
-	move.category = _parse_category(data.get("CATEGORY", ""))
-	move.moveTypes = _parse_move_types(data.get("TYPE(S)", ""))
-	var parsed_targets: Array[MoveTarget] = _parse_targets(data.get("TARGETS", ""))
+	move.privateName = str(Utils.get_data(data, "PRIVATE NAME", "")).replace(" ", "")
+	move.name = str(Utils.get_data(data, "NAME", ""))
+	move.description = str(Utils.get_data(data, "DESCRIPTION", ""))
+	move.category = _parse_category(Utils.get_data(data, "CATEGORY", ""))
+	move.moveTypes = _parse_move_types(Utils.get_data(data, "TYPE(S)", ""))
+	var parsed_targets: Array[MoveTarget] = _parse_targets(Utils.get_data(data, "TARGETS", ""))
 	move.targets = parsed_targets
-	move.statusCondition = _parse_status_condition(data.get("STATUS CONDITION", "NONE"))
-	move.activationWindow = _parse_activation_window(data.get("ACTIVATION WINDOW", "STANDARD"))
-	move.additionalDamageType = _parse_additional_damage_type(data.get("ADDITIONAL DAMAGE TYPE", "NONE"))
-	move.valueTypeToIncrease = _parse_value_type(data.get("VALUE TYPE TO INCREASE", "NONE"))
-	move.valueTypeToDecrease = _parse_value_type(data.get("VALUE TYPE TO DECREASE", "NONE"))
-	move.requirements = _parse_requirement_to_appear(data.get("REQUIREMENTS TO APPEAR", "NONE"))
+	move.statusCondition = _parse_status_condition(Utils.get_data(data, "STATUS CONDITION", "NONE"))
+	move.activationWindow = _parse_activation_window(Utils.get_data(data, "ACTIVATION WINDOW", "STANDARD"))
+	move.additionalDamageType = _parse_additional_damage_type(Utils.get_data(data, "ADDITIONAL DAMAGE TYPE", "NONE"))
+	move.valueTypeToIncrease = _parse_value_type(Utils.get_data(data, "VALUE TYPE TO INCREASE", "NONE"))
+	move.valueTypeToDecrease = _parse_value_type(Utils.get_data(data, "VALUE TYPE TO DECREASE", "NONE"))
+	move.requirements = _parse_requirement_to_appear(Utils.get_data(data, "REQUIREMENTS TO APPEAR", "NONE"))
 
-	move.baseDamage = float(str(data.get("BASE DAMAGE", 0.0)))
-	move.baseBlock = float(str(data.get("BASE BLOCK", 0.0)))
-	move.activationChance = float(str(data.get("ACTIVATION CHANCE", 0.0)))
-	move.additionalDamageValue = float(str(data.get("ADDITIONAL DAMAGE VALUE", 0.0)))
-	move.valueToIncrease = float(str(data.get("VALUE TO INCREASE", 0.0)))
-	move.valueToDecrease = float(str(data.get("VALUE TO DECREASE", 0.0)))
-	move.pool = int(str(data.get("POOL", 1)))
+	move.baseDamage = float(str(Utils.get_data(data, "BASE DAMAGE", 0.0)))
+	move.baseBlock = float(str(Utils.get_data(data, "BASE BLOCK", 0.0)))
+	move.activationChance = float(str(Utils.get_data(data, "ACTIVATION CHANCE", 0.0)))
+	move.additionalDamageValue = float(str(Utils.get_data(data, "ADDITIONAL DAMAGE VALUE", 0.0)))
+	move.valueToIncrease = float(str(Utils.get_data(data, "VALUE TO INCREASE", 0.0)))
+	move.valueToDecrease = float(str(Utils.get_data(data, "VALUE TO DECREASE", 0.0)))
+	move.pool = int(str(Utils.get_data(data, "POOL", 1)))
 
-	move.statsToIncrease = str(data.get("STATS TO INCREASE", "NONE"))
-	move.statsToDecrease = str(data.get("STATS TO DECREASE", "NONE"))
-	move.restrictions = str(data.get("RESTRICTIONS", "NONE"))
+	move.statsToIncrease = str(Utils.get_data(data, "STATS TO INCREASE", "NONE"))
+	move.statsToDecrease = str(Utils.get_data(data, "STATS TO DECREASE", "NONE"))
+	move.restrictions = str(Utils.get_data(data, "RESTRICTIONS", "NONE"))
 
 	return move
 
@@ -73,7 +72,7 @@ static func _parse_category(raw: Variant) -> Category:
 		"TECH": return Category.TECH
 		_:
 			push_error("Categoria inválida: ", raw)
-			return Category.ATTACK
+			return Category.UNKNOWN
 
 
 static func _parse_move_types(raw: Variant) -> Array[MoveType]:

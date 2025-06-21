@@ -7,14 +7,12 @@ extends Control
 @export var _techMovesPanel: BattleMovesPanel
 
 
-func init(stateMachine: BattleStateMachine) -> void:
-	var player: PlayerInstance = GM.runManager.currentRunDataRef.playerInstance
-
-	_statusPanel.init(player)
+func init(playerBattleActor: PlayerBattleActor, stateMachine: BattleStateMachine) -> void:
+	_statusPanel.init(playerBattleActor)
 	_actionsPanel.init(stateMachine)
 
-	_attackMovesPanel.init(stateMachine.on_attack_index_cliked, player.get_battle_moves_by_category(MoveData.Category.ATTACK))
-	_techMovesPanel.init(stateMachine.on_tech_index_cliked, player.get_battle_moves_by_category(MoveData.Category.TECH))
+	_attackMovesPanel.init(stateMachine.on_attack_index_cliked, playerBattleActor.get_battle_moves_by_category(MoveData.Category.ATTACK))
+	_techMovesPanel.init(stateMachine.on_tech_index_cliked, playerBattleActor.get_battle_moves_by_category(MoveData.Category.TECH))
 
 	return
 

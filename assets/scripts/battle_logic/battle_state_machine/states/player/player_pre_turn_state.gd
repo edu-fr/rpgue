@@ -1,21 +1,21 @@
 class_name PlayerPreTurnState
 extends BaseBattleState
 
-var _playerInstance: PlayerInstance
+var _playerBattleActor: PlayerBattleActor
 
-func _init(playerInstance: PlayerInstance, stateMachine: BattleStateMachine) -> void:
+func _init(playerBattleActor: PlayerBattleActor, stateMachine: BattleStateMachine) -> void:
 	super(stateMachine)
-	_playerInstance = playerInstance
+	_playerBattleActor = playerBattleActor
 
 	return
 
 
 func on_state_start() -> void:
-	_playerInstance.activate_pre_turn_start_effects()
+	_playerBattleActor.activate_pre_turn_start_effects()
 
 	if (_check_battle_ended()):
 		return
 
-	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, PlayerTurnMainState.new(_playerInstance, _stateMachine)))
+	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, PlayerTurnMainState.new(_playerBattleActor, _stateMachine)))
 
 	return

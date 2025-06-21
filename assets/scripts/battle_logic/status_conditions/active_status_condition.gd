@@ -1,12 +1,12 @@
 class_name ActiveStatusCondition
 
-var _caster: LivingBeing
-var _target: LivingBeing
+var _caster: BattleActor
+var _target: BattleActor
 var _statusCondition: AbstractBaseStatusCondition
 var _baseDuration: int
 var _remainingDuration: int
 
-func _init(caster: LivingBeing, target: LivingBeing, statusCondition: AbstractBaseStatusCondition, duration: int) -> void:
+func _init(caster: BattleActor, target: BattleActor, statusCondition: AbstractBaseStatusCondition, duration: int) -> void:
 	_caster = caster
 	_target = target
 	_statusCondition = statusCondition

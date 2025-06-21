@@ -1,5 +1,5 @@
 class_name EnemyZombie
-extends EnemyInstance
+extends EnemyBattleActor
 
 func _init() -> void:
 	var __maxHP: float = 50

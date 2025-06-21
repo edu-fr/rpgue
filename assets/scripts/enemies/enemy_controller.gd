@@ -4,13 +4,13 @@ extends Control
 @export var _healthBar: HealthBarController
 @export var _enemyImage: TextureRect
 
-var _enemyInstance: EnemyInstance
+var _enemyInstance: EnemyBattleActor
 
 
-func init(enemyInstance: EnemyInstance) -> void:
+func init(enemyInstance: EnemyBattleActor) -> void:
 	_enemyInstance = enemyInstance
-
-	_setup_health_bar(_enemyInstance.get_max_HP(), _enemyInstance.get_current_HP())
+	_healthBar.init(_enemyInstance.get_max_HP(), _enemyInstance.get_current_HP())
+	_enemyInstance.current_hp_changed.connect(_healthBar.update_value)
 
 	return
 
@@ -18,7 +18,7 @@ func init(enemyInstance: EnemyInstance) -> void:
 func receive_player_attack(moveData: MoveData) -> void:
 	_alive_assertion()
 
-	_take_damage(moveData.baseDamage)
+	_enemyInstance.take_damage(moveData.baseDamage)
 
 	if (!is_alive()):
 		_on_death()
@@ -29,7 +29,7 @@ func receive_player_attack(moveData: MoveData) -> void:
 func heal(healValue: int) -> void:
 	_alive_assertion()
 
-	_healthBar.heal(healValue)
+	_enemyInstance.heal(healValue)
 
 	return
 
@@ -62,22 +62,8 @@ func get_id() -> int:
 	return _enemyInstance._id
 
 
-func get_instance() -> EnemyInstance:
+func get_instance() -> EnemyBattleActor:
 	return _enemyInstance
-
-
-func _setup_health_bar(maxHealth: float, current: float = -1) -> void:
-	_healthBar.init(maxHealth, current)
-
-	return
-
-
-func _take_damage(damageValue: float) -> void:
-	_alive_assertion()
-
-	_healthBar.take_damage(damageValue)
-
-	return
 
 
 func _on_death() -> void:

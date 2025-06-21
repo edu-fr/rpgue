@@ -7,7 +7,6 @@ const _SAVE_DATA_PATH: String = "user://save_data.json"
 enum DataFileName { UNKNOWN, NONE, EXTERNAL_DATA }
 var _loadedSaveData: SaveData
 var _externalGameConfig: ExternalGameConfig
-
 var currentInGameData: InGameData
 var currentRunData: RunData
 
@@ -63,32 +62,53 @@ func get_enemies_data() -> Dictionary:
 
 
 func get_random_enemy() -> EnemyData:
-	return get_enemies_data().keys().pick_random()
+	var randomEnemy: EnemyData = get_enemies_data().values().pick_random()
+	assert(randomEnemy != null, "Can't get random enemy")
+
+	return randomEnemy
 
 
 func get_player_default_class_data() -> PlayerClassData:
-	return _externalGameConfig.get_player_default_class_data()
+	var defaultClassData: PlayerClassData = _externalGameConfig.get_player_default_class_data()
+	assert(defaultClassData != null, "Can't get default player class data")
+
+	return defaultClassData
 
 
 func get_enemy_data_with_name(privateName: String) -> EnemyData:
-	return _externalGameConfig.get_enemies_data().find_key(privateName)
+	var enemyData: EnemyData = _externalGameConfig.get_enemies_data().get(privateName)
+	assert(enemyData != null, "Enemy data with name " + privateName + " not found")
+
+	return enemyData
+
+
+func create_battle_moves_from_move_names(moveNames: Array[String], moveOwner: BattleActor) -> Array[BattleMove]:
+	var _battleMoves: Array[BattleMove] = []
+	for _moveName: String in moveNames:
+		var _moveData: MoveData = _externalGameConfig.get_move_data_with_name(_moveName)
+		assert(_moveData != null, "Move data with name " + _moveName + " not found")
+		_battleMoves.append(BattleMove.new(_moveData, moveOwner))
+
+	assert(_battleMoves.size() > 0, "Couldn't create battle moves array from names.")
+
+	return _battleMoves
 
 
 # TODO: Voltar a carregar data do save file
 func _load_data_from_save_file() -> bool:
-#	if (FileAccess.file_exists(_SAVE_DATA_PATH)):
-#		var loadedData: SaveData = JsonClassConverter.json_file_to_class(SaveData, _SAVE_DATA_PATH)
-#		if (loadedData != null):
-#			_loadedSaveData = loadedData
-#			print("Local data successfully loaded!")
-#
-#			return true
-#		else:
-#			print("Local data failed to load!")
-#
-#			return false
-#
-#	print ("Save file doesn't exists")
+	#	if (FileAccess.file_exists(_SAVE_DATA_PATH)):
+	#		var loadedData: SaveData = JsonClassConverter.json_file_to_class(SaveData, _SAVE_DATA_PATH)
+	#		if (loadedData != null):
+	#			_loadedSaveData = loadedData
+	#			print("Local data successfully loaded!")
+	#
+	#			return true
+	#		else:
+	#			print("Local data failed to load!")
+	#
+	#			return false
+	#
+	#	print ("Save file doesn't exists")
 
 	return false
 

@@ -9,6 +9,10 @@ var battleMovesList: Array[BattleMove]
 func init(onBattleMoveIndexClicked: Callable, movesInfo: Array[BattleMove]) -> void:
 	assert(movesInfo.size() <= 4, "Can't create more than 4 move buttons")
 
+	if(movesInfo.size() == 0):
+		hide()
+		return
+
 	battleMovesList = []
 
 	for i: int in battleMoveButtonsSlots.size():

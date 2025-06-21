@@ -51,7 +51,7 @@ func force_remove_aparitions(element: Variant) -> void:
 
 func peek_queue_end() -> Variant:
 	if is_empty():
-		return null as Variant
+		return null
 
 	return _elements.back()
 

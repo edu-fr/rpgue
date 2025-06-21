@@ -1,11 +1,11 @@
 class_name AbstractBaseStatusCondition
 
 var _baseDamage: int
-var _caster: LivingBeing
-var _target: LivingBeing
+var _caster: BattleActor
+var _target: BattleActor
 
 
-func _init(caster: LivingBeing, target: LivingBeing, baseDamage: int) -> void:
+func _init(caster: BattleActor, target: BattleActor, baseDamage: int) -> void:
 	_caster = caster
 	_target = target
 	_baseDamage = baseDamage

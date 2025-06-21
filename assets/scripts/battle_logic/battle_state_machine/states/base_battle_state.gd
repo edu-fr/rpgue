@@ -53,13 +53,23 @@ func _check_battle_ended() -> bool:
 	return true
 
 
+func skipping_turn_as_enemy_is_not_alive(enemyInstance: EnemyBattleActor) -> bool:
+	if (enemyInstance.alive()):
+		false
+
+	_stateMachine.swap_state(_get_next_actor_turn())
+
+	return true
+
+
 func _get_next_actor_turn() -> BaseBattleState:
 	var _nextTurnOwnerId: int = _stateMachine.battleScene.get_next_turn_owner_id()
-	if (_nextTurnOwnerId < 10):
+
+	if (_nextTurnOwnerId < _stateMachine.battleScene.enemyLimit):
 		var _enemyController: EnemyController = _stateMachine.battleScene.get_enemy_controller_by_id(_nextTurnOwnerId)
 		return EnemyPreTurnState.new(_enemyController.get_instance(), _stateMachine)
 	else:
-		var _playerInstance: PlayerInstance = _stateMachine.battleScene.get_player_instance()
-		return PlayerPreTurnState.new(_playerInstance, _stateMachine)
+		var _playerBattleActor: PlayerBattleActor = _stateMachine.battleScene.get_player_instance()
+		return PlayerPreTurnState.new(_playerBattleActor, _stateMachine)
 
 	return null

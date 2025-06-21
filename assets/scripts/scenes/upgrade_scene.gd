@@ -28,7 +28,7 @@ func _setup_buttons() -> void:
 
 
 func _on_upgrade_clicked(upgradeData: MoveData) -> void:
-	GM.runManager.currentRunDataRef.playerInstance.add_upgrade(upgradeData)
+	GM.runManager.currentRunDataRef.playerBattleActor.add_upgrade(upgradeData)
 	GM.flowManager.go_to_run_map()
 
 	return

@@ -29,24 +29,24 @@ var pool: int
 static func create_from_json(data: Dictionary) -> UpgradeData:
 	var upgrade: UpgradeData = UpgradeData.new()
 
-	upgrade.privateName = data.get("PRIVATE NAME", "")
-	upgrade.name = data.get("NAME", "")
-	upgrade.description = data.get("DESCRIPTION", "")
+	upgrade.privateName = Utils.get_data(data, "PRIVATE NAME", "")
+	upgrade.name = Utils.get_data(data, "NAME", "")
+	upgrade.description = Utils.get_data(data, "DESCRIPTION", "")
 
-	upgrade.upgradeTypes = _parse_upgrade_types(data.get("TYPE(S)", ""))
-	upgrade.targets = _parse_targets(data.get("TARGETS", ""))
-	upgrade.statsToIncrease = _parse_stat_type(data.get("STATS TO INCREASE", "NONE"))
-	upgrade.valueTypeToIncrease = _parse_value_type(data.get("VALUE TYPE TO INCREASE", ""))
-	upgrade.statsToDecrease = _parse_stat_type(data.get("STATS TO DECREASE", "NONE"))
-	upgrade.valueTypeToDecrease = _parse_value_type(data.get("VALUE TYPE TO DECREASE", ""))
+	upgrade.upgradeTypes = _parse_upgrade_types(Utils.get_data(data, "TYPE(S)", ""))
+	upgrade.targets = _parse_targets(Utils.get_data(data, "TARGETS", ""))
+	upgrade.statsToIncrease = _parse_stat_type(Utils.get_data(data, "STATS TO INCREASE", "NONE"))
+	upgrade.valueTypeToIncrease = _parse_value_type(Utils.get_data(data, "VALUE TYPE TO INCREASE", ""))
+	upgrade.statsToDecrease = _parse_stat_type(Utils.get_data(data, "STATS TO DECREASE", "NONE"))
+	upgrade.valueTypeToDecrease = _parse_value_type(Utils.get_data(data, "VALUE TYPE TO DECREASE", ""))
 
-	upgrade.activationChance = data.get("ACTIVATION CHANCE", 0.0)
-	upgrade.additionalDamageValue = data.get("ADDITIONAL DAMAGE VALUE", 0.0)
-	upgrade.valueToIncrease = data.get("VALUE TO INCREASE", 0.0)
-	upgrade.valueToDecrease = data.get("VALUE TO DECREASE", 0.0)
-	upgrade.requirements = _parse_requirement_to_appear(data.get("REQUIREMENTS TO APPEAR", ""))
-	upgrade.restrictions = data.get("RESTRICTIONS", "NONE")
-	upgrade.pool = data.get("POOL", 1)
+	upgrade.activationChance = Utils.get_data(data, "ACTIVATION CHANCE", 0.0)
+	upgrade.additionalDamageValue = Utils.get_data(data, "ADDITIONAL DAMAGE VALUE", 0.0)
+	upgrade.valueToIncrease = Utils.get_data(data, "VALUE TO INCREASE", 0.0)
+	upgrade.valueToDecrease = Utils.get_data(data, "VALUE TO DECREASE", 0.0)
+	upgrade.requirements = _parse_requirement_to_appear(Utils.get_data(data, "REQUIREMENTS TO APPEAR", ""))
+	upgrade.restrictions = Utils.get_data(data, "RESTRICTIONS", "NONE")
+	upgrade.pool = Utils.get_data(data, "POOL", 1)
 
 	return upgrade
 

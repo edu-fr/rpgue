@@ -1,47 +1,29 @@
 class_name EnemyTurnActionState
 extends BaseBattleState
 
+var _enemyInstance: EnemyBattleActor
 var _moveToUse: BattleMove
 
-func _init(stateMachine: BattleStateMachine, moveToUse: BattleMove) -> void:
+func _init(moveToUse: BattleMove, enemyInstance: EnemyBattleActor, stateMachine: BattleStateMachine,) -> void:
 	super(stateMachine)
+	_enemyInstance = enemyInstance
 	_moveToUse = moveToUse
 
 	return
 
 
 func on_state_start() -> void:
-	_stateMachine.battleScene.player
+	# Attack modifiers probably gonna show up here and be used after this (or maybe the turn will be skipped)
+	_enemyInstance.activate_action_phase_start_effects()
 
-	return
+	if (_check_battle_ended()):
+		return
 
+	if (skipping_turn_as_enemy_is_not_alive(_enemyInstance)):
+		return
 
-func on_confirm_clicked() -> void:
-	print("enemy turn start battle state confirm clicked")
-	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, EnemyTurnPostTurnState.new(_stateMachine)))
+	_stateMachine.battleScene._apply_attack_on_player(_moveToUse)
 
-	return
-
-
-func on_attack_clicked() -> void:
-	print("enemy turn start battle state attack clicked")
-
-	return
-
-
-func on_tech_clicked() -> void:
-	print("enemy turn start battle state tech clicked")
-
-	return
-
-
-func on_attack_index_cliked(index: int) -> void:
-	print("enemy turn start battle state attack index " + str(index) + " clicked")
-
-	return
-
-
-func on_tech_index_cliked(index: int) -> void:
-	print("enemy turn start battle state tech index " + str(index) + " clicked")
+	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, EnemyTurnPostTurnState.new(_enemyInstance, _stateMachine)))
 
 	return

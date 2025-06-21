@@ -3,11 +3,9 @@ class_name TurnFlowController
 var _turn_queue: Queue
 var _min_turn_count: int = 10
 
-var _verbose: bool = true
-
 
 func _init(playerIds: Array[int], enemyIds: Array[int]) -> void:
-	if (_verbose):
+	if (GM.verbose):
 		print("[TURN QUEUE] Initializing queue")
 
 	_turn_queue = Queue.new()
@@ -37,18 +35,26 @@ func get_next_turn(remainingPlayerIds: Array[int], remainingEnemyIds: Array[int]
 
 func _fill_turn_queue(remainingPlayerIds: Array[int], remainingEnemyIds: Array[int]) -> void:
 	print("[TURN QUEUE] Fill turn queue. Rem players: " + str(remainingEnemyIds.size()) + "; Rem enemies: " + str(remainingEnemyIds.size()))
+	var fullIdList: Array[int] = []
 
-	var fullIdList: Array[int] = remainingPlayerIds.duplicate(true)
-	fullIdList.append_array(remainingEnemyIds.duplicate(true))
+	for _id: int in remainingPlayerIds:
+		fullIdList.append(_id)
 
-	var lastOnQueue: int = _turn_queue.peek_queue_end()
+	for _id: int in remainingEnemyIds:
+		fullIdList.append(_id)
+
 	var startingIndex: int
-	if (remainingPlayerIds.has(lastOnQueue)):
-		startingIndex = remainingPlayerIds.size()
-	elif (remainingEnemyIds.has(lastOnQueue)):
-		startingIndex = remainingPlayerIds.size() + remainingEnemyIds.find(lastOnQueue)
+
+	if (_turn_queue.peek_queue_end() == null):
+		startingIndex = 0
 	else:
-		push_error("can't find last actor from turn queue, make sure the list is updated before calling this func")
+		var last: int = _turn_queue.peek_queue_end()
+		if (remainingPlayerIds.has(last)):
+			startingIndex = remainingPlayerIds.size()
+		elif (remainingEnemyIds.has(last)):
+			startingIndex = remainingPlayerIds.size() + remainingEnemyIds.find(last)
+		else:
+			push_error("can't find last actor from turn queue, make sure the list is updated before calling this func")
 
 	_enqueue_turns_until_full(fullIdList, startingIndex)
 

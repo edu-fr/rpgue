@@ -116,3 +116,12 @@ static func _execute_action(key_data: Dictionary) -> void:
 		action.call()
 	else:
 		push_error("Invalid Callable in key action")
+
+# Import utils
+
+static func get_data(dictionary: Dictionary, fieldName: String, defaultValue: Variant = null) -> Variant:
+	assert(dictionary.has(fieldName) != null, "Field '%s' not found in dictionary" % fieldName)
+	var _entryValue: Variant = dictionary.get(fieldName, defaultValue)
+	assert(_entryValue != null, "Field '%s' has no value" % fieldName)
+
+	return _entryValue

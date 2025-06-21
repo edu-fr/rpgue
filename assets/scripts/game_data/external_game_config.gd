@@ -1,9 +1,9 @@
 class_name ExternalGameConfig
 
-var _movesRawConfig: Dictionary[String, MoveData] = {}
-var _upgradesRawConfig: Dictionary[String, UpgradeData] = {}
-var _enemiesRawConfig: Dictionary[String, EnemyData] = {}
-var _playerClassesRawConfig: Dictionary[String, PlayerClassData] = {}
+var _movesRawConfig: Dictionary = {}
+var _upgradesRawConfig: Dictionary = {}
+var _enemiesRawConfig: Dictionary = {}
+var _playerClassesRawConfig: Dictionary = {}
 
 ## DEBUG
 static var _verbose: bool = true
@@ -63,7 +63,7 @@ static func create_from_json(jsonData: Dictionary) -> ExternalGameConfig:
 	return _config
 
 
-func get_upgrades_data() -> Dictionary[String, UpgradeData]:
+func get_upgrades_data() -> Dictionary:
 	assert(_upgradesRawConfig.size() > 0, "Upgrades raw config is empty")
 
 	return _upgradesRawConfig.duplicate(true)
@@ -77,17 +77,17 @@ func get_enemies_data() -> Dictionary:
 
 func get_player_default_class_data() -> PlayerClassData:
 	assert(_playerClassesRawConfig.size() > 0, "Player classes raw config is empty")
-	assert(_playerClassesRawConfig["hero"] != null, "Default class hero not found in class data")
+	assert(_playerClassesRawConfig.get("hero") != null, "Default class hero not found in class data")
 
-	return _playerClassesRawConfig.duplicate(true)["hero"]
+	return _playerClassesRawConfig.duplicate(true).get("hero")
 
 
 func get_move_data_with_name(privateName: String) -> MoveData:
-	return _movesRawConfig.duplicate(true)[privateName]
+	return _movesRawConfig.duplicate(true).get(privateName)
 
 
 func get_enemy_data_with_name(privateName: String) -> EnemyData:
-	return _enemiesRawConfig.duplicate(true)[privateName]
+	return _enemiesRawConfig.duplicate(true).get(privateName)
 
 
 func mock_get_X_moves_of_type(category: MoveData.Category, amount: int) -> Array[MoveData]:

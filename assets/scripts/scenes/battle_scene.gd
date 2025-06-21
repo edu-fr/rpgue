@@ -8,9 +8,11 @@ const _enemyScenePath: String = "res://assets/prefabs/enemy.tscn"
 @export var _debugVisualStack: VisualStackVBoxContainer
 
 var _stateMachine: BattleStateMachine
-var _playerInstance: PlayerInstance
+var _playerBattleActor: PlayerBattleActor
 var _allEnemies: Array[EnemyController]
 var _playerReward: PlayerReward
+
+const enemyLimit: int = 10 # Synced with initial players ids number
 var turnFlowController: TurnFlowController
 
 
@@ -46,9 +48,11 @@ func setup_scene() -> void: # called by SetupState
 
 
 func _setup_player() -> void:
-	_playerInstance = GM.runManager.currentRunDataRef.playerInstance.duplicate(true)
+	_playerBattleActor = GM.runManager.currentRunDataRef.get_player_battle_actor()
 
-	_playerBattleUIController.init(_stateMachine)
+	assert(_playerBattleActor != null, "Can't setup battle, player battle actor is null")
+
+	_playerBattleUIController.init(_playerBattleActor, _stateMachine)
 	_playerBattleUIController.hide_and_disable_moves_panels()
 	_playerBattleUIController.hide_and_disable_actions_panel()
 	_playerReward = PlayerReward.new()
@@ -64,14 +68,13 @@ func _setup_UI() -> void:
 
 func _spawn_enemies(_quantity: int) -> void:
 	@warning_ignore_start("unsafe_property_access", "unsafe_method_access")
-	var currentLevelEnemyData: EnemyData = GM.DataManager.get_random_enemy() # TODO: Select by habitat
+	var _enemyData: EnemyData = GM.dataManager.get_random_enemy() # TODO: Select by habitat
 	@warning_ignore_restore("unsafe_property_access", "unsafe_method_access")
 
 	for i: int in _quantity:
 		var enemy: Node = preload(_enemyScenePath).instantiate()
 		var enemyController: EnemyController = enemy
-
-		enemyController.init(EnemyInstance.new(currentLevelEnemyData.privateName, i))
+		enemyController.init(EnemyBattleActor.new(i, _enemyData.maxHP, _enemyData.maxHP, _enemyData.baseDamage, _enemyData.moveNameList))
 
 		_allEnemies.append(enemyController)
 		_enemiesHBoxContainer.add_child(enemy)
@@ -79,13 +82,15 @@ func _spawn_enemies(_quantity: int) -> void:
 	return
 
 
-# Should always be called after spawning player and enemies
+# Should always be called AFTER spawning player and enemies
 func _setup_turn_queue() -> void:
-	var playerIds: Array[int] = []
-	playerIds.append(_playerInstance.get_id())
-	var enemyIds: Array[int] = _allEnemies.filter(func(enemyController: EnemyController) -> int: return enemyController.get_id())
+	var _playerIds: Array[int] = []
+	_playerIds.append(_playerBattleActor.get_id())
+	var _enemyIds: Array[int] = []
+	for _enemy: EnemyController in _allEnemies:
+		_enemyIds.append(_enemy.get_id())
 
-	turnFlowController = TurnFlowController.new(playerIds, enemyIds)
+	turnFlowController = TurnFlowController.new(_playerIds, _enemyIds)
 
 	return
 
@@ -95,7 +100,15 @@ func _setup_turn_queue() -> void:
 #region Battle Result Check
 
 func get_next_turn_owner_id() -> int:
-	return turnFlowController.get_next_turn(_get_remaining_players_ids(), _get_remaining_enemies_ids())
+	var _remainingPlayersIds: Array[int] = _get_remaining_players_ids()
+	var _remainingEnemiesIds: Array[int] = _get_remaining_enemies_ids()
+
+	if (_remainingEnemiesIds.size() == 0):
+		push_error("Not enough enemies left to get next turn owner")
+	if (_remainingPlayersIds.size() == 0):
+		push_error("Not enough players left to get next turn owner")
+
+	return turnFlowController.get_next_turn(_remainingPlayersIds, _remainingEnemiesIds)
 
 
 # called by battle state machine living checks
@@ -110,15 +123,19 @@ func get_battle_result() -> BattleEnums.BattleResult:
 
 
 func _get_remaining_players_ids() -> Array[int]:
-	var _ids: Array[int] = []
-	if (_playerInstance.alive()):
-		_ids.append(_playerInstance.get_id())
+	var _idArray: Array[int] = []
+	if (_playerBattleActor.alive()):
+		_idArray.append(_playerBattleActor.get_id())
 
-	return _ids
+	return _idArray
 
 
 func _get_remaining_enemies_ids() -> Array[int]:
-	return _get_remaining_enemies().filter(func(enemy: EnemyController) -> int: return enemy.get_id())
+	var _idArray: Array[int] = []
+	for _enemyController: EnemyController in _get_remaining_enemies():
+		_idArray.append(_enemyController.get_id())
+
+	return _idArray
 
 
 func _get_remaining_enemies() -> Array[EnemyController]:
@@ -138,12 +155,12 @@ func get_enemy_controller_by_id(id: int) -> EnemyController:
 	return null
 
 
-func get_player_instance() -> PlayerInstance:
-	return _playerInstance
+func get_player_instance() -> PlayerBattleActor:
+	return _playerBattleActor
 
 
 func _apply_attack_on_player(battle_move: BattleMove) -> void:
-	_playerInstance.take_damage(battle_move.power)
+	_playerBattleActor.take_damage(battle_move.power)
 
 	return
 

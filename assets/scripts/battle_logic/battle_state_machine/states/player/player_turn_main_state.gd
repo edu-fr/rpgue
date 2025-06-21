@@ -1,12 +1,12 @@
 class_name PlayerTurnMainState
 extends BaseBattleState
 
-var _playerInstance: PlayerInstance
+var _playerBattleActor: PlayerBattleActor
 
 
-func _init(playerInstance: PlayerInstance, stateMachine: BattleStateMachine) -> void:
+func _init(playerBattleActor: PlayerBattleActor, stateMachine: BattleStateMachine) -> void:
 	super(stateMachine)
-	_playerInstance = playerInstance
+	_playerBattleActor = playerBattleActor
 
 	return
 
@@ -30,7 +30,7 @@ func on_attack_clicked() -> void:
 	var _battleUI: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
 	_battleUI.hide_and_disable_actions_panel()
 
-	_stateMachine.push_state(PlayerSelectMoveState.new(MoveData.Category.ATTACK, _playerInstance, _stateMachine))
+	_stateMachine.push_state(PlayerSelectMoveState.new(MoveData.Category.ATTACK, _playerBattleActor, _stateMachine))
 
 	return
 
@@ -39,6 +39,6 @@ func on_tech_clicked() -> void:
 	var _battleUI: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
 	_battleUI.hide_and_disable_actions_panel()
 
-	_stateMachine.push_state(PlayerSelectMoveState.new(MoveData.Category.TECH, _playerInstance, _stateMachine))
+	_stateMachine.push_state(PlayerSelectMoveState.new(MoveData.Category.TECH, _playerBattleActor, _stateMachine))
 
 	return

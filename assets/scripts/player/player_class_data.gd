@@ -23,14 +23,14 @@ func _init(_privateName: String, _name: String, _description: String, _baseDamag
 
 
 static func create_from_json(data: Dictionary) -> PlayerClassData:
-	var _privateName: String = data.get("PRIVATE NAME", "")
-	var _name: String = data.get("NAME", "")
-	var _description: String = data.get("DESCRIPTION", "")
-	var _baseDamage: float = float(str(data.get("BASE DAMAGE", 0.0)))
-	var _baseBlock: float = float(str(data.get("BASE BLOCK", 0.0)))
-	var _baseMaxHP: float = float(str(data.get("BASE MAX HP", 0.0)))
+	var _privateName: String = str(Utils.get_data(data, "PRIVATE NAME", "")).replace(" ", "")
+	var _name: String = Utils.get_data(data, "NAME", "")
+	var _description: String = Utils.get_data(data, "DESCRIPTION", "")
+	var _baseDamage: float = float(str(Utils.get_data(data, "BASE DAMAGE", 0.0)))
+	var _baseBlock: float = float(str(Utils.get_data(data, "BASE BLOCK", 0.0)))
+	var _baseMaxHP: float = float(str(Utils.get_data(data, "BASE MAX HP", 0.0)))
 
-	var _movesListData: String = data.get("INITIAL MOVE LIST", "")  # INITIAL MOVE LIST as in the .json
+	var _movesListData: String = Utils.get_data(data, "INITIAL MOVE LIST", "")  # INITIAL MOVE LIST as in the .json
 	var _moves: Array[String] = []  # INITIAL MOVE LIST as in the .json
 	for _move: String in _movesListData.split(",", false):
 		_moves.append(_move.strip_edges())

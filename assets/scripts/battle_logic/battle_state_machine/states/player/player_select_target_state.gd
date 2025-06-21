@@ -3,12 +3,12 @@ extends BaseBattleState
 
 var _battleMove: BattleMove
 var _enemyTargetingController: EnemyTargetingController
-var _playerInstance: PlayerInstance
+var _playerBattleActor: PlayerBattleActor
 
-func _init(battleMove: BattleMove, playerInstance: PlayerInstance, battleStateMachine: BattleStateMachine) -> void:
+func _init(battleMove: BattleMove, playerBattleActor: PlayerBattleActor, battleStateMachine: BattleStateMachine) -> void:
 	super(battleStateMachine)
 	_battleMove = battleMove
-	_playerInstance = playerInstance
+	_playerBattleActor = playerBattleActor
 
 	var enemiesRef: Array[EnemyController] = _stateMachine.battleScene._get_remaining_enemies()
 	_enemyTargetingController = EnemyTargetingController.new(_battleMove, enemiesRef)
@@ -56,7 +56,7 @@ func on_up_arrow_clicked() -> void:
 
 func _on_target_selection_finished(enemy_indices: Array[int]) -> void:
 	print("[SIGNAL] target_selection_finished received successfully")
-	_stateMachine.pop_stack(PlayerAttackResultState.new(_battleMove, enemy_indices, _playerInstance, _stateMachine))
+	_stateMachine.pop_stack(PlayerAttackResultState.new(_battleMove, enemy_indices, _playerBattleActor, _stateMachine))
 
 	return
 

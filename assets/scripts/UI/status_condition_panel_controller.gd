@@ -1,11 +1,11 @@
 class_name StatusConditionPanelController
 extends Node
 
-var statusConditionArray: Array[ActiveStatusCondition]
-var currentItems: Dictionary[StatusConditionEnums.Type, StatusConditionController]
+var statusConditionArray: Array
+var currentItems: Dictionary
 
 
-func _update_status_conditions(array: Array[ActiveStatusCondition]) -> void:
+func _update_status_conditions(array: Array) -> void:
 	for i: int in currentItems.size():
 		var _value: StatusConditionController = currentItems[i]
 		_value.queue_free()

@@ -1,11 +1,11 @@
 class_name EnemyPreTurnState
 extends BaseBattleState
 
-var _enemyInstance: EnemyInstance
+var _enemyInstance: EnemyBattleActor
 var _moveToUse: BattleMove
 
 
-func _init(enemyInstance: EnemyInstance, stateMachine: BattleStateMachine) -> void:
+func _init(enemyInstance: EnemyBattleActor, stateMachine: BattleStateMachine) -> void:
 	super(stateMachine)
 	_enemyInstance = enemyInstance
 
@@ -18,6 +18,9 @@ func on_state_start() -> void:
 	if (_check_battle_ended()):
 		return
 
+	if (skipping_turn_as_enemy_is_not_alive(_enemyInstance)):
+		return
+
 	_moveToUse = _enemyInstance.get_random_move()
 
 	return
@@ -25,7 +28,7 @@ func on_state_start() -> void:
 
 func on_confirm_clicked() -> void:
 	print("enemy turn start battle state confirm clicked")
-	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, EnemyTurnActionState.new(_stateMachine, _moveToUse)))
+	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, EnemyTurnActionState.new(_moveToUse, _enemyInstance, _stateMachine)))
 
 	return
 

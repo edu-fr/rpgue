@@ -1,17 +1,17 @@
 class_name PlayerTurnPostTurnState
 extends BaseBattleState
 
-var _playerInstance: PlayerInstance
+var _playerBattleActor: PlayerBattleActor
 
-func _init(playerInstance: PlayerInstance, stateMachine: BattleStateMachine) -> void:
+func _init(playerBattleActor: PlayerBattleActor, stateMachine: BattleStateMachine) -> void:
 	super(stateMachine)
-	_playerInstance = playerInstance
+	_playerBattleActor = playerBattleActor
 
 	return
 
 
 func on_state_start() -> void:
-	_playerInstance.activate_post_turn_start_effects()
+	_playerBattleActor.activate_post_turn_start_effects()
 
 	if (_check_battle_ended()):
 		return

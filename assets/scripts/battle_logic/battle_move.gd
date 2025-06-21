@@ -9,9 +9,8 @@ var power: float
 var _baseMoveData: MoveData
 
 
-func _init(moveData: MoveData, user: LivingBeing) -> void:
+func _init(moveData: MoveData, user: BattleActor) -> void:
 	_baseMoveData = moveData
-
 	publicName = moveData.name
 	description = moveData.description
 	moveTypes = moveData.moveTypes
