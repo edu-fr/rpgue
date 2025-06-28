@@ -16,13 +16,13 @@ func _ready() -> void:
 
 
 func _boot() -> void:
-	print("Boot started")
+	print("====== BOOT STARTED ======")
 
 	GM.init(self)
 	dataManager.init()
 	runManager.init()
 
-	print("Boot finished")
+	print("====== BOOT FINISHED ======\n")
 
 	return
 

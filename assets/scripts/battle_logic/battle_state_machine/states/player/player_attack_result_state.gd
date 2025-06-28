@@ -17,7 +17,9 @@ func _init(battleMove: BattleMove, targetEnemiesIndexes: Array[int], playerBattl
 
 
 func on_state_start() -> void:
-	print("MOVE USED: " + _battleMove.publicName + "; Should do " + str(_battleMove.get_move_data().baseDamage) + " damage.")
+	if (GM.verbose):
+		print("[PLAYER ATTACK RESULT STATE] Move used:")
+		print(_battleMove)
 
 	for _enemyIndex: int in _targetEnemiesIds:
 		var _enemy: EnemyController = _stateMachine.battleScene._get_remaining_enemy_by_id(_enemyIndex)

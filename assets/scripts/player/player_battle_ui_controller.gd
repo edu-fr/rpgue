@@ -6,8 +6,12 @@ extends Control
 @export var _attackMovesPanel: BattleMovesPanel
 @export var _techMovesPanel: BattleMovesPanel
 
+var _playerBattleActor: PlayerBattleActor
+
 
 func init(playerBattleActor: PlayerBattleActor, stateMachine: BattleStateMachine) -> void:
+	_playerBattleActor = playerBattleActor
+
 	_statusPanel.init(playerBattleActor)
 	_actionsPanel.init(stateMachine)
 
@@ -22,17 +26,11 @@ func start_player_turn(remainingEnemies: Array[EnemyController]) -> PlayerAction
 
 
 func get_player_health() -> float:
-	return _statusPanel.get_player_current_health()
+	return _playerBattleActor.get_current_HP()
 
 
 func is_player_alive() -> bool:
-	return _statusPanel.get_player_current_health() > 0
-
-
-func damage_player(damage: int) -> bool:
-	_statusPanel.damage_player(damage)
-
-	return is_player_alive()
+	return get_player_health() > 0
 
 
 func hide_and_disable_actions_panel() -> void:

@@ -17,7 +17,7 @@ func _init(playerIds: Array[int], enemyIds: Array[int]) -> void:
 func get_next_turn(remainingPlayerIds: Array[int], remainingEnemyIds: Array[int]) -> int:
 	var nextToPlayIsValid: bool = false
 	var nextToPlay: int
-	print("[TURN QUEUE] Getting next turn")
+	print("\n[TURN QUEUE] Getting next turn")
 
 	while (!nextToPlayIsValid):
 		if (_turn_queue.size() <= 0):
@@ -47,25 +47,25 @@ func _fill_turn_queue(remainingPlayerIds: Array[int], remainingEnemyIds: Array[i
 	for _id: int in remainingEnemyIds:
 		fullIdList.append(_id)
 
-	var startingIndex: int
+	var _startingIndex: int
 
 	if (_turn_queue.peek_queue_end() == null):
-		startingIndex = 0
+		_startingIndex = 0
 	else:
 		var _last_of_the_queue: int = _turn_queue.peek_queue_end()
 
 		var _is_last_enemy: bool = not remainingEnemyIds.is_empty() and remainingEnemyIds.back() == _last_of_the_queue
 		if (_is_last_enemy):
-			startingIndex = 0
+			_startingIndex = 0
 		else:
 			var last_actor_index: int = fullIdList.find(_last_of_the_queue)
 			if (last_actor_index != -1):
-				startingIndex = (last_actor_index + 1) % fullIdList.size()
+				_startingIndex = (last_actor_index + 1) % fullIdList.size()
 			else:
 				push_error("[TURN QUEUE] Can't find last actor from turn queue, make sure the list is updated before calling this func")
-				startingIndex = 0 # Fallback para um índice seguro
+				_startingIndex = 0 # Fallback para um índice seguro
 
-	_enqueue_turns_until_full(fullIdList, startingIndex)
+	_enqueue_turns_until_full(fullIdList, _startingIndex)
 
 	return
 

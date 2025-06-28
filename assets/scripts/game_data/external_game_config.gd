@@ -5,9 +5,6 @@ var _upgradesRawConfig: Dictionary = {}
 var _enemiesRawConfig: Dictionary = {}
 var _playerClassesRawConfig: Dictionary = {}
 
-## DEBUG
-static var _verbose: bool = true
-##
 
 static func create_from_json(jsonData: Dictionary) -> ExternalGameConfig:
 	var _config: ExternalGameConfig = ExternalGameConfig.new()
@@ -34,10 +31,9 @@ static func create_from_json(jsonData: Dictionary) -> ExternalGameConfig:
 	for key: String in _playerClassesData.keys():
 		var _playerClassDataDict: Dictionary = _playerClassesData[key]
 		var _playerClassData: PlayerClassData = PlayerClassData.create_from_json(_playerClassDataDict)
-		print("player class key: " + _playerClassData.privateName)
 		_config._playerClassesRawConfig[_playerClassData.privateName] = _playerClassData
 
-	if (_verbose):
+	if (GM.verbose):
 		print("\n########### MOVES DATA ##############\n")
 		for _moveData: MoveData in _config._movesRawConfig.values():
 			print(_moveData.to_string())

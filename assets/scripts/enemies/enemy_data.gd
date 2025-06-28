@@ -4,8 +4,8 @@ extends Resource
 var privateName: String
 var name: String
 var description: String
-var baseDamage: float
-var baseBlock: float
+var baseDamageMultiplier: float
+var baseBlockMultiplier: float
 var maxHP: float
 var startingHP: float
 var moveNameList: Array[String]
@@ -16,8 +16,8 @@ func _init(\
 	_privateName: String, \
 	_name: String, \
 	_description: String, \
-	_baseDamage: float, \
-	_baseBlock: float, \
+	_baseDamageMultiplier: float, \
+	_baseBlockMultiplier: float, \
 	_maxHP: float, \
 	_startingHP: float, \
 	_moveNameList: Array[String], \
@@ -26,8 +26,8 @@ func _init(\
 	privateName = _privateName
 	name = _name
 	description = _description
-	baseDamage = _baseDamage
-	baseBlock = _baseBlock
+	baseDamageMultiplier = _baseDamageMultiplier
+	baseBlockMultiplier = _baseBlockMultiplier
 	maxHP = _maxHP
 	startingHP = _startingHP
 	moveNameList = _moveNameList.duplicate(true)
@@ -40,8 +40,8 @@ static func create_from_json(data: Dictionary) -> EnemyData:
 	var _privateName: String = str(Utils.get_data(data, "PRIVATE NAME", "")).replace(" ", "")
 	var _name: String = Utils.get_data(data, "NAME", "")
 	var _description: String = Utils.get_data(data, "DESCRIPTION", "")
-	var _baseDamage: float = float(str(Utils.get_data(data, "BASE DAMAGE", 0.0)))
-	var _baseBlock: float = float(str(Utils.get_data(data, "BASE BLOCK", 0.0)))
+	var _baseDamageMultiplier: float = float(str(Utils.get_data(data, "BASE DAMAGE MULTIPLIER", 1.0)))
+	var _baseBlockMultiplier: float = float(str(Utils.get_data(data, "BASE BLOCK MULTIPLIER", 1.0)))
 	var _maxHP: float = float(str(Utils.get_data(data, "MAX HP", 0.0)))
 	var _startingHP: float = float(str(Utils.get_data(data, "STARTING HP", 0.0)))
 
@@ -55,7 +55,7 @@ static func create_from_json(data: Dictionary) -> EnemyData:
 	for _move: String in _movesRawStr.split(",", false):
 		_moves.append(str(_move.replace(" ", "")))
 
-	return EnemyData.new(_privateName, _name, _description, _baseDamage, _baseBlock, _maxHP, _startingHP, _moves, _habitats)
+	return EnemyData.new(_privateName, _name, _description, _baseDamageMultiplier, _baseBlockMultiplier, _maxHP, _startingHP, _moves, _habitats)
 
 
 func _to_string() -> String:

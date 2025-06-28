@@ -20,7 +20,7 @@ func _init() -> void:
 
 func push_state(newState: BaseState) -> void:
 	_assert_state_type(newState)
-	print("[STATE MACHINE] Push: " + str(Utils.get_clear_script_name(newState)))
+	# print("[STATE MACHINE] Push: " + str(Utils.get_clear_script_name(newState)))
 
 	if (currentState != null):
 		currentState.on_state_end()
@@ -34,7 +34,7 @@ func push_state(newState: BaseState) -> void:
 
 
 func pop_state(resumeCurrent: bool = true) -> void:
-	print("[STATE MACHINE] Pop: " + str(Utils.get_clear_script_name(currentState)))
+	# print("[STATE MACHINE] Pop: " + str(Utils.get_clear_script_name(currentState)))
 	currentState.on_state_end()
 
 	stateStack.pop()

@@ -22,6 +22,10 @@ func on_state_start() -> void:
 	if (skipping_turn_as_enemy_is_not_alive(_enemyInstance)):
 		return
 
+	if (GM.verbose):
+		print("[ENEMY] Move to use: ")
+		print(_moveToUse)
+
 	_stateMachine.battleScene._apply_attack_on_player(_moveToUse)
 
 	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, EnemyTurnPostTurnState.new(_enemyInstance, _stateMachine)))

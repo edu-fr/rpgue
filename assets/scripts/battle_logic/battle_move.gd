@@ -22,3 +22,7 @@ func _init(moveData: MoveData, user: BattleActor) -> void:
 
 func get_move_data() -> MoveData:
 	return _baseMoveData
+
+
+func _to_string() -> String:
+	return ObjectPrinter.print_object(self)

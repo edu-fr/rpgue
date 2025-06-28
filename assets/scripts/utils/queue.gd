@@ -45,7 +45,7 @@ func force_remove_aparitions(element: Variant) -> void:
 	assert(contains(element), "Trying to force remove a non-existent element")
 	print("[DEBUG] Elements before force remove: ")
 
-	for i in _elements:
+	for i: int in _elements.size():
 		print(str(i) + ": " + str(_elements[i]))
 	while (contains(element)):
 		_elements.erase(element)

@@ -1,15 +1,15 @@
 class_name EnemyTargetingController
 extends Node
 
-signal target_selection_finished(enemy_indices: Array[int])
+signal target_selection_finished(enemyIDs: Array[int])
 var _battleMove: BattleMove
 var _enemies: Array[EnemyController]
 var _currentIndex: int = 0
 
 
-func _init(battle_move: BattleMove, enemies_array: Array[EnemyController]) -> void:
-	_battleMove = battle_move
-	_enemies = enemies_array
+func _init(battleMove: BattleMove, enemiesArray: Array[EnemyController]) -> void:
+	_battleMove = battleMove
+	_enemies = enemiesArray
 	_currentIndex = 0 if _enemies.size() > 0 else -1
 	_update_selection()
 
@@ -37,9 +37,13 @@ func handle_press_right() -> void:
 
 
 func handle_confirm_click() -> void:
-	var indices: Array[int] = _calculate_target_indices()
+	var indexes: Array[int] = _calculate_target_indices()
+	var enemyIDs: Array[int]
+	for i: int in indexes:
+		enemyIDs.append(_enemies[i].get_id())
+
 	print("[SIGNAL] Emitting target_selection_finished")
-	target_selection_finished.emit(indices)
+	target_selection_finished.emit(enemyIDs)
 	cancel_enemy_selection()
 	queue_free()
 

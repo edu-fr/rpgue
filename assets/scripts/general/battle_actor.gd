@@ -77,6 +77,8 @@ func set_max_hp(newMaxHP: float, animate: bool) -> void:
 
 func take_damage(damage: float) -> void:
 	# Apply any modifiers
+	if (GM.verbose):
+		print("[PLAYER] Player will take " + str(damage) + " damage")
 
 	set_current_hp(get_current_HP() - damage, true)
 
@@ -85,6 +87,8 @@ func take_damage(damage: float) -> void:
 
 func heal(healValue: float) -> void:
 	# Apply any modifiers
+	if (GM.verbose):
+		print("[PLAYER] Player will heal " + str(healValue) + " hp")
 
 	set_current_hp(get_current_HP() + healValue, true)
 

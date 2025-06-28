@@ -18,11 +18,11 @@ func update_value(oldValue: float, newValue: float, animate: bool) -> void:
 	if (newValue > _progressBar.value):
 		if (animate):
 			# TODO: Health upgrade animation/SFX
-			print("Healed HP!")
+			print("Healed " + str(newValue - oldValue) + "HP!")
 	elif (newValue < _progressBar.value):
 		if (animate):
 			# TODO: Health downgrade animation/SFX
-			print("Lose HP!")
+			print("Lose " + str(newValue - oldValue) + " HP!")
 	else:
 		return
 

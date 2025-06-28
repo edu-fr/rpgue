@@ -38,7 +38,9 @@ func erase_run_data() -> void:
 
 
 func update_run_data(runData: RunData) -> void:
-	print("Updating run data...")
+	if (GM.verbose):
+		print("Updating run data...")
+
 	_loadedSaveData.set_run_data(runData)
 	save_current_data_to_save_file()
 

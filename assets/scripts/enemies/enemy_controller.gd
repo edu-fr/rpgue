@@ -35,7 +35,9 @@ func heal(healValue: int) -> void:
 
 
 func set_selected(value: bool) -> void:
-	_alive_assertion()
+	if (!is_alive()):
+		push_error("Trying to set an dead enemy selection to " + str(value))
+		return
 
 	_enemyImage.modulate = Color(1.5, 1.5, 1.5) if value else Color(1, 1, 1)
 
@@ -43,7 +45,9 @@ func set_selected(value: bool) -> void:
 
 
 func set_semi_selected(value: bool) -> void:
-	_alive_assertion()
+	if (!is_alive()):
+		push_error("Trying to set an dead enemy semi selection to " + str(value))
+		return
 
 	_enemyImage.modulate = Color(1.3, 1.3, 1.3) if value else Color(1, 1, 1)
 

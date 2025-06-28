@@ -74,7 +74,7 @@ func _spawn_enemies(_quantity: int) -> void:
 	for i: int in _quantity:
 		var enemy: Node = preload(_enemyScenePath).instantiate()
 		var enemyController: EnemyController = enemy
-		enemyController.init(EnemyBattleActor.new(i, _enemyData.maxHP, _enemyData.maxHP, _enemyData.baseDamage, _enemyData.moveNameList))
+		enemyController.init(EnemyBattleActor.new(i, _enemyData.maxHP, _enemyData.maxHP, _enemyData.baseDamageMultiplier, _enemyData.moveNameList))
 
 		_allEnemies.append(enemyController)
 		_enemiesHBoxContainer.add_child(enemy)
@@ -114,7 +114,6 @@ func get_next_turn_owner_id() -> int:
 # called by battle state machine living checks
 func get_battle_result() -> BattleEnums.BattleResult:
 	if (!_is_player_alive()):
-		print("PLAYER NOT ALIVE")
 		return BattleEnums.BattleResult.PLAYER_LOSE
 
 	if (_get_remaining_enemies().size() == 0):
