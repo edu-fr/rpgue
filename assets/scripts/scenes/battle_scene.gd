@@ -114,6 +114,7 @@ func get_next_turn_owner_id() -> int:
 # called by battle state machine living checks
 func get_battle_result() -> BattleEnums.BattleResult:
 	if (!_is_player_alive()):
+		print("PLAYER NOT ALIVE")
 		return BattleEnums.BattleResult.PLAYER_LOSE
 
 	if (_get_remaining_enemies().size() == 0):

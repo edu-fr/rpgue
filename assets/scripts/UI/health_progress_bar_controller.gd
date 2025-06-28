@@ -1,4 +1,4 @@
-class_name HealthBarController
+class_name HealthProgressBarController
 extends Control
 
 @export var _progressBar: ProgressBar

@@ -31,7 +31,6 @@ func on_state_end() -> void:
 
 
 func on_confirm_clicked() -> void:
-	print("player select target battle state confirm clicked")
 	_enemyTargetingController.handle_confirm_click()
 	return
 
@@ -55,14 +54,12 @@ func on_up_arrow_clicked() -> void:
 
 
 func _on_target_selection_finished(enemy_indices: Array[int]) -> void:
-	print("[SIGNAL] target_selection_finished received successfully")
 	_stateMachine.pop_stack(PlayerAttackResultState.new(_battleMove, enemy_indices, _playerBattleActor, _stateMachine))
 
 	return
 
 
 func on_back_clicked() -> void:
-	print("player_select_target_state on back clicked. Popping state")
 	_enemyTargetingController.handle_back_click()
 	_stateMachine.pop_state()
 

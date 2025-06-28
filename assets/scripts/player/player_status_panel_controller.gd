@@ -3,7 +3,7 @@ extends Control
 
 @export var _playerName: String = "Default"
 @export var _playerNameLabel: Label
-@export var _healthBarController: HealthBarController
+@export var _healthBarController: HealthProgressBarController
 var _playerBattleActor: PlayerBattleActor
 
 

@@ -29,7 +29,6 @@ func init(onBattleMoveIndexClicked: Callable, movesInfo: Array[BattleMove]) -> v
 
 
 func set_buttons_enabled(value: bool) -> void:
-	print("Setting moves buttons enabled: " + str(value))
 	for button: Button in battleMoveButtonsSlots:
 		button.disabled = !value
 

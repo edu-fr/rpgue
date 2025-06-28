@@ -16,7 +16,7 @@ func on_state_start() -> void:
 	# Attack modifiers probably gonna show up here and be used after this (or maybe the turn will be skipped)
 	_enemyInstance.activate_action_phase_start_effects()
 
-	if (_check_battle_ended()):
+	if (_change_state_if_battle_ended()):
 		return
 
 	if (skipping_turn_as_enemy_is_not_alive(_enemyInstance)):

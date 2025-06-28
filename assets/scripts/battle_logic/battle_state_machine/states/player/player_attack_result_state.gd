@@ -15,6 +15,7 @@ func _init(battleMove: BattleMove, targetEnemiesIndexes: Array[int], playerBattl
 	return
 
 
+
 func on_state_start() -> void:
 	print("MOVE USED: " + _battleMove.publicName + "; Should do " + str(_battleMove.get_move_data().baseDamage) + " damage.")
 

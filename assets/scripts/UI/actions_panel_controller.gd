@@ -50,7 +50,6 @@ func _on_tech_button_pressed() -> void:
 
 
 func set_buttons_enabled(value: bool) -> void:
-	print("Setting buttons enabled: " + str(value))
 	_attackButton.disabled = !value
 	_techButton.disabled = !value
 

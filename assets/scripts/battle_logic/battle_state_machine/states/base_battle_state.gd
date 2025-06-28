@@ -34,7 +34,7 @@ func on_tech_index_cliked(index: int) -> void:
 	return
 
 
-func _check_battle_ended() -> bool:
+func _change_state_if_battle_ended() -> bool:
 	var _battle_result: BattleEnums.BattleResult = _stateMachine.battleScene.get_battle_result()
 	match(_battle_result):
 		BattleEnums.BattleResult.ONGOING:
@@ -55,7 +55,7 @@ func _check_battle_ended() -> bool:
 
 func skipping_turn_as_enemy_is_not_alive(enemyInstance: EnemyBattleActor) -> bool:
 	if (enemyInstance.alive()):
-		false
+		return false
 
 	_stateMachine.swap_state(_get_next_actor_turn())
 
@@ -71,5 +71,3 @@ func _get_next_actor_turn() -> BaseBattleState:
 	else:
 		var _playerBattleActor: PlayerBattleActor = _stateMachine.battleScene.get_player_instance()
 		return PlayerPreTurnState.new(_playerBattleActor, _stateMachine)
-
-	return null

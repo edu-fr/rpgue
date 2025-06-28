@@ -13,7 +13,7 @@ func _init(playerBattleActor: PlayerBattleActor, stateMachine: BattleStateMachin
 func on_state_start() -> void:
 	_playerBattleActor.activate_pre_turn_start_effects()
 
-	if (_check_battle_ended()):
+	if (_change_state_if_battle_ended()):
 		return
 
 	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, PlayerTurnMainState.new(_playerBattleActor, _stateMachine)))

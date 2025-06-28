@@ -43,8 +43,16 @@ func contains(element: Variant) -> bool:
 
 func force_remove_aparitions(element: Variant) -> void:
 	assert(contains(element), "Trying to force remove a non-existent element")
+	print("[DEBUG] Elements before force remove: ")
+
+	for i in _elements:
+		print(str(i) + ": " + str(_elements[i]))
 	while (contains(element)):
 		_elements.erase(element)
+
+	print("[DEBUG] Elements after force remove: ")
+	for i in _elements:
+		print(str(i))
 
 	return
 
@@ -56,8 +64,15 @@ func peek_queue_end() -> Variant:
 	return _elements.back()
 
 
-func print_current() -> void:
-	print("Queue state")
+func _to_string() -> String:
+	var _str: String = "Queue: ["
 	for i: int in _elements.size():
-		print("Queue[" + str(i) + "]: " + str(_elements[i]))
-	return
+		_str += str(_elements[i])
+		if (i == _elements.size() - 1):
+			break
+
+		_str += ", "
+
+	_str += "]"
+
+	return _str

@@ -1,7 +1,7 @@
 class_name EnemyController
 extends Control
 
-@export var _healthBar: HealthBarController
+@export var _healthBar: HealthProgressBarController
 @export var _enemyImage: TextureRect
 
 var _enemyInstance: EnemyBattleActor
