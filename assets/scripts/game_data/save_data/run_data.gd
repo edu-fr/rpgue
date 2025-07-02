@@ -15,11 +15,24 @@ func _init() -> void:
 	return
 
 
-func on_level_beated() -> void:
+func on_level_beated(updatedPlayer: PlayerBattleActor) -> void:
 	levelsBeated += 1
+	playerRunData.update_run_data_from_battle_actor(updatedPlayer)
 
 	return
 
 
-func get_player_battle_actor() -> PlayerBattleActor:
+func on_upgrade_received(upgradeData: UpgradeData) -> void:
+	playerRunData.add_upgrade(upgradeData)
+
+	return
+
+
+func on_move_received(moveData: MoveData) -> void:
+	playerRunData.add_move(moveData)
+
+	return
+
+
+func get_player_battle_actor_from_current_run_data() -> PlayerBattleActor:
 	return playerRunData.create_battle_actor_from_run_data()

@@ -23,14 +23,11 @@ static func get_random_elements(original_dict: Dictionary, quantity: int) -> Dic
 	if original_dict.is_empty() || quantity <= 0:
 		return result
 
-	# Garante que não pedimos mais elementos do que existem
 	var max_elements: int = mini(quantity, original_dict.size())
 
-	# Cria array de chaves e embaralha
 	var keys: Array = original_dict.keys()
 	keys.shuffle()
 
-	# Seleciona os primeiros X elementos
 	for i: int in range(max_elements):
 		var key: String = keys[i]
 		result[key] = original_dict[key]
@@ -45,7 +42,6 @@ static var _is_debug: bool = OS.is_debug_build()
 static var _validation_done: bool = false
 
 
-# Configura uma ação para uma tecla
 static func set_key_action(key: Key, action: Callable, one_shot: bool = false) -> void:
 	if not _is_debug:
 		return
@@ -56,7 +52,6 @@ static func set_key_action(key: Key, action: Callable, one_shot: bool = false) -
 	return
 
 
-# Remove a ação de uma tecla
 static func remove_key_action(key: Key) -> void:
 	if not _is_debug:
 		return
@@ -116,6 +111,7 @@ static func _execute_action(key_data: Dictionary) -> void:
 		action.call()
 	else:
 		push_error("Invalid Callable in key action")
+
 
 # Import utils
 

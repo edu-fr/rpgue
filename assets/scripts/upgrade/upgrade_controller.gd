@@ -5,10 +5,10 @@ extends Control
 @export var titleText: RichTextLabel
 @export var descriptionText: RichTextLabel
 
-var upgradeData: MoveData
+var upgradeData: UpgradeData
 
 
-func init(upgrade_data: MoveData, onUpgradeClicked: Callable) -> void:
+func init(upgrade_data: UpgradeData, onUpgradeClicked: Callable) -> void:
 	upgradeData = upgrade_data
 	_setupButton(onUpgradeClicked)
 

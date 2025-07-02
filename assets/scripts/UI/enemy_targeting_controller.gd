@@ -43,8 +43,8 @@ func handle_confirm_click() -> void:
 		enemyIDs.append(_enemies[i].get_id())
 
 	print("[SIGNAL] Emitting target_selection_finished")
-	target_selection_finished.emit(enemyIDs)
 	cancel_enemy_selection()
+	target_selection_finished.emit(enemyIDs)
 	queue_free()
 
 	return

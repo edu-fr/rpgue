@@ -39,7 +39,7 @@ func _setup_debug_visual_state_machine_stack() -> void:
 #region Battle Setup
 
 func setup_scene() -> void: # called by SetupState
-	_spawn_enemies(4)
+	_spawn_enemies(1)
 	_setup_player()
 	_setup_UI()
 	_setup_turn_queue()
@@ -48,7 +48,7 @@ func setup_scene() -> void: # called by SetupState
 
 
 func _setup_player() -> void:
-	_playerBattleActor = GM.runManager.currentRunDataRef.get_player_battle_actor()
+	_playerBattleActor = GM.runManager.currentRunDataRef.get_player_battle_actor_from_current_run_data()
 
 	assert(_playerBattleActor != null, "Can't setup battle, player battle actor is null")
 
@@ -155,7 +155,7 @@ func get_enemy_controller_by_id(id: int) -> EnemyController:
 	return null
 
 
-func get_player_instance() -> PlayerBattleActor:
+func get_player() -> PlayerBattleActor:
 	return _playerBattleActor
 
 

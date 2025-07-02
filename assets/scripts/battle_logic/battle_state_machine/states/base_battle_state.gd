@@ -35,12 +35,13 @@ func on_tech_index_cliked(index: int) -> void:
 
 
 func _change_state_if_battle_ended() -> bool:
-	var _battle_result: BattleEnums.BattleResult = _stateMachine.battleScene.get_battle_result()
-	match(_battle_result):
+	var _battleResult: BattleEnums.BattleResult = _stateMachine.battleScene.get_battle_result()
+	var _player: PlayerBattleActor = _stateMachine.battleScene.get_player()
+	match(_battleResult):
 		BattleEnums.BattleResult.ONGOING:
 			return false
 		BattleEnums.BattleResult.PLAYER_WIN:
-			_stateMachine.pop_stack(BattleWinState.new(_stateMachine))
+			_stateMachine.pop_stack(BattleWinState.new(_player, _stateMachine))
 			return true
 		BattleEnums.BattleResult.PLAYER_LOSE:
 			_stateMachine.pop_stack(BattleLossState.new(_stateMachine))
@@ -69,5 +70,5 @@ func _get_next_actor_turn() -> BaseBattleState:
 		var _enemyController: EnemyController = _stateMachine.battleScene.get_enemy_controller_by_id(_nextTurnOwnerId)
 		return EnemyPreTurnState.new(_enemyController.get_instance(), _stateMachine)
 	else:
-		var _playerBattleActor: PlayerBattleActor = _stateMachine.battleScene.get_player_instance()
+		var _playerBattleActor: PlayerBattleActor = _stateMachine.battleScene.get_player()
 		return PlayerPreTurnState.new(_playerBattleActor, _stateMachine)

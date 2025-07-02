@@ -10,6 +10,7 @@ var _currentHP: float
 var _initialAttackDamageMultiplier: float
 var _currentAttackDamageMultiplier: float
 var _moveList: Array[String]
+var _upgradeList: Array[String]
 
 
 func _init(id: int, maxHP: float, currentHP: float, initialAttackDamageMultiplier: float, currentAttackDamageMultiplier: float, moveList: Array[String]) -> void:
@@ -20,11 +21,32 @@ func _init(id: int, maxHP: float, currentHP: float, initialAttackDamageMultiplie
 	_currentAttackDamageMultiplier = currentAttackDamageMultiplier
 	_moveList = moveList
 
+	return
 
-func update_run_data_from_battle_actor() -> void:
+
+func update_run_data_from_battle_actor(updatePlayer: PlayerBattleActor) -> void:
+	_maxHP = updatePlayer.get_max_HP()
+	_currentHP = updatePlayer.get_current_HP()
+	_currentAttackDamageMultiplier = updatePlayer.get_attack_damage_multiplier()
 
 	return
+
 
 func create_battle_actor_from_run_data() -> PlayerBattleActor:
 	return PlayerBattleActor.new(_id, _maxHP, _currentHP, _currentAttackDamageMultiplier, _moveList)
 
+
+func add_upgrade(upgradeData: UpgradeData) -> void:
+	assert(!_upgradeList.has(upgradeData.privateName), "Upgrade " + upgradeData.name + " already added to player");
+
+	_upgradeList.append(upgradeData.privateName)
+
+	return
+
+
+func add_move(moveData: MoveData) -> void:
+	assert(!_upgradeList.has(moveData.privateName), "Move " + moveData.name + " already added to player");
+
+	_moveList.append(moveData.privateName)
+
+	return
