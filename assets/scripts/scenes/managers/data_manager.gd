@@ -63,6 +63,10 @@ func get_enemies_data() -> Dictionary:
 	return _externalGameConfig.get_enemies_data()
 
 
+func get_moves_data() -> Dictionary:
+	return _externalGameConfig.get_moves_data()
+
+
 func get_random_enemy() -> EnemyData:
 	var randomEnemy: EnemyData = get_enemies_data().values().pick_random()
 	assert(randomEnemy != null, "Can't get random enemy")

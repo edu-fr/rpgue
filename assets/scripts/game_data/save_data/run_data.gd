@@ -22,14 +22,14 @@ func on_level_beated(updatedPlayer: PlayerBattleActor) -> void:
 	return
 
 
-func on_upgrade_received(upgradeData: UpgradeData) -> void:
-	playerRunData.add_upgrade(upgradeData)
+func on_upgrade_received(upgradePrivateName: String) -> void:
+	playerRunData.add_upgrade(upgradePrivateName)
 
 	return
 
 
-func on_move_received(moveData: MoveData) -> void:
-	playerRunData.add_move(moveData)
+func on_move_received(movePrivateName: String) -> void:
+	playerRunData.add_move(movePrivateName)
 
 	return
 

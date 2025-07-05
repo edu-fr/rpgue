@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://cwmm70xh5e8jp" path="res://assets/art/backgrounds/upgrade_background.jpg" id="2_rumqp"]
 [ext_resource type="PackedScene" uid="uid://c41jk74pfw21h" path="res://assets/prefabs/overlay_color_rect.tscn" id="3_f1v28"]
 [ext_resource type="Theme" uid="uid://bmyojn3mkgcsr" path="res://assets/config/button_themes/upgrade_menu_scene_title_theme.tres" id="4_a1j38"]
-[ext_resource type="PackedScene" uid="uid://dddh188mjrpky" path="res://assets/prefabs/upgrade_button.tscn" id="4_y2p1a"]
+[ext_resource type="PackedScene" uid="uid://dddh188mjrpky" path="res://assets/prefabs/improvement_button.tscn" id="4_y2p1a"]
 
-[node name="Upgrade" type="Control" node_paths=PackedStringArray("upgradeController1", "upgradeController2", "upgradeController3")]
+[node name="Upgrade" type="Control" node_paths=PackedStringArray("improvementController1", "improvementController2", "improvementController3")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,9 +17,9 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_8e1t4")
-upgradeController1 = NodePath("MarginContainer/VBoxContainer/UpgradeButtonMarginContainer")
-upgradeController2 = NodePath("MarginContainer/VBoxContainer/UpgradeButtonMarginContainer2")
-upgradeController3 = NodePath("MarginContainer/VBoxContainer/UpgradeButtonMarginContainer3")
+improvementController1 = NodePath("MarginContainer/VBoxContainer/UpgradeButtonMarginContainer")
+improvementController2 = NodePath("MarginContainer/VBoxContainer/UpgradeButtonMarginContainer2")
+improvementController3 = NodePath("MarginContainer/VBoxContainer/UpgradeButtonMarginContainer3")
 
 [node name="BackgroundTextureRect" parent="." instance=ExtResource("1_lbi6r")]
 modulate = Color(1, 1, 1, 1)

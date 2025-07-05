@@ -36,17 +36,17 @@ func create_battle_actor_from_run_data() -> PlayerBattleActor:
 	return PlayerBattleActor.new(_id, _maxHP, _currentHP, _currentAttackDamageMultiplier, _moveList)
 
 
-func add_upgrade(upgradeData: UpgradeData) -> void:
-	assert(!_upgradeList.has(upgradeData.privateName), "Upgrade " + upgradeData.name + " already added to player");
+func add_upgrade(upgradePrivateName: String) -> void:
+	assert(!_upgradeList.has(upgradePrivateName), "Upgrade " + upgradePrivateName + " already added to player");
 
-	_upgradeList.append(upgradeData.privateName)
+	_upgradeList.append(upgradePrivateName)
 
 	return
 
 
-func add_move(moveData: MoveData) -> void:
-	assert(!_upgradeList.has(moveData.privateName), "Move " + moveData.name + " already added to player");
+func add_move(movePrivateName: String) -> void:
+	assert(!_upgradeList.has(movePrivateName), "Move " + movePrivateName + " already added to player");
 
-	_moveList.append(moveData.privateName)
+	_moveList.append(movePrivateName)
 
 	return

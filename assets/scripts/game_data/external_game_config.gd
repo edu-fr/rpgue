@@ -65,6 +65,12 @@ func get_upgrades_data() -> Dictionary:
 	return _upgradesRawConfig.duplicate(true)
 
 
+func get_moves_data() -> Dictionary:
+	assert(_movesRawConfig.size() > 0, "Moves raw config is empty")
+
+	return _movesRawConfig.duplicate(true)
+
+
 func get_enemies_data() -> Dictionary:
 	assert(_enemiesRawConfig.size() > 0, "Enemies raw config is empty")
 
