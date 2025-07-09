@@ -15,8 +15,8 @@ func init(playerBattleActor: PlayerBattleActor, stateMachine: BattleStateMachine
 	_statusPanel.init(playerBattleActor)
 	_actionsPanel.init(stateMachine)
 
-	_attackMovesPanel.init(stateMachine.on_attack_index_cliked, playerBattleActor.get_battle_moves_by_category(MoveData.Category.ATTACK))
-	_techMovesPanel.init(stateMachine.on_tech_index_cliked, playerBattleActor.get_battle_moves_by_category(MoveData.Category.TECH))
+	_attackMovesPanel.init(stateMachine.on_attack_index_cliked, playerBattleActor.get_battle_moves_by_category(ImportUtils.Category.ATTACK))
+	_techMovesPanel.init(stateMachine.on_tech_index_cliked, playerBattleActor.get_battle_moves_by_category(ImportUtils.Category.TECH))
 
 	return
 
@@ -56,11 +56,11 @@ func hide_and_disable_moves_panels() -> void:
 	return
 
 
-func show_and_enable_selected_moves_panel(category: MoveData.Category) -> void:
+func show_and_enable_selected_moves_panel(category: ImportUtils.Category) -> void:
 	match(category):
-		MoveData.Category.ATTACK:
+		ImportUtils.Category.ATTACK:
 			_show_and_enable_attack_moves_panel()
-		MoveData.Category.TECH:
+		ImportUtils.Category.TECH:
 			_show_and_enable_tech_moves_panel()
 
 	return

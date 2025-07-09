@@ -2,8 +2,8 @@ class_name BattleMove
 
 var publicName: String
 var description: String
-var moveTypes: Array[MoveData.MoveType]
-var category: MoveData.Category
+var moveTypes: Array[ImportUtils.MoveType]
+var category: ImportUtils.Category
 var power: float
 
 var _baseMoveData: MoveData

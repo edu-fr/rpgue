@@ -17,7 +17,7 @@ func _init(battleMove: BattleMove, enemiesArray: Array[EnemyController]) -> void
 
 
 func handle_press_left() -> void:
-	if MoveData.MoveTarget.ALL_ENEMIES in _battleMove.get_move_data().targets:
+	if ImportUtils.TargetType.ALL_ENEMIES in _battleMove.get_move_data().targets:
 		return
 
 	_currentIndex = max(0, _currentIndex - 1)
@@ -27,7 +27,7 @@ func handle_press_left() -> void:
 
 
 func handle_press_right() -> void:
-	if MoveData.MoveTarget.ALL_ENEMIES in _battleMove.get_move_data().targets:
+	if ImportUtils.TargetType.ALL_ENEMIES in _battleMove.get_move_data().targets:
 		return
 
 	_currentIndex = min(_enemies.size() - 1, _currentIndex + 1)
@@ -66,24 +66,24 @@ func _update_selection() -> void:
 func _calculate_target_indices() -> Array[int]:
 	var _indices: Array[int] = []
 
-	if MoveData.MoveTarget.ALL_ENEMIES in _battleMove.get_move_data().targets:
+	if ImportUtils.TargetType.ALL_ENEMIES in _battleMove.get_move_data().targets:
 		_indices.append_array(range(_enemies.size()))
 		return _indices
 
-	for target_type: MoveData.MoveTarget in _battleMove.get_move_data().targets:
+	for target_type: ImportUtils.TargetType in _battleMove.get_move_data().targets:
 		match target_type:
-			MoveData.MoveTarget.CURRENT:
+			ImportUtils.TargetType.CURRENT:
 				if _is_valid_index(_currentIndex):
 					_indices.append(_currentIndex)
-			MoveData.MoveTarget.ADJACENT:
+			ImportUtils.TargetType.ADJACENT:
 				_indices.append_array(_get_adjacent_indices(_currentIndex))
-			MoveData.MoveTarget.ADJACENT_ALLIES:
+			ImportUtils.TargetType.ADJACENT_ALLIES:
 				pass
-			MoveData.MoveTarget.ALL_ALLIES:
+			ImportUtils.TargetType.ALL_ALLIES:
 				pass
-			MoveData.MoveTarget.SELF:
+			ImportUtils.TargetType.SELF:
 				pass
-			MoveData.MoveTarget.ALL_ENEMIES:
+			ImportUtils.TargetType.ALL_ENEMIES:
 				pass
 
 	return _get_unique_sorted_indices(_indices)

@@ -92,7 +92,7 @@ func get_enemy_data_with_name(privateName: String) -> EnemyData:
 	return _enemiesRawConfig.duplicate(true).get(privateName)
 
 
-func mock_get_X_moves_of_type(category: MoveData.Category, amount: int) -> Array[MoveData]:
+func mock_get_X_moves_of_type(category: ImportUtils.Category, amount: int) -> Array[MoveData]:
 	assert(category != null, "Move category can't be null")
 	assert(_movesRawConfig.values().size() > 0, "Couldn't find any moves on raw config")
 

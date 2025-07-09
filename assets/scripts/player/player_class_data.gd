@@ -8,9 +8,19 @@ var baseDamageMultiplier: float
 var baseBlockMultiplier: float
 var baseMaxHP: float
 var initialMoveNameList: Array[String]
+var immunities: Array[StatusConditionEnums.Type]
 
 
-func _init(_privateName: String, _name: String, _description: String, _baseDamageMultiplier: float, _baseBlockMultiplier: float, _baseMaxHP: float, _initialMoveNameList: Array[String]) -> void:
+func _init(\
+	_privateName: String, \
+	_name: String, \
+	_description: String, \
+	_baseDamageMultiplier: float, \
+	_baseBlockMultiplier: float, \
+	_baseMaxHP: float, \
+	_initialMoveNameList: Array[String], \
+	_immunities: Array[StatusConditionEnums.Type])\
+-> void:
 	privateName = _privateName
 	name = _name
 	description = _description
@@ -18,6 +28,7 @@ func _init(_privateName: String, _name: String, _description: String, _baseDamag
 	baseBlockMultiplier = _baseBlockMultiplier
 	baseMaxHP = _baseMaxHP
 	initialMoveNameList = _initialMoveNameList.duplicate(true)
+	immunities = _immunities.duplicate(true)
 
 	return
 
@@ -35,7 +46,9 @@ static func create_from_json(data: Dictionary) -> PlayerClassData:
 	for _move: String in _movesListData.split(",", false):
 		_moves.append(_move.strip_edges())
 
-	return PlayerClassData.new(_privateName, _name, _description, _baseDamageMultiplier, _baseBlockMultiplier, _baseMaxHP, _moves)
+	var _immunities: Array[StatusConditionEnums.Type] = ImportUtils.parse_immunities(Utils.get_data(data, "STATUS CONDITION", []))
+
+	return PlayerClassData.new(_privateName, _name, _description, _baseDamageMultiplier, _baseBlockMultiplier, _baseMaxHP, _moves, _immunities)
 
 
 func _to_string() -> String:

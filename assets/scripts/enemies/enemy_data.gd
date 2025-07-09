@@ -10,6 +10,7 @@ var maxHP: float
 var startingHP: float
 var moveNameList: Array[String]
 var habitats: Array[float]
+var immunities: Array[StatusConditionEnums.Type]
 
 
 func _init(\
@@ -21,7 +22,8 @@ func _init(\
 	_maxHP: float, \
 	_startingHP: float, \
 	_moveNameList: Array[String], \
-	_habitats: Array[float])\
+	_habitats: Array[float], \
+	_immunities: Array[StatusConditionEnums.Type])\
 -> void:
 	privateName = _privateName
 	name = _name
@@ -32,6 +34,7 @@ func _init(\
 	startingHP = _startingHP
 	moveNameList = _moveNameList.duplicate(true)
 	habitats = _habitats
+	immunities = _immunities.duplicate(true)
 
 	return
 
@@ -55,7 +58,19 @@ static func create_from_json(data: Dictionary) -> EnemyData:
 	for _move: String in _movesRawStr.split(",", false):
 		_moves.append(str(_move.replace(" ", "")))
 
-	return EnemyData.new(_privateName, _name, _description, _baseDamageMultiplier, _baseBlockMultiplier, _maxHP, _startingHP, _moves, _habitats)
+	var _immunities: Array[StatusConditionEnums.Type] = ImportUtils.parse_immunities(Utils.get_data(data, "STATUS CONDITION", []))
+
+	return EnemyData.new(\
+		_privateName, \
+		_name, \
+		_description, \
+		_baseDamageMultiplier, \
+		_baseBlockMultiplier, \
+		_maxHP, \
+		_startingHP, \
+		_moves, \
+		_habitats, \
+		_immunities)
 
 
 func _to_string() -> String:

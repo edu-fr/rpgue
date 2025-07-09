@@ -457,10 +457,11 @@
       "DESCRIPTION": "A rotting corpse that stalks the living, driven by hunger.",
       "BASE DAMAGE MULTIPLIER": 0.2,
       "BASE BLOCK MULTIPLIER": 1,
-      "MOVE LIST": "hard_strike",
+      "MOVE LIST": "cold_water_orb, scorching_orb, torch_throw",
       "MAX HP": 50,
       "STARTING HP": 50,
       "STARTING STATUS CONDITION": "STAGGER",
+      "IMMUNITIES": "FREEZE",
       "HABITAT": "1"
     },
     "2": {
@@ -469,10 +470,11 @@
       "DESCRIPTION": "A bat infected with a desease that make it violent.",
       "BASE DAMAGE MULTIPLIER": 0.1,
       "BASE BLOCK MULTIPLIER": 0.5,
-      "MOVE LIST": "poisonous_fangs, take_cover",
+      "MOVE LIST": "poisonous_fangs",
       "MAX HP": 25,
       "STARTING HP": 20,
       "STARTING STATUS CONDITION": "NONE",
+      "IMMUNITIES": "POISON",
       "HABITAT": "1"
     }
   },
@@ -483,8 +485,9 @@
       "DESCRIPTION": "Dual sword wielder with a radiant confidence.",
       "BASE DAMAGE MULTIPLIER": 1.4,
       "BASE BLOCK MULTIPLIER": 1,
-      "INITIAL MOVE LIST": "vertical_slash",
-      "BASE MAX HP": 50
+      "INITIAL MOVE LIST": "cold_water_orb, torch_throw, poisonous_fangs",
+      "BASE MAX HP": 50,
+      "IMMUNITIES": "STAGGER"
     },
     "2": {
       "PRIVATE NAME": "rogue_mage",
@@ -493,7 +496,8 @@
       "BASE DAMAGE MULTIPLIER": 0.9,
       "BASE BLOCK MULTIPLIER": 1.2,
       "INITIAL MOVE LIST": "scorching_orb",
-      "BASE MAX HP": 25
+      "BASE MAX HP": 25,
+      "IMMUNITIES": "BURN"
     }
   }
 }

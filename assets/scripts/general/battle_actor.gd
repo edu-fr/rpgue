@@ -157,7 +157,7 @@ func alive() -> bool:
 	return get_current_HP() > 0
 
 
-func get_battle_moves_by_category(category: MoveData.Category) -> Array[BattleMove]:
+func get_battle_moves_by_category(category: ImportUtils.Category) -> Array[BattleMove]:
 	assert(category != null, "Move category can't be null")
 
 	var _moves: Array[BattleMove] = get_moves()

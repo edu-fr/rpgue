@@ -1,10 +1,10 @@
 class_name PlayerSelectMoveState
 extends BaseBattleState
 
-var _category: MoveData.Category
+var _category: ImportUtils.Category
 var _playerBattleActor: PlayerBattleActor
 
-func _init(category: MoveData.Category, playerBattleActor: PlayerBattleActor, stateMachine: BattleStateMachine) -> void:
+func _init(category: ImportUtils.Category, playerBattleActor: PlayerBattleActor, stateMachine: BattleStateMachine) -> void:
 	super(stateMachine)
 	_playerBattleActor = playerBattleActor
 	_category = category
