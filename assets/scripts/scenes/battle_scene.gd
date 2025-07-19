@@ -159,8 +159,8 @@ func get_player() -> PlayerBattleActor:
 	return _playerBattleActor
 
 
-func _apply_attack_on_player(battle_move: BattleMove) -> void:
-	_playerBattleActor.take_damage(battle_move.power)
+func _apply_attack_on_player(opponentOutgoingBattleMove: OutgoingBattleMove) -> void:
+	_playerBattleActor.take_battle_move(opponentOutgoingBattleMove)
 
 	return
 

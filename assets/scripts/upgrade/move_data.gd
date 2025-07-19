@@ -1,7 +1,6 @@
 class_name MoveData
 extends Resource
 
-
 var privateName: String
 var name: String
 var description: String

@@ -1,8 +1,13 @@
-class_name Poison
+class_name AttackSpeedBuff
 extends AbstractBaseStatusCondition
 
+
+func get_base_damage() -> float:
+	return 0
+
+
 func get_type() -> StatusConditionEnums.Type:
-	return StatusConditionEnums.Type.POISON
+	return StatusConditionEnums.Type.ATTACK_SPEED_BUFF
 
 
 func pre_turn() -> StatusConditionTurnEffect:
@@ -14,4 +19,4 @@ func action_phase() -> StatusConditionTurnEffect:
 
 
 func post_turn() -> StatusConditionTurnEffect:
-	return StatusConditionTurnEffect.new(10, TurnEffectType.DAMAGE)
+	return null

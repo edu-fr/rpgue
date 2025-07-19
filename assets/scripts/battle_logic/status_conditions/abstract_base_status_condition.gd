@@ -1,16 +1,9 @@
 class_name AbstractBaseStatusCondition
 
-var _baseDamage: int
-var _caster: BattleActor
-var _target: BattleActor
+func get_base_damage() -> float:
+	push_error("base damage not override on child")
 
-
-func _init(caster: BattleActor, target: BattleActor, baseDamage: int) -> void:
-	_caster = caster
-	_target = target
-	_baseDamage = baseDamage
-
-	return
+	return -1
 
 
 func get_type() -> StatusConditionEnums.Type:

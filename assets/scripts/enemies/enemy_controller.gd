@@ -4,21 +4,21 @@ extends Control
 @export var _healthBar: HealthProgressBarController
 @export var _enemyImage: TextureRect
 
-var _enemyInstance: EnemyBattleActor
+var _battleActor: EnemyBattleActor
 
 
 func init(enemyInstance: EnemyBattleActor) -> void:
-	_enemyInstance = enemyInstance
-	_healthBar.init(_enemyInstance.get_max_HP(), _enemyInstance.get_current_HP())
-	_enemyInstance.current_hp_changed.connect(_healthBar.update_value)
+	_battleActor = enemyInstance
+	_healthBar.init(_battleActor.get_max_HP(), _battleActor.get_current_HP())
+	_battleActor.current_hp_changed.connect(_healthBar.update_value)
 
 	return
 
 
-func receive_player_attack(moveData: MoveData) -> void:
+func receive_player_attack(incomingBattleMove: OutgoingBattleMove) -> void:
 	_alive_assertion()
 
-	_enemyInstance.take_damage(moveData.baseDamage)
+	_battleActor.take_battle_move(incomingBattleMove)
 
 	if (!is_alive()):
 		_on_death()
@@ -29,7 +29,7 @@ func receive_player_attack(moveData: MoveData) -> void:
 func heal(healValue: int) -> void:
 	_alive_assertion()
 
-	_enemyInstance.heal(healValue)
+	_battleActor.heal(healValue)
 
 	return
 
@@ -55,19 +55,19 @@ func set_semi_selected(value: bool) -> void:
 
 
 func is_alive() -> bool:
-	return _enemyInstance.alive()
+	return _battleActor.alive()
 
 
 func get_random_move() -> BattleMove:
-	return _enemyInstance.get_random_move()
+	return _battleActor.get_random_move()
 
 
 func get_id() -> int:
-	return _enemyInstance._id
+	return _battleActor._id
 
 
-func get_instance() -> EnemyBattleActor:
-	return _enemyInstance
+func get_battle_actor() -> EnemyBattleActor:
+	return _battleActor
 
 
 func _on_death() -> void:

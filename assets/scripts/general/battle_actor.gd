@@ -8,7 +8,7 @@ var _maxHP: float
 var _initialHP: float
 var _currentHP: float
 var _attackDamageMultiplier: float
-var _statusConditions: Array[AbstractBaseStatusCondition]
+var _statusConditions: Array[ActiveStatusCondition]
 var _battleMoveList: Array[BattleMove]
 
 
@@ -26,12 +26,6 @@ func _init(id: int, maxHP: float, initialHP: float, attackDamageMultiplier: floa
 
 func get_id() -> int:
 	return _id
-
-
-func set_status_conditions(statusConditions: Array[AbstractBaseStatusCondition]) -> void:
-	_statusConditions = statusConditions
-
-	return
 
 
 func get_attack_damage_multiplier() -> float:
@@ -75,12 +69,30 @@ func set_max_hp(newMaxHP: float, animate: bool) -> void:
 	return
 
 
-func take_damage(damage: float) -> void:
+func take_battle_move(opponentOutgoingBattleMove: OutgoingBattleMove) -> BattleMoveOutcome:
+	var damageReceived: float = opponentOutgoingBattleMove.rawDamageToDeal
+	_take_damage(damageReceived)
+	_try_apply_status_conditions(opponentOutgoingBattleMove)
+
+	return
+
+
+func _take_damage(damage: float) -> void:
 	# Apply any modifiers
 	if (GM.verbose):
-		print("[PLAYER] Player will take " + str(damage) + " damage")
+		print("[BATTLE ACTOR] Actor will take " + str(damage) + " damage")
 
 	set_current_hp(get_current_HP() - damage, true)
+
+	return
+
+
+func _try_apply_status_conditions(opponentOutgoingBattleMove: OutgoingBattleMove) -> void:
+	if (!opponentOutgoingBattleMove.doApplyStatusCondition):
+		return
+
+	for _statusCondition: ActiveStatusCondition in opponentOutgoingBattleMove.statusConditionsToApply:
+		add_or_update_status_condition(_statusCondition)
 
 	return
 
@@ -88,26 +100,32 @@ func take_damage(damage: float) -> void:
 func heal(healValue: float) -> void:
 	# Apply any modifiers
 	if (GM.verbose):
-		print("[PLAYER] Player will heal " + str(healValue) + " hp")
+		print("[BATTLE ACTOR] Player will heal " + str(healValue) + " hp")
 
 	set_current_hp(get_current_HP() + healValue, true)
 
 	return
 
 
-func get_status_condition() -> Array[AbstractBaseStatusCondition]:
+func get_status_condition() -> Array[ActiveStatusCondition]:
 	return _statusConditions
 
 
-func add_status_condition(statusCondition: AbstractBaseStatusCondition) -> void:
-	assert(!_statusConditions.has(statusCondition),"Being already have the status condition " + Utils.get_clear_script_name(statusCondition))
+func add_or_update_status_condition(statusCondition: ActiveStatusCondition) -> void:
+	var _abstractStatusCondition: AbstractBaseStatusCondition = statusCondition.get_status_condition()
+	var _conditionIndex: int = -1
+
+	for i: int in range(_statusConditions.size()):
+		if (_statusConditions[i].get_status_condition() == _abstractStatusCondition):
+			_statusConditions[_conditionIndex].update_status_condition(statusCondition)
+			return
 
 	_statusConditions.append(statusCondition)
 
 	return
 
 
-func remove_status_condition(statusCondition: AbstractBaseStatusCondition) -> void:
+func force_remove_status_condition(statusCondition: ActiveStatusCondition) -> void:
 	assert(_statusConditions.has(statusCondition),\
 	"Being don't have the status condition " + Utils.get_clear_script_name(statusCondition))
 
@@ -127,8 +145,14 @@ func get_random_move() -> BattleMove:
 
 
 func activate_pre_turn_start_effects() -> void:
-	for _statusCondition: AbstractBaseStatusCondition in _statusConditions:
-		_statusCondition.pre_turn()
+	for _statusCondition: ActiveStatusCondition in _statusConditions:
+		var _abstractStatusCondition: AbstractBaseStatusCondition = _statusCondition.get_status_condition()
+		var _result: StatusConditionTurnEffect = _abstractStatusCondition.pre_turn()
+
+		if (_result != null):
+			_take_damage(_result.damage)
+
+
 		if (!alive()):
 			return
 
@@ -136,8 +160,13 @@ func activate_pre_turn_start_effects() -> void:
 
 
 func activate_action_phase_start_effects() -> void:
-	for _statusCondition: AbstractBaseStatusCondition in _statusConditions:
-		_statusCondition.action_phase()
+	for _statusCondition: ActiveStatusCondition in _statusConditions:
+		var _abstractStatusCondition: AbstractBaseStatusCondition = _statusCondition.get_status_condition()
+		var _result: StatusConditionTurnEffect = _abstractStatusCondition.action_phase()
+
+		if (_result != null):
+			_take_damage(_result.damage)
+
 		if (!alive()):
 			return
 
@@ -145,10 +174,26 @@ func activate_action_phase_start_effects() -> void:
 
 
 func activate_post_turn_start_effects() -> void:
-	for _statusCondition: AbstractBaseStatusCondition in _statusConditions:
-		_statusCondition.post_turn()
+	for _statusCondition: ActiveStatusCondition in _statusConditions:
+		var _abstractStatusCondition: AbstractBaseStatusCondition = _statusCondition.get_status_condition()
+		var _result: StatusConditionTurnEffect = _abstractStatusCondition.post_turn()
+
+		if (_result != null):
+			_take_damage(_result.damage)
+
 		if (!alive()):
 			return
+
+	_update_active_status_conditions()
+
+	return
+
+
+func _update_active_status_conditions() -> void:
+	for _statusCondition: ActiveStatusCondition in _statusConditions:
+		_statusCondition.on_turn_finished() # ALWAYS NEED TO BE CALLED AFTER THE POST TURN EFFECT
+
+	_statusConditions = _statusConditions.filter(func(statusCondition: ActiveStatusCondition) -> bool: return statusCondition.get_remaining_amount() > 0)
 
 	return
 

@@ -26,7 +26,8 @@ func on_state_start() -> void:
 		print("[ENEMY] Move to use: ")
 		print(_moveToUse)
 
-	_stateMachine.battleScene._apply_attack_on_player(_moveToUse)
+	var _outgoingBattleMove: OutgoingBattleMove = _moveToUse.get_use_result(_stateMachine.battleScene.get_player())
+	_stateMachine.battleScene._apply_attack_on_player(_outgoingBattleMove)
 
 	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, EnemyTurnPostTurnState.new(_enemyInstance, _stateMachine)))
 

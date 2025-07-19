@@ -166,15 +166,14 @@ static func parse_immunities(raw: Variant) -> Array[StatusConditionEnums.Type]:
 		return immunities
 
 	for _immunity: String in _rawAsStr.split(",", false):
-		var normalized: String = _immunity.strip_edges().to_upper()
-		match normalized:
+		match _immunity.strip_edges().to_upper():
 			"STAGGER": immunities.append(StatusConditionEnums.Type.STAGGER)
 			"BURN": immunities.append(StatusConditionEnums.Type.BURN)
 			"FREEZE": immunities.append(StatusConditionEnums.Type.FREEZE)
 			"POISON": immunities.append(StatusConditionEnums.Type.POISON)
 			"NONE": immunities.append(StatusConditionEnums.Type.UNKNOWN)
 			_:
-				push_error("Status condition desconhecida: " + normalized)
+				push_error("Immunity desconhecida: " + _immunity)
 				immunities.append(StatusConditionEnums.Type.UNKNOWN)
 
 	return immunities

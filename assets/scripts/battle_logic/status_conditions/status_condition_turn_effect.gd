@@ -1,11 +1,11 @@
 class_name StatusConditionTurnEffect
 
-var _damage: int
-var _turnEffectType: StatusConditionEnums.TurnEffectType
+var damage: float
+var effectType: StatusConditionEnums.TurnEffectType
 
 
-func _init(damage: int, turnEffectType: StatusConditionEnums.TurnEffectType) -> void:
-	_damage = damage
-	_turnEffectType = turnEffectType
+func _init(turnEffectDamage: float, turnEffectType: StatusConditionEnums.TurnEffectType) -> void:
+	damage = turnEffectDamage
+	effectType = turnEffectType
 
 	return

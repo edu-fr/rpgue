@@ -23,7 +23,7 @@ func on_state_start() -> void:
 
 	for _enemyIndex: int in _targetEnemiesIds:
 		var _enemy: EnemyController = _stateMachine.battleScene._get_remaining_enemy_by_id(_enemyIndex)
-		_enemy.receive_player_attack(_battleMove.get_move_data())
+		_enemy.receive_player_attack(_battleMove.get_use_result(_enemy.get_battle_actor()))
 
 	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, PlayerTurnPostTurnState.new(_playerBattleActor, _stateMachine)))
 

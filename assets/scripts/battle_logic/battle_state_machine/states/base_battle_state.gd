@@ -68,7 +68,7 @@ func _get_next_actor_turn() -> BaseBattleState:
 
 	if (_nextTurnOwnerId < _stateMachine.battleScene.enemyLimit):
 		var _enemyController: EnemyController = _stateMachine.battleScene.get_enemy_controller_by_id(_nextTurnOwnerId)
-		return EnemyPreTurnState.new(_enemyController.get_instance(), _stateMachine)
+		return EnemyPreTurnState.new(_enemyController.get_battle_actor(), _stateMachine)
 	else:
 		var _playerBattleActor: PlayerBattleActor = _stateMachine.battleScene.get_player()
 		return PlayerPreTurnState.new(_playerBattleActor, _stateMachine)

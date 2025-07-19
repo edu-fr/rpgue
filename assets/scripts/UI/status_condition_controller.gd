@@ -9,7 +9,7 @@ var _activeStatusCondition: ActiveStatusCondition
 func init(activeStatusCondition: ActiveStatusCondition) -> void:
 	_activeStatusCondition = activeStatusCondition
 	setup_icon(_activeStatusCondition.get_status_condition().get_type())
-	setup_duration_text(_activeStatusCondition._remainingDuration)
+	setup_duration_text(_activeStatusCondition._remainingAmount)
 	return
 
 
