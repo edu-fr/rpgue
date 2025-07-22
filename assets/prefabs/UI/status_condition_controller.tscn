@@ -1,4 +1,26 @@
-[gd_scene format=3 uid="uid://b8bm4yg8pn8n6"]
+[gd_scene load_steps=3 format=3 uid="uid://b8bm4yg8pn8n6"]
 
-[node name="StatusConditionController" type="TextureRect"]
-physics_interpolation_mode = 0
+[ext_resource type="Script" uid="uid://bc3vyx8rfg0en" path="res://assets/scripts/UI/status_condition_controller.gd" id="1_uyixe"]
+[ext_resource type="Texture2D" uid="uid://dg0mj43sj071i" path="res://assets/art/icons/status_condition/burn.png" id="2_hq4ce"]
+
+[node name="StatusConditionController" type="PanelContainer" node_paths=PackedStringArray("_icon", "_durationText")]
+clip_contents = true
+custom_minimum_size = Vector2(25, 25)
+offset_right = 32.0
+offset_bottom = 32.0
+script = ExtResource("1_uyixe")
+_icon = NodePath("TextureRect")
+_durationText = NodePath("RichTextLabel")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_hq4ce")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+theme_override_constants/text_highlight_h_padding = 0
+theme_override_constants/outline_size = 4
+text = "10"
+fit_content = true
+scroll_active = false
+vertical_alignment = 2

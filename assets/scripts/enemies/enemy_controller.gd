@@ -2,6 +2,7 @@ class_name EnemyController
 extends Control
 
 @export var _healthBar: HealthProgressBarController
+@export var _statusConditionPanelController: StatusConditionPanelController
 @export var _enemyImage: TextureRect
 
 var _battleActor: EnemyBattleActor
@@ -11,6 +12,7 @@ func init(enemyInstance: EnemyBattleActor) -> void:
 	_battleActor = enemyInstance
 	_healthBar.init(_battleActor.get_max_HP(), _battleActor.get_current_HP())
 	_battleActor.current_hp_changed.connect(_healthBar.update_value)
+	_battleActor.status_conditions_changed.connect(_statusConditionPanelController.update_status_conditions)
 
 	return
 
@@ -67,6 +69,8 @@ func get_id() -> int:
 
 
 func get_battle_actor() -> EnemyBattleActor:
+	assert(_battleActor != null, "Enemy controller battle actor is null")
+
 	return _battleActor
 
 

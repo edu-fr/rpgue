@@ -10,7 +10,7 @@ const prefabExtension: String = ".tscn"
 
 # ICONS
 
-const statusConditionIconsPath: String = baseAssetsPath + "art/icons/status_condition"
+const statusConditionIconsPath: String = baseAssetsPath + "art/icons/status_condition/"
 # Manter sincronizado com nome do arquivo e com o enum StatusConditionType
 const poisonIconPath: String = statusConditionIconsPath + "poison" + imageExtension
 const burnIconPath: String = statusConditionIconsPath + "burn" + imageExtension
@@ -26,16 +26,11 @@ const statusConditionControllerPath: String = baseAssetsPath + "prefabs/UI/statu
 # METHODS
 
 static func load_status_condition_icon(type: StatusConditionEnums.Type) -> Texture2D:
-	var statusConditionIconName: String = _get_status_condition_icon_path_by_type(type)
-	var path: String = statusConditionIconsPath + statusConditionIconName + imageExtension
-
-	return load_texture(path)
+	return load_texture(_get_status_condition_icon_path_by_type(type))
 
 
 static func load_status_condition_controller() -> StatusConditionController:
-	var item: TextureRect = preload(statusConditionControllerPath).instantiate()
-	var statusConditionController: StatusConditionController = item
-
+	var statusConditionController: StatusConditionController = preload(statusConditionControllerPath).instantiate()
 	return statusConditionController
 
 

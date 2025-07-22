@@ -2,6 +2,7 @@ class_name BattleActor # WONT PERSIST ON MEMORY
 
 signal current_hp_changed(oldHP: float, newHp: float, animate: bool)
 signal max_hp_changed(oldMaxHP: float, newMaxHP: float, animate: bool)
+signal status_conditions_changed(statusConditions: Array[ActiveStatusCondition])
 
 var _id: int
 var _maxHP: float
@@ -118,9 +119,14 @@ func add_or_update_status_condition(statusCondition: ActiveStatusCondition) -> v
 	for i: int in range(_statusConditions.size()):
 		if (_statusConditions[i].get_status_condition() == _abstractStatusCondition):
 			_statusConditions[_conditionIndex].update_status_condition(statusCondition)
+			# STATUS CONDITION CHANGED EMIT
+			status_conditions_changed.emit(_statusConditions)
+
 			return
 
 	_statusConditions.append(statusCondition)
+	# STATUS CONDITION CHANGED EMIT
+	status_conditions_changed.emit(_statusConditions)
 
 	return
 
@@ -130,6 +136,8 @@ func force_remove_status_condition(statusCondition: ActiveStatusCondition) -> vo
 	"Being don't have the status condition " + Utils.get_clear_script_name(statusCondition))
 
 	_statusConditions.erase(statusCondition)
+	# STATUS CONDITION CHANGED EMIT
+	status_conditions_changed.emit(_statusConditions)
 
 	return
 
@@ -194,6 +202,9 @@ func _update_active_status_conditions() -> void:
 		_statusCondition.on_turn_finished() # ALWAYS NEED TO BE CALLED AFTER THE POST TURN EFFECT
 
 	_statusConditions = _statusConditions.filter(func(statusCondition: ActiveStatusCondition) -> bool: return statusCondition.get_remaining_amount() > 0)
+
+	# STATUS CONDITION CHANGED EMIT
+	status_conditions_changed.emit(_statusConditions)
 
 	return
 

@@ -27,11 +27,12 @@ font_size = 25
 shadow_size = 3
 shadow_color = Color(0, 0, 0, 0.843137)
 
-[node name="EnemyVBoxContainer" type="VBoxContainer" node_paths=PackedStringArray("_healthBar", "_enemyImage")]
+[node name="EnemyVBoxContainer" type="VBoxContainer" node_paths=PackedStringArray("_healthBar", "_statusConditionPanelController", "_enemyImage")]
 focus_mode = 2
 alignment = 1
 script = ExtResource("1_vweea")
 _healthBar = NodePath("EnemyHealthProgressBar")
+_statusConditionPanelController = NodePath("StatusConditionPanelController")
 _enemyImage = NodePath("EnemyTextureRect")
 
 [node name="EnemyHealthProgressBar" type="ProgressBar" parent="." node_paths=PackedStringArray("_progressBar", "_label")]
