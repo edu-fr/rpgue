@@ -35,16 +35,7 @@ func on_state_end() -> void:
 
 func on_attack_index_cliked(index: int) -> void:
 	var _battleUI: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
-	var _batteMove: BattleMove = _battleUI._attackMovesPanel.battleMovesList[index]
-	_battleUI.hide_and_disable_moves_panels()
-	_stateMachine.push_state(PlayerSelectTargetState.new(_batteMove, _playerBattleActor, _stateMachine))
-
-	return
-
-
-func on_tech_index_cliked(index: int) -> void:
-	var _battleUI: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
-	var _batteMove: BattleMove = _battleUI._techMovesPanel.battleMovesList[index]
+	var _batteMove: BattleMove = _battleUI._movesPanel.battleMovesList[index]
 	_battleUI.hide_and_disable_moves_panels()
 	_stateMachine.push_state(PlayerSelectTargetState.new(_batteMove, _playerBattleActor, _stateMachine))
 

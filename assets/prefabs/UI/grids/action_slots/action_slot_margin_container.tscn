@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpj4krim35hsu"]
+
+[ext_resource type="StyleBox" uid="uid://bfema13o0ijyb" path="res://assets/config/texture_styles/action_slot_controller_style.tres" id="1_x7i8k"]
+[ext_resource type="Script" uid="uid://cqrw5cw1fvm3n" path="res://assets/scripts/general/action_slots/action_slot_controller.gd" id="2_rh3ym"]
+[ext_resource type="Texture2D" uid="uid://nc4mcpk2v6x4" path="res://assets/art/ui/action_slots/action_slot_potent.png" id="3_qt5em"]
+[ext_resource type="Texture2D" uid="uid://bhklefjxn60mm" path="res://assets/art/ui/action_slots/action_slot_tech.png" id="4_eepv6"]
+[ext_resource type="Texture2D" uid="uid://cup1h0lbpkdkq" path="res://assets/art/ui/action_slots/action_slot_fast.png" id="5_5gsbg"]
+[ext_resource type="Texture2D" uid="uid://dly8b3immx63b" path="res://assets/art/ui/action_slots/action_slot_unknown.png" id="6_fn026"]
+
+[node name="ActionSlotMarginContainer" type="MarginContainer" node_paths=PackedStringArray("panelContainer")]
+offset_right = 260.0
+offset_bottom = 150.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("2_rh3ym")
+panelContainer = NodePath("ActionSlotController")
+PotentSlotBg = ExtResource("3_qt5em")
+TechSlotBg = ExtResource("4_eepv6")
+FastSlotBg = ExtResource("5_5gsbg")
+UniversalSlotBg = ExtResource("6_fn026")
+
+[node name="ActionSlotController" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("1_x7i8k")

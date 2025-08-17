@@ -1,17 +1,19 @@
-[gd_scene load_steps=23 format=3 uid="uid://bytpyetjp5qo5"]
+[gd_scene load_steps=26 format=3 uid="uid://bytpyetjp5qo5"]
 
 [ext_resource type="Script" uid="uid://d175r3802fi5t" path="res://assets/scripts/scenes/battle_scene.gd" id="1_7hjph"]
 [ext_resource type="Script" uid="uid://cohgkgfx73n8t" path="res://assets/scripts/player/player_status_panel_controller.gd" id="2_4yxab"]
 [ext_resource type="PackedScene" uid="uid://b26x5w04r3k5m" path="res://assets/prefabs/background_texture_rect.tscn" id="2_txouv"]
 [ext_resource type="FontFile" uid="uid://d06djgmxl5agq" path="res://assets/art/fonts/NES_cyrillic.ttf" id="2_wjigb"]
 [ext_resource type="Texture2D" uid="uid://dpwjd00ofe7rl" path="res://assets/art/backgrounds/battle_background.png" id="3_0slls"]
-[ext_resource type="Script" uid="uid://gvr87ys6n1p3" path="res://assets/scripts/UI/actions_panel_controller.gd" id="4_7lnlx"]
 [ext_resource type="StyleBox" uid="uid://cwld1tb0waeaq" path="res://assets/config/colors/button_default.tres" id="4_lsh0s"]
 [ext_resource type="Script" uid="uid://5xju5142fku4" path="res://assets/scripts/player/player_battle_ui_controller.gd" id="4_pbdns"]
 [ext_resource type="LabelSettings" uid="uid://bk76npxe4v3st" path="res://assets/config/label_settings/text_box_label_settings.tres" id="5_kmdtb"]
 [ext_resource type="Script" uid="uid://cykqu710qfcuw" path="res://assets/scripts/UI/text_box_controller.gd" id="5_x10or"]
 [ext_resource type="Script" uid="uid://2sl453ikgn7p" path="res://assets/scripts/UI/health_progress_bar_controller.gd" id="6_jo7rj"]
+[ext_resource type="Script" path="res://assets/scripts/UI/input_options_panel_controller.gd" id="8_wofiw"]
 [ext_resource type="Script" uid="uid://ddlw8t05f50xm" path="res://assets/scripts/UI/battle_moves_panel_controller.gd" id="10_pbdns"]
+[ext_resource type="Script" uid="uid://bpas3wiwi0xox" path="res://assets/scripts/general/action_slots/action_slots_controller.gd" id="11_dy2cn"]
+[ext_resource type="PackedScene" uid="uid://dpj4krim35hsu" path="res://assets/prefabs/UI/grids/action_slots/action_slot_margin_container.tscn" id="12_wofiw"]
 [ext_resource type="PackedScene" uid="uid://pq2chwno6jao" path="res://assets/prefabs/visual_stack.tscn" id="13_hd3ej"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4mow"]
@@ -45,6 +47,9 @@ shadow_offset = Vector2(2, 2)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vd2et"]
 bg_color = Color(0, 0, 0, 0.168627)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_hd3ej"]
+resource_local_to_scene = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7u3kc"]
 bg_color = Color(0, 0.0630134, 0.438141, 1)
@@ -100,7 +105,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PlayerController" type="Control" parent="." node_paths=PackedStringArray("_statusPanel", "_actionsPanel", "_attackMovesPanel", "_techMovesPanel")]
+[node name="PlayerController" type="Control" parent="." node_paths=PackedStringArray("_statusPanel", "_inputOptionsPanel", "_movesPanel")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -109,9 +114,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_pbdns")
 _statusPanel = NodePath("PlayerStatusPanel")
-_actionsPanel = NodePath("PlayerActionsPanel")
-_attackMovesPanel = NodePath("PlayerAttackMovesPanel")
-_techMovesPanel = NodePath("PlayerTechMovesPanel")
+_inputOptionsPanel = NodePath("InputOptionsPanel")
+_movesPanel = NodePath("PlayerAttackMovesPanel")
 
 [node name="PlayerStatusPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("_playerNameLabel", "_healthBarController")]
 z_index = 1
@@ -182,74 +186,78 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="PlayerActionsPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("_attackButton", "_techButton")]
+[node name="InputOptionsPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("_attackButton")]
 z_index = 1
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 100.0
-grow_horizontal = 2
+layout_mode = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_vd2et")
-script = ExtResource("4_7lnlx")
-_attackButton = NodePath("ActionsHBoxContainer/AttackButtonMarginContainer/AttackButton")
-_techButton = NodePath("ActionsHBoxContainer/TechButtonMarginContainer/TechButton")
+script = ExtResource("8_wofiw")
+_attackButton = NodePath("InputOptionsHBoxContainer/AttackInputOptionButtonMarginContainer/AttackInputOptionButton")
 
-[node name="ActionsHBoxContainer" type="HBoxContainer" parent="PlayerController/PlayerActionsPanel"]
+[node name="InputOptionsHBoxContainer" type="MarginContainer" parent="PlayerController/InputOptionsPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 353.0
+offset_top = 693.0
+offset_right = 603.0
+offset_bottom = 943.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
-
-[node name="AttackButtonMarginContainer" type="MarginContainer" parent="PlayerController/PlayerActionsPanel/ActionsHBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="AttackButton" type="Button" parent="PlayerController/PlayerActionsPanel/ActionsHBoxContainer/AttackButtonMarginContainer"]
+[node name="BackgroundInputOptionsPanel" type="TextureRect" parent="PlayerController/InputOptionsPanel/InputOptionsHBoxContainer"]
+modulate = Color(1, 1, 1, 0.329412)
+layout_mode = 2
+texture = SubResource("ViewportTexture_hd3ej")
+expand_mode = 2
+
+[node name="AttackInputOptionButtonMarginContainer" type="MarginContainer" parent="PlayerController/InputOptionsPanel/InputOptionsHBoxContainer"]
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="AttackInputOptionButton" type="Button" parent="PlayerController/InputOptionsPanel/InputOptionsHBoxContainer/AttackInputOptionButtonMarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_top = NodePath(".")
-focus_neighbor_right = NodePath("../../TechButtonMarginContainer/TechButton")
 focus_neighbor_bottom = NodePath(".")
-focus_next = NodePath("../../TechButtonMarginContainer/TechButton")
 theme_override_fonts/font = ExtResource("2_wjigb")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 100
 theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
 theme_override_styles/normal = ExtResource("4_lsh0s")
 keep_pressed_outside = true
-text = "Strike"
+text = "X"
 
-[node name="TechButtonMarginContainer" type="MarginContainer" parent="PlayerController/PlayerActionsPanel/ActionsHBoxContainer"]
+[node name="AttackInputOptionButtonTextContainer" type="Control" parent="PlayerController/InputOptionsPanel/InputOptionsHBoxContainer/AttackInputOptionButtonMarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
-[node name="TechButton" type="Button" parent="PlayerController/PlayerActionsPanel/ActionsHBoxContainer/TechButtonMarginContainer"]
+[node name="AttackInputOptionButtonRichTextLabel" type="RichTextLabel" parent="PlayerController/InputOptionsPanel/InputOptionsHBoxContainer/AttackInputOptionButtonMarginContainer/AttackInputOptionButtonTextContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
-size_flags_horizontal = 3
-focus_neighbor_left = NodePath("../../AttackButtonMarginContainer/AttackButton")
-focus_neighbor_top = NodePath(".")
-focus_neighbor_bottom = NodePath(".")
-focus_previous = NodePath("../../AttackButtonMarginContainer/AttackButton")
-theme_override_fonts/font = ExtResource("2_wjigb")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
-theme_override_styles/normal = ExtResource("4_lsh0s")
-text = "Tech"
+offset_left = 130.0
+offset_top = 27.0
+offset_right = 266.0
+offset_bottom = 87.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 43
+text = "Attack"
+scroll_active = false
+justification_flags = 0
 
 [node name="PlayerAttackMovesPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("battleMoveButtonsSlots")]
+visible = false
 z_index = 1
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 1
@@ -258,7 +266,7 @@ anchor_bottom = 1.0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vd2et")
 script = ExtResource("10_pbdns")
-battleMoveButtonsSlots = [NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer/AttackButton"), NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer2/AttackButton2"), NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer3/AttackButton3"), NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer4/AttackButton4")]
+battleMoveButtonsSlots = [NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer/AttackButton"), NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer2/AttackButton2"), NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer3/AttackButton3"), NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer4/AttackButton4"), NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer5/AttackButton5"), NodePath("AttackActionsHBoxContainer/AttackButtonMarginContainer6/AttackButton6")]
 
 [node name="AttackActionsHBoxContainer" type="VBoxContainer" parent="PlayerController/PlayerAttackMovesPanel"]
 layout_mode = 1
@@ -364,7 +372,7 @@ focus_neighbor_left = NodePath("../../AttackButtonMarginContainer3/AttackButton3
 focus_neighbor_top = NodePath("../../AttackButtonMarginContainer3/AttackButton3")
 focus_neighbor_right = NodePath("../../AttackButtonMarginContainer/AttackButton")
 focus_neighbor_bottom = NodePath("../../AttackButtonMarginContainer/AttackButton")
-focus_next = NodePath("../../../../PlayerActionsPanel/ActionsHBoxContainer/AttackButtonMarginContainer/AttackButton")
+focus_next = NodePath("../../../../InputOptionsPanel/InputOptionsHBoxContainer/AttackInputOptionButtonMarginContainer/AttackInputOptionButton")
 focus_previous = NodePath("../../AttackButtonMarginContainer3/AttackButton3")
 theme_override_fonts/font = ExtResource("2_wjigb")
 theme_override_font_sizes/font_size = 50
@@ -374,135 +382,135 @@ theme_override_styles/normal = ExtResource("4_lsh0s")
 keep_pressed_outside = true
 text = "ATTACK 4"
 
-[node name="PlayerTechMovesPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("battleMoveButtonsSlots")]
-z_index = 1
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_vd2et")
-script = ExtResource("10_pbdns")
-battleMoveButtonsSlots = [NodePath("TechActionsHBoxContainer/TechButtonMarginContainer/TechButton"), NodePath("TechActionsHBoxContainer/TechButtonMarginContainer2/TechButton2"), NodePath("TechActionsHBoxContainer/TechButtonMarginContainer3/TechButton3"), NodePath("TechActionsHBoxContainer/TechButtonMarginContainer4/TechButton4")]
+[node name="AttackButtonMarginContainer5" type="MarginContainer" parent="PlayerController/PlayerAttackMovesPanel/AttackActionsHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="TechActionsHBoxContainer" type="VBoxContainer" parent="PlayerController/PlayerTechMovesPanel"]
+[node name="AttackButton5" type="Button" parent="PlayerController/PlayerAttackMovesPanel/AttackActionsHBoxContainer/AttackButtonMarginContainer5"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../../AttackButtonMarginContainer3/AttackButton3")
+focus_neighbor_top = NodePath("../../AttackButtonMarginContainer3/AttackButton3")
+focus_neighbor_right = NodePath("../../AttackButtonMarginContainer/AttackButton")
+focus_neighbor_bottom = NodePath("../../AttackButtonMarginContainer/AttackButton")
+focus_next = NodePath("../../../../InputOptionsPanel/InputOptionsHBoxContainer/AttackInputOptionButtonMarginContainer/AttackInputOptionButton")
+focus_previous = NodePath("../../AttackButtonMarginContainer3/AttackButton3")
+theme_override_fonts/font = ExtResource("2_wjigb")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
+theme_override_styles/normal = ExtResource("4_lsh0s")
+keep_pressed_outside = true
+text = "ATTACK 5"
+
+[node name="AttackButtonMarginContainer6" type="MarginContainer" parent="PlayerController/PlayerAttackMovesPanel/AttackActionsHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="AttackButton6" type="Button" parent="PlayerController/PlayerAttackMovesPanel/AttackActionsHBoxContainer/AttackButtonMarginContainer6"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../../AttackButtonMarginContainer3/AttackButton3")
+focus_neighbor_top = NodePath("../../AttackButtonMarginContainer3/AttackButton3")
+focus_neighbor_right = NodePath("../../AttackButtonMarginContainer/AttackButton")
+focus_neighbor_bottom = NodePath("../../AttackButtonMarginContainer/AttackButton")
+focus_next = NodePath("../../../../InputOptionsPanel/InputOptionsHBoxContainer/AttackInputOptionButtonMarginContainer/AttackInputOptionButton")
+focus_previous = NodePath("../../AttackButtonMarginContainer3/AttackButton3")
+theme_override_fonts/font = ExtResource("2_wjigb")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
+theme_override_styles/normal = ExtResource("4_lsh0s")
+keep_pressed_outside = true
+text = "ATTACK 6"
+
+[node name="ActionSlotsPanel" type="Panel" parent="PlayerController"]
+z_index = 1
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 0
+offset_left = 801.0
+offset_top = 791.0
+offset_right = 1695.0
+offset_bottom = 1008.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d4mow")
+script = ExtResource("11_dy2cn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerController/ActionSlotsPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="TechButtonMarginContainer" type="MarginContainer" parent="PlayerController/PlayerTechMovesPanel/TechActionsHBoxContainer"]
+[node name="ActionSlotMarginContainer" parent="PlayerController/ActionSlotsPanel/HBoxContainer" instance=ExtResource("12_wofiw")]
 layout_mode = 2
-size_flags_horizontal = 3
+
+[node name="ActionSlotMarginContainer2" parent="PlayerController/ActionSlotsPanel/HBoxContainer" instance=ExtResource("12_wofiw")]
+layout_mode = 2
+
+[node name="ActionSlotMarginContainer3" parent="PlayerController/ActionSlotsPanel/HBoxContainer" instance=ExtResource("12_wofiw")]
+layout_mode = 2
+
+[node name="ConfirmButtonMarginContainer" type="MarginContainer" parent="PlayerController"]
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 0
+offset_left = 1750.0
+offset_top = 842.0
+offset_right = 1880.0
+offset_bottom = 972.0
+size_flags_horizontal = 8
+size_flags_vertical = 4
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="TechButton" type="Button" parent="PlayerController/PlayerTechMovesPanel/TechActionsHBoxContainer/TechButtonMarginContainer"]
-custom_minimum_size = Vector2(0, 100)
+[node name="ConfirmButton" type="Button" parent="PlayerController/ConfirmButtonMarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_neighbor_left = NodePath("../../TechButtonMarginContainer4/TechButton4")
-focus_neighbor_top = NodePath("../../TechButtonMarginContainer4/TechButton4")
-focus_neighbor_right = NodePath("../../TechButtonMarginContainer2/TechButton2")
-focus_neighbor_bottom = NodePath("../../TechButtonMarginContainer2/TechButton2")
-focus_next = NodePath("../../TechButtonMarginContainer2/TechButton2")
-focus_previous = NodePath("../../TechButtonMarginContainer4/TechButton4")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
 theme_override_fonts/font = ExtResource("2_wjigb")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 100
 theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
 theme_override_styles/normal = ExtResource("4_lsh0s")
 keep_pressed_outside = true
-text = "TECH 1"
+text = "X"
 
-[node name="TechButtonMarginContainer2" type="MarginContainer" parent="PlayerController/PlayerTechMovesPanel/TechActionsHBoxContainer"]
+[node name="Container" type="Control" parent="PlayerController/ConfirmButtonMarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
-[node name="TechButton2" type="Button" parent="PlayerController/PlayerTechMovesPanel/TechActionsHBoxContainer/TechButtonMarginContainer2"]
-custom_minimum_size = Vector2(0, 100)
+[node name="RichTextLabel" type="RichTextLabel" parent="PlayerController/ConfirmButtonMarginContainer/Container"]
+clip_contents = false
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
-size_flags_horizontal = 3
-focus_neighbor_left = NodePath("../../TechButtonMarginContainer/TechButton")
-focus_neighbor_top = NodePath("../../TechButtonMarginContainer/TechButton")
-focus_neighbor_right = NodePath("../../TechButtonMarginContainer3/TechButton3")
-focus_neighbor_bottom = NodePath("../../TechButtonMarginContainer3/TechButton3")
-focus_next = NodePath("../../TechButtonMarginContainer3/TechButton3")
-focus_previous = NodePath("../../TechButtonMarginContainer/TechButton")
-theme_override_fonts/font = ExtResource("2_wjigb")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
-theme_override_styles/normal = ExtResource("4_lsh0s")
-keep_pressed_outside = true
-text = "TECH 2"
-
-[node name="TechButtonMarginContainer3" type="MarginContainer" parent="PlayerController/PlayerTechMovesPanel/TechActionsHBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="TechButton3" type="Button" parent="PlayerController/PlayerTechMovesPanel/TechActionsHBoxContainer/TechButtonMarginContainer3"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_horizontal = 3
-focus_neighbor_left = NodePath("../../TechButtonMarginContainer2/TechButton2")
-focus_neighbor_top = NodePath("../../TechButtonMarginContainer2/TechButton2")
-focus_neighbor_right = NodePath("../../TechButtonMarginContainer4/TechButton4")
-focus_neighbor_bottom = NodePath("../../TechButtonMarginContainer4/TechButton4")
-focus_next = NodePath("../../TechButtonMarginContainer4/TechButton4")
-focus_previous = NodePath("../../TechButtonMarginContainer2/TechButton2")
-theme_override_fonts/font = ExtResource("2_wjigb")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
-theme_override_styles/normal = ExtResource("4_lsh0s")
-keep_pressed_outside = true
-text = "TECH 3"
-
-[node name="TechButtonMarginContainer4" type="MarginContainer" parent="PlayerController/PlayerTechMovesPanel/TechActionsHBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="TechButton4" type="Button" parent="PlayerController/PlayerTechMovesPanel/TechActionsHBoxContainer/TechButtonMarginContainer4"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_horizontal = 3
-focus_neighbor_left = NodePath("../../TechButtonMarginContainer3/TechButton3")
-focus_neighbor_top = NodePath("../../TechButtonMarginContainer3/TechButton3")
-focus_neighbor_right = NodePath("../../TechButtonMarginContainer/TechButton")
-focus_neighbor_bottom = NodePath("../../TechButtonMarginContainer/TechButton")
-focus_next = NodePath("../../TechButtonMarginContainer/TechButton")
-focus_previous = NodePath("../../TechButtonMarginContainer3/TechButton3")
-theme_override_fonts/font = ExtResource("2_wjigb")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover = SubResource("StyleBoxFlat_7u3kc")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_uqbl3")
-theme_override_styles/normal = ExtResource("4_lsh0s")
-keep_pressed_outside = true
-text = "TECH 4"
+offset_left = -15.0
+offset_top = 115.0
+offset_right = 121.0
+offset_bottom = 175.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 34
+text = "Confirm"
+scroll_active = false
+justification_flags = 0
 
 [node name="TextBoxMarginContainer" type="MarginContainer" parent="." node_paths=PackedStringArray("_textBox", "_textBoxLabel")]
+visible = false
 z_index = 4096
 z_as_relative = false
 layout_mode = 1

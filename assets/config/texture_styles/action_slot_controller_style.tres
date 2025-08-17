@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://bfema13o0ijyb"]
+
+[ext_resource type="Texture2D" uid="uid://nc4mcpk2v6x4" path="res://assets/art/ui/action_slots/action_slot_potent.png" id="1_fr8vu"]
+
+[resource]
+texture = ExtResource("1_fr8vu")
+expand_margin_left = 110.0
+expand_margin_top = 140.0
+expand_margin_right = 90.0
+expand_margin_bottom = 180.0

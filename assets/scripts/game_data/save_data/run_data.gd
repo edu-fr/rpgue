@@ -4,13 +4,14 @@ extends Resource
 @export var levelsBeated: int
 var playerRunData: PlayerRunData
 
-
 func _init() -> void:
 	levelsBeated = 0
-
+	seed(int(Time.get_unix_time_from_system()) + Time.get_ticks_msec())
 	# Load from file or get default class values
 	var _playerClassData: PlayerClassData = GM.dataManager.get_player_default_class_data()
-	playerRunData = PlayerRunData.new(10, _playerClassData.baseMaxHP, _playerClassData.baseMaxHP, _playerClassData.baseDamageMultiplier, _playerClassData.baseDamageMultiplier, _playerClassData.initialMoveNameList) # ID synced with enemy limit on battle scene
+	playerRunData = PlayerRunData.new(10, _playerClassData.baseMaxHP, _playerClassData.baseMaxHP, _playerClassData.baseDamageMultiplier, _playerClassData.baseDamageMultiplier, _playerClassData.initialMoveNameList, 3)
+	# PlayerRunData ID synced with enemy limit on battle scene
+	# For now, using default value of 2 battle action slots
 
 	return
 

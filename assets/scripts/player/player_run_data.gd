@@ -11,15 +11,17 @@ var _initialAttackDamageMultiplier: float
 var _currentAttackDamageMultiplier: float
 var _moveList: Array[String]
 var _upgradeList: Array[String]
+var _actionSlots: int
 
 
-func _init(id: int, maxHP: float, currentHP: float, initialAttackDamageMultiplier: float, currentAttackDamageMultiplier: float, moveList: Array[String]) -> void:
+func _init(id: int, maxHP: float, currentHP: float, initialAttackDamageMultiplier: float, currentAttackDamageMultiplier: float, moveList: Array[String], actionSlotsAmount: int) -> void:
 	_id = id
 	_maxHP = maxHP
 	_currentHP = currentHP
 	_initialAttackDamageMultiplier = initialAttackDamageMultiplier
 	_currentAttackDamageMultiplier = currentAttackDamageMultiplier
 	_moveList = moveList
+	_actionSlots = actionSlotsAmount
 
 	return
 
@@ -33,7 +35,7 @@ func update_run_data_from_battle_actor(updatePlayer: PlayerBattleActor) -> void:
 
 
 func create_battle_actor_from_run_data() -> PlayerBattleActor:
-	return PlayerBattleActor.new(_id, _maxHP, _currentHP, _currentAttackDamageMultiplier, _moveList)
+	return PlayerBattleActor.new(_id, _maxHP, _currentHP, _currentAttackDamageMultiplier, _moveList, _actionSlots)
 
 
 func add_upgrade(upgradePrivateName: String) -> void:

@@ -31,7 +31,7 @@ func get_use_result(target: BattleActor) -> OutgoingBattleMove:
 
 	var _statusConditionsAsEnumList: Array[StatusConditionEnums.Type] = []
 	_statusConditionsAsEnumList.append(get_move_data().statusCondition)
-	var _willApplyStatus: bool = RandomNumberGenerator.new().randfn() <= get_move_data().activationChance
+	var _willApplyStatus: bool = GM.rng.randfn() <= get_move_data().activationChance
 
 	var _statusConditionsToApply: Array[ActiveStatusCondition] = []
 	for _statusConditionEnum: StatusConditionEnums.Type in _statusConditionsAsEnumList:

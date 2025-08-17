@@ -1,0 +1,48 @@
+<code_scheme name="Project" version="173">
+  <GDScriptCodeStyleSettings>
+    <option name="SPACE_BEFORE_METHOD_CALL_PARENTHESES" value="false" />
+    <option name="SPACE_BEFORE_IF_PARENTHESES" value="true" />
+    <option name="SPACE_BEFORE_FOR_PARENTHESES" value="true" />
+    <option name="SPACE_BEFORE_WHILE_PARENTHESES" value="true" />
+    <option name="SPACE_BEFORE_SWITCH_PARENTHESES" value="true" />
+    <option name="SPACE_BEFORE_MATCH_PARENTHESES" value="true" />
+    <option name="SPACE_AROUND_ASSIGNMENT_OPERATORS" value="true" />
+    <option name="SPACE_AROUND_LOGICAL_OPERATORS" value="true" />
+    <option name="SPACE_AROUND_EQUALITY_OPERATORS" value="true" />
+    <option name="SPACE_AROUND_RELATIONAL_OPERATORS" value="true" />
+    <option name="SPACE_AROUND_ADDITIVE_OPERATORS" value="true" />
+    <option name="SPACE_AROUND_MULTIPLICATIVE_OPERATORS" value="true" />
+    <option name="SPACE_AROUND_SHIFT_OPERATORS" value="true" />
+    <option name="SPACE_WITHIN_METHOD_CALL_PARENTHESES" value="false" />
+    <option name="SPACE_WITHIN_METHOD_PARENTHESES" value="false" />
+    <option name="SPACE_WITHIN_IF_PARENTHESES" value="false" />
+    <option name="SPACE_WITHIN_FOR_PARENTHESES" value="false" />
+    <option name="SPACE_WITHIN_WHILE_PARENTHESES" value="false" />
+    <option name="SPACE_WITHIN_SWITCH_PARENTHESES" value="false" />
+    <option name="SPACE_WITHIN_MATCH_PARENTHESES" value="false" />
+    <option name="SPACE_AFTER_COMMA" value="true" />
+    <option name="SPACE_BEFORE_COMMA" value="false" />
+    <option name="SPACE_AFTER_SEMICOLON" value="true" />
+    <option name="SPACE_BEFORE_SEMICOLON" value="false" />
+    <option name="SPACE_AFTER_TYPE_COLON" value="true" />
+    <option name="SPACE_BEFORE_TYPE_COLON" value="false" />
+    <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
+    <option name="BLANK_LINES_AFTER_CLASS_HEADER" value="1" />
+    <option name="BLANK_LINES_AROUND_METHOD" value="1" />
+    <option name="BLANK_LINES_AROUND_FIELD" value="0" />
+    <option name="ALIGN_MULTILINE_PARAMETERS" value="true" />
+    <option name="ALIGN_MULTILINE_METHOD_BRACKETS" value="true" />
+    <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
+    <option name="ALIGN_MULTILINE_ASSIGNMENT" value="true" />
+    <option name="ALIGN_MULTILINE_TERNARY_OPERATION" value="true" />
+    <option name="ALIGN_MULTILINE_THROWS_LIST" value="true" />
+    <option name="ALIGN_MULTILINE_EXTENDS_LIST" value="true" />
+    <option name="ALIGN_MULTILINE_PARENTHESIZED_EXPRESSION" value="true" />
+    <option name="WRAP_FIRST_METHOD_IN_CLASS_BODY" value="true" />
+    <option name="WRAP_FIRST_FIELD_IN_CLASS_BODY" value="true" />
+    <option name="METHOD_ANNOTATION_WRAP" value="0" />
+    <option name="FIELD_ANNOTATION_WRAP" value="0" />
+    <option name="CLASS_ANNOTATION_WRAP" value="0" />
+    <option name="ENUM_CONSTANTS_WRAP" value="0" />
+  </GDScriptCodeStyleSettings>
+</code_scheme>

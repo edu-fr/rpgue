@@ -1,9 +1,8 @@
-class_name ActionsPanelController
+class_name InputOptionsPanelController
 extends Control
 
-enum BUTTON { UNKNOWN, NONE, ATTACK, TECH }
+enum BUTTON { UNKNOWN, NONE, ATTACK }
 @export var _attackButton: Button
-@export var _techButton: Button
 
 var _remainingEnemiesRef: Array[EnemyController]
 signal playerTurn(turnResult: PlayerAction)
@@ -14,10 +13,7 @@ func init(battleStateMachine: BattleStateMachine) -> void:
 	_stateMachine = battleStateMachine
 
 	_attackButton.pressed.connect(_on_attack_button_pressed)
-	_techButton.pressed.connect(_on_tech_button_pressed)
-
 	_attackButton.focus_mode = Control.FOCUS_ALL
-	_techButton.focus_mode = Control.FOCUS_ALL
 
 	set_buttons_enabled(false) # buttons start disabled
 
@@ -43,21 +39,13 @@ func _on_attack_button_pressed() -> void:
 	return
 
 
-func _on_tech_button_pressed() -> void:
-	_stateMachine.on_tech_clicked()
-
-	return
-
-
 func set_buttons_enabled(value: bool) -> void:
 	_attackButton.disabled = !value
-	_techButton.disabled = !value
 
 	if (value == true):
 		_attackButton.grab_focus()
 	else:
 		_attackButton.release_focus()
-		_techButton.release_focus()
 
 	return
 
