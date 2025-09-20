@@ -1,7 +1,10 @@
 class_name ActionSlotController
-extends MarginContainer
+extends Panel
+
+const font_scale_factor: float = 0.05
 
 @export var panelContainer: PanelContainer
+@export var moveLabel: Label
 
 @export var PotentSlotBg: CompressedTexture2D
 @export var TechSlotBg: CompressedTexture2D
@@ -21,8 +24,22 @@ func _ready() -> void:
 		Action.ActionSlotType.UNIVERSAL: UniversalSlotBg
 	}
 
+	resized.connect(_on_painel_resized)
+	_on_painel_resized()
+
+	return
+
+
+func _on_painel_resized() -> void:
+	if moveLabel:
+		var novo_tamanho_fonte: float = self.size.x * font_scale_factor
+		moveLabel.add_theme_font_size_override("font_size", int(novo_tamanho_fonte))
+
+	return
+
+
 func setup(type: Action.ActionSlotType) -> void:
-	clear()
+	remove_move()
 	slotType = type
 	var _themeBox: StyleBoxTexture = panelContainer.get_theme_stylebox("panel").duplicate(true)
 
@@ -41,12 +58,27 @@ func setup(type: Action.ActionSlotType) -> void:
 	return
 
 
+func add_move(battleMove: BattleMove) -> void:
+	assert(currentActiveBattleMove == null, "Trying to add a move to an action slot that is already occupied")
+
+	currentActiveBattleMove = battleMove
+	moveLabel.text = battleMove.publicName
+
+	# TODO: Add special effect if the move type matches the slot type
+
+	return
+
+
+func remove_move() -> void:
+	currentActiveBattleMove = null
+	moveLabel.text = ""
+
+	return
+
+
 func set_active(boolean: bool) -> void:
 	active = boolean
 	self.set_visible(boolean)
 
 	return
 
-
-func clear() -> void:
-	currentActiveBattleMove = null

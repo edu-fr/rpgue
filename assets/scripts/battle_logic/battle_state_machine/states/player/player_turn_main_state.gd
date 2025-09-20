@@ -8,6 +8,9 @@ func _init(playerBattleActor: PlayerBattleActor, stateMachine: BattleStateMachin
 	super(stateMachine)
 	_playerBattleActor = playerBattleActor
 
+	var playerController: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
+	playerController.update_action_slots_for_turn()
+
 	return
 
 
@@ -15,15 +18,21 @@ func on_state_start() -> void:
 	var playerController: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
 	playerController.show_and_enable_actions_panel()
 
+	return
+
 
 func on_state_resumed() -> void:
 	var playerController: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
 	playerController.show_and_enable_actions_panel()
 
+	return
+
 
 func on_state_end() -> void:
 	var playerController: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
 	playerController.hide_and_disable_actions_panel()
+
+	return
 
 
 func on_attack_clicked() -> void:

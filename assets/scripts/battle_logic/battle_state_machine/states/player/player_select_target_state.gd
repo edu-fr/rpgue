@@ -54,6 +54,7 @@ func on_up_arrow_clicked() -> void:
 
 
 func _on_target_selection_finished(enemy_indices: Array[int]) -> void:
+	_stateMachine.battleScene._playerBattleUIController.on_move_selected(_battleMove)
 	_stateMachine.pop_stack(PlayerAttackResultState.new(_battleMove, enemy_indices, _playerBattleActor, _stateMachine))
 
 	return

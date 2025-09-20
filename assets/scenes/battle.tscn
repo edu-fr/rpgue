@@ -10,7 +10,7 @@
 [ext_resource type="LabelSettings" uid="uid://bk76npxe4v3st" path="res://assets/config/label_settings/text_box_label_settings.tres" id="5_kmdtb"]
 [ext_resource type="Script" uid="uid://cykqu710qfcuw" path="res://assets/scripts/UI/text_box_controller.gd" id="5_x10or"]
 [ext_resource type="Script" uid="uid://2sl453ikgn7p" path="res://assets/scripts/UI/health_progress_bar_controller.gd" id="6_jo7rj"]
-[ext_resource type="Script" path="res://assets/scripts/UI/input_options_panel_controller.gd" id="8_wofiw"]
+[ext_resource type="Script" uid="uid://gvr87ys6n1p3" path="res://assets/scripts/UI/input_options_panel_controller.gd" id="8_wofiw"]
 [ext_resource type="Script" uid="uid://ddlw8t05f50xm" path="res://assets/scripts/UI/battle_moves_panel_controller.gd" id="10_pbdns"]
 [ext_resource type="Script" uid="uid://bpas3wiwi0xox" path="res://assets/scripts/general/action_slots/action_slots_controller.gd" id="11_dy2cn"]
 [ext_resource type="PackedScene" uid="uid://dpj4krim35hsu" path="res://assets/prefabs/UI/grids/action_slots/action_slot_margin_container.tscn" id="12_wofiw"]
@@ -105,7 +105,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PlayerController" type="Control" parent="." node_paths=PackedStringArray("_statusPanel", "_inputOptionsPanel", "_movesPanel")]
+[node name="PlayerController" type="Control" parent="." node_paths=PackedStringArray("_statusPanel", "_inputOptionsPanel", "_movesPanel", "_actionSlotsController")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -116,6 +116,7 @@ script = ExtResource("4_pbdns")
 _statusPanel = NodePath("PlayerStatusPanel")
 _inputOptionsPanel = NodePath("InputOptionsPanel")
 _movesPanel = NodePath("PlayerAttackMovesPanel")
+_actionSlotsController = NodePath("ActionSlotsPanel")
 
 [node name="PlayerStatusPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("_playerNameLabel", "_healthBarController")]
 z_index = 1
@@ -434,34 +435,36 @@ theme_override_styles/normal = ExtResource("4_lsh0s")
 keep_pressed_outside = true
 text = "ATTACK 6"
 
-[node name="ActionSlotsPanel" type="Panel" parent="PlayerController"]
+[node name="ActionSlotsPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("actionSlotControllers")]
 z_index = 1
+clip_contents = true
 custom_minimum_size = Vector2(70, 70)
-layout_mode = 0
-offset_left = 801.0
-offset_top = 791.0
-offset_right = 1695.0
-offset_bottom = 1008.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.7
+anchor_right = 0.9
+anchor_bottom = 0.9
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_d4mow")
 script = ExtResource("11_dy2cn")
+actionSlotControllers = [NodePath("HBoxContainer/ActionSlotPanelContainer"), NodePath("HBoxContainer/ActionSlotPanelContainer2"), NodePath("HBoxContainer/ActionSlotPanelContainer3")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PlayerController/ActionSlotsPanel"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+theme_override_constants/separation = 0
 alignment = 1
 
-[node name="ActionSlotMarginContainer" parent="PlayerController/ActionSlotsPanel/HBoxContainer" instance=ExtResource("12_wofiw")]
+[node name="ActionSlotPanelContainer" parent="PlayerController/ActionSlotsPanel/HBoxContainer" instance=ExtResource("12_wofiw")]
 layout_mode = 2
 
-[node name="ActionSlotMarginContainer2" parent="PlayerController/ActionSlotsPanel/HBoxContainer" instance=ExtResource("12_wofiw")]
+[node name="ActionSlotPanelContainer2" parent="PlayerController/ActionSlotsPanel/HBoxContainer" instance=ExtResource("12_wofiw")]
 layout_mode = 2
 
-[node name="ActionSlotMarginContainer3" parent="PlayerController/ActionSlotsPanel/HBoxContainer" instance=ExtResource("12_wofiw")]
+[node name="ActionSlotPanelContainer3" parent="PlayerController/ActionSlotsPanel/HBoxContainer" instance=ExtResource("12_wofiw")]
 layout_mode = 2
 
 [node name="ConfirmButtonMarginContainer" type="MarginContainer" parent="PlayerController"]
