@@ -20,6 +20,9 @@ func init(enemyInstance: EnemyBattleActor) -> void:
 func receive_player_attack(incomingBattleMove: OutgoingBattleMove) -> void:
 	_alive_assertion()
 
+	if (GM.verbose):
+		print("Enemy " + str(get_id()) + " receiving attack")
+
 	_battleActor.take_battle_move(incomingBattleMove)
 
 	if (!is_alive()):
@@ -78,6 +81,11 @@ func _on_death() -> void:
 	# Death animation
 	_enemyImage.visible = false
 	_healthBar.visible = false
+	_statusConditionPanelController.clear_status_conditions()
+	_statusConditionPanelController.hide_panel()
+
+	if (GM.verbose):
+		print("Enemy " + str(get_id()) + " has died")
 
 	return
 

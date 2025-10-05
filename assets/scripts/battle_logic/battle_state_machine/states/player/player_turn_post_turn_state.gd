@@ -16,6 +16,6 @@ func on_state_start() -> void:
 	if (_change_state_if_battle_ended()):
 		return
 
-	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, _get_next_actor_turn()))
+	_stateMachine.pop_stack(ChangeTurnState.new(_stateMachine))
 
 	return

@@ -10,7 +10,7 @@ var _stateMachine: BattleStateMachine
 func init(battleStateMachine: BattleStateMachine) -> void:
 	_stateMachine = battleStateMachine
 
-	_attackButton.pressed.connect(_stateMachine.on_attack_clicked)
+	_attackButton.button_up.connect(_stateMachine.on_attack_clicked)
 	_attackButton.focus_mode = Control.FOCUS_ALL
 
 	hide_and_disable() # buttons start disabled

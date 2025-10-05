@@ -18,7 +18,7 @@ func _gui_input(_event: InputEvent) -> void:
 	if (!_displayingText):
 		return
 
-	if _event.is_action_pressed("ui_accept"):
+	if _event.is_action_released("ui_accept"):
 		accept_event()
 		_hide()
 		_textBoxClosed.emit()

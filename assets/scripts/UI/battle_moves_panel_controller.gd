@@ -23,7 +23,7 @@ func init(onBattleMoveIndexClicked: Callable, movesInfo: Array[BattleMove]) -> v
 		battleMovesList.append(movesInfo[i])
 		battleMoveButtonsSlots[i].text = movesInfo[i].publicName
 		var actionCallable: Callable = func() -> void: onBattleMoveIndexClicked.call(i)
-		battleMoveButtonsSlots[i].pressed.connect(actionCallable)
+		battleMoveButtonsSlots[i].button_up.connect(actionCallable)
 
 	return
 

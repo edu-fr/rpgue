@@ -21,11 +21,14 @@ func _init() -> void:
 func push_state(newState: BaseState) -> void:
 	_assert_state_type(newState)
 	# print("[STATE MACHINE] Push: " + str(Utils.get_clear_script_name(newState)))
+	if (currentState != null):
+		print("[STATE MACHINE] Current state before push: " + str(Utils.get_clear_script_name(currentState)))
 
 	if (currentState != null):
 		currentState.on_state_end()
 
 	stateStack.push(newState)
+	print("[STATE MACHINE] Current state after push: " + str(Utils.get_clear_script_name(currentState)))
 
 	statePushed.emit(Utils.get_clear_script_name(newState))
 	currentState.on_state_start()

@@ -42,3 +42,19 @@ func _insert_new_status_condition(activeStatusCondition: ActiveStatusCondition) 
 	currentStatusConditions[_type] = _statusConditionController
 
 	return
+
+
+func clear_status_conditions() -> void:
+	for statusConditionController: StatusConditionController in currentStatusConditions.values():
+		statusConditionController.queue_free()
+		self.remove_child(statusConditionController)
+
+	currentStatusConditions.clear()
+
+	return
+
+
+func hide_panel() -> void:
+	self.visible = false
+
+	return

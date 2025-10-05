@@ -12,7 +12,7 @@ func _ready() -> void:
 	for i: int in _stageButtons.size():
 		_stageButtons[i].disabled = i != runDataRef.levelsBeated
 		if (i == runDataRef.levelsBeated):
-			_stageButtons[i].pressed.connect(_on_stage_clicked)
+			_stageButtons[i].button_up.connect(_on_stage_clicked)
 
 	return
 
