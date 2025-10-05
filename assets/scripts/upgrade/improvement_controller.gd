@@ -9,6 +9,6 @@ extends Control
 func init(title: String, description: String, improvementPrivateName: String, onClick: Callable) -> void:
 	titleText.text = title
 	descriptionText.text =description
-	button.pressed.connect(onClick.bind(improvementPrivateName))
+	button.button_up.connect(onClick.bind(improvementPrivateName))
 
 	return

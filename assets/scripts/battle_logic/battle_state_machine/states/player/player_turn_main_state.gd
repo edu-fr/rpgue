@@ -2,14 +2,13 @@ class_name PlayerTurnMainState
 extends BaseBattleState
 
 var _playerBattleActor: PlayerBattleActor
+var _currentlySelectedMoves: Array[SelectedBattleMove]
 
 
-func _init(playerBattleActor: PlayerBattleActor, stateMachine: BattleStateMachine) -> void:
+func _init(playerBattleActor: PlayerBattleActor, currentlySelectedMoves: Array[SelectedBattleMove], stateMachine: BattleStateMachine) -> void:
 	super(stateMachine)
 	_playerBattleActor = playerBattleActor
-
-	var playerController: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
-	playerController.update_action_slots_for_turn()
+	_currentlySelectedMoves = currentlySelectedMoves
 
 	return
 
@@ -36,10 +35,7 @@ func on_state_end() -> void:
 
 
 func on_attack_clicked() -> void:
-	var _battleUI: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
-	_battleUI.hide_and_disable_actions_panel()
-
-	_stateMachine.push_state(PlayerSelectMoveState.new(ImportUtils.Category.ATTACK, _playerBattleActor, _stateMachine))
+	_stateMachine.push_state(PlayerSelectMoveState.new(_playerBattleActor, _currentlySelectedMoves, _stateMachine))
 
 	return
 

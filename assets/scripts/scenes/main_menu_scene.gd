@@ -8,10 +8,10 @@ extends Control
 
 
 func _ready() -> void:
-	startButton.pressed.connect(_on_start_pressed)
-	eraseRunDataButton.pressed.connect(_on_erase_run_data_pressed)
-	optionsButton.pressed.connect(_on_options_pressed)
-	quitButton.pressed.connect(_on_quit_pressed)
+	startButton.button_up.connect(_on_start_pressed)
+	eraseRunDataButton.button_up.connect(_on_erase_run_data_pressed)
+	optionsButton.button_up.connect(_on_options_pressed)
+	quitButton.button_up.connect(_on_quit_pressed)
 
 	return
 

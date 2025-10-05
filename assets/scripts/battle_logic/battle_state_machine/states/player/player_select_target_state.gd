@@ -4,11 +4,14 @@ extends BaseBattleState
 var _battleMove: BattleMove
 var _enemyTargetingController: EnemyTargetingController
 var _playerBattleActor: PlayerBattleActor
+var _currentlySelectedMoves: Array[SelectedBattleMove]
 
-func _init(battleMove: BattleMove, playerBattleActor: PlayerBattleActor, battleStateMachine: BattleStateMachine) -> void:
+
+func _init(battleMove: BattleMove, playerBattleActor: PlayerBattleActor, currentlySelectedMoves: Array[SelectedBattleMove], battleStateMachine: BattleStateMachine) -> void:
 	super(battleStateMachine)
 	_battleMove = battleMove
 	_playerBattleActor = playerBattleActor
+	_currentlySelectedMoves = currentlySelectedMoves
 
 	var enemiesRef: Array[EnemyController] = _stateMachine.battleScene._get_remaining_enemies()
 	_enemyTargetingController = EnemyTargetingController.new(_battleMove, enemiesRef)
@@ -54,8 +57,10 @@ func on_up_arrow_clicked() -> void:
 
 
 func _on_target_selection_finished(enemy_indices: Array[int]) -> void:
-	_stateMachine.battleScene._playerBattleUIController.on_move_selected(_battleMove)
-	_stateMachine.pop_stack(PlayerAttackResultState.new(_battleMove, enemy_indices, _playerBattleActor, _stateMachine))
+	var selectedBattleMove: SelectedBattleMove = SelectedBattleMove.new(_battleMove, enemy_indices)
+	_stateMachine.battleScene._playerBattleUIController.on_move_selected(selectedBattleMove, _currentlySelectedMoves.size())
+	_currentlySelectedMoves.append(selectedBattleMove)
+	_stateMachine.push_state(PlayerCheckSelectedTransitionState.new(_currentlySelectedMoves, _playerBattleActor, _stateMachine))
 
 	return
 

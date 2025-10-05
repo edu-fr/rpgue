@@ -168,29 +168,28 @@ func _apply_attack_on_player(opponentOutgoingBattleMove: OutgoingBattleMove) -> 
 #region Turn Logic
 
 func _input(event: InputEvent) -> void:
-	if (event.is_action_pressed("ui_left")):
+	if (event.is_action_released("ui_left")):
 		_stateMachine.on_left_arrow_clicked()
-	elif (event.is_action_pressed("ui_right")):
+	elif (event.is_action_released("ui_right")):
 		_stateMachine.on_right_arrow_clicked()
-	elif (event.is_action_pressed("ui_down")):
+	elif (event.is_action_released("ui_down")):
 		_stateMachine.on_down_arrow_clicked()
-	elif (event.is_action_pressed("ui_up")):
+	elif (event.is_action_released("ui_up")):
 		_stateMachine.on_up_arrow_clicked()
-	elif (event.is_action_pressed("ui_accept")):
+	elif (event.is_action_released("ui_accept")):
 		_stateMachine.on_confirm_clicked()
-	elif (event.is_action_pressed("ui_cancel")):
+	elif (event.is_action_released("ui_cancel")):
 		_stateMachine.on_back_clicked()
 
 	return
 
 
-func _get_remaining_enemy_by_id(id: int) -> EnemyController:
+func _get_remaining_enemy_by_id_or_null(id: int) -> EnemyController:
 	var enemies: Array[EnemyController] = _get_remaining_enemies()
 	for enemy: EnemyController in enemies:
 		if (enemy.get_id() == id):
 			return enemy
 
-	push_error("Remaining enemy not found with id " + str(id))
 	return null
 
 

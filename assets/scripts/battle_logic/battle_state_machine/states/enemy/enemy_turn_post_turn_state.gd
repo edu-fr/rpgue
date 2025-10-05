@@ -20,6 +20,6 @@ func on_state_start() -> void:
 	if (skipping_turn_as_enemy_is_not_alive(_enemyInstance)):
 		return
 
-	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, _get_next_actor_turn()))
+	_stateMachine.swap_state(ChangeTurnState.new(_stateMachine))
 
 	return

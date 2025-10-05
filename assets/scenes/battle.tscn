@@ -105,7 +105,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PlayerController" type="Control" parent="." node_paths=PackedStringArray("_statusPanel", "_inputOptionsPanel", "_movesPanel", "_actionSlotsController")]
+[node name="PlayerController" type="Control" parent="." node_paths=PackedStringArray("_statusPanel", "_inputOptionsPanel", "_movesPanel", "_actionSlotsController", "_confirmActionsButtonContainer", "_confirmActionsButton")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -117,6 +117,8 @@ _statusPanel = NodePath("PlayerStatusPanel")
 _inputOptionsPanel = NodePath("InputOptionsPanel")
 _movesPanel = NodePath("PlayerAttackMovesPanel")
 _actionSlotsController = NodePath("ActionSlotsPanel")
+_confirmActionsButtonContainer = NodePath("ConfirmButtonMarginContainer")
+_confirmActionsButton = NodePath("ConfirmButtonMarginContainer/ConfirmButton")
 
 [node name="PlayerStatusPanel" type="Panel" parent="PlayerController" node_paths=PackedStringArray("_playerNameLabel", "_healthBarController")]
 z_index = 1

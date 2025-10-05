@@ -16,6 +16,9 @@ func on_state_start() -> void:
 	if (_change_state_if_battle_ended()):
 		return
 
-	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, PlayerTurnMainState.new(_playerBattleActor, _stateMachine)))
+	var playerController: PlayerBattleUIController = _stateMachine.battleScene._playerBattleUIController
+	playerController.update_action_slots_for_turn()
+
+	_stateMachine.swap_state(CheckBattleState.new(_stateMachine, PlayerTurnMainState.new(_playerBattleActor, [], _stateMachine)))
 
 	return
