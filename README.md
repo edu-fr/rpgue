@@ -1,5 +1,5 @@
-# rpgue
+Turn-based combat RPG with rogue-like mechanics
 
-Link documentação
+Small personal project that I work on weekends
 
-https://www.notion.so/rpgue-186fabbdcd8180d9a79def3dedf4cbac
+Developed in Godot
